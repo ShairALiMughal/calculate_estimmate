@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <title>Villa Agency - Schedule a Visit</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="assets/css/fontawesome.css">
+    <link rel="stylesheet" href="assets/css/templatemo-villa-agency.css">
+    <link rel="stylesheet" href="assets/css/owl.css">
+    <link rel="stylesheet" href="assets/css/animate.css">
+    <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css" />
+
+    <style>
+        .schedule-content {
+            background-color: #f7f7f7;
+            padding: 50px 0;
+        }
+        .schedule-form-container {
+            background-color: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .schedule-form-container h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #1e1e1e;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+        .form-group input[type="date"],
+        .form-group input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .checkbox-group {
+            margin-bottom: 15px;
+        }
+        .checkbox-group label {
+            display: flex;
+            align-items: center;
+        }
+        .checkbox-group input[type="checkbox"] {
+            margin-right: 10px;
+        }
+        #totalPrice {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-top: 20px;
+            text-align: right;
+        }
+        .orange-button {
+            background-color: #f35525;
+            color: #fff;
+            border: none;
+            padding: 12px 30px;
+            font-size: 15px;
+            text-transform: uppercase;
+            cursor: pointer;
+            border-radius: 5px;
+            display: block;
+            width: 100%;
+            transition: all 0.3s;
+        }
+        .orange-button:hover {
+            background-color: #1e1e1e;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ***** Preloader Start ***** -->
+    <div id="js-preloader" class="js-preloader">
+        <div class="preloader-inner">
+            <span class="dot"></span>
+            <div class="dots">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </div>
+    <!-- ***** Preloader End ***** -->
+
+    <div class="sub-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-8">
+                    <ul class="info">
+                        <li><i class="fa fa-envelope"></i> info@company.com</li>
+                        <li><i class="fa fa-map"></i> Sunny Isles Beach, FL 33160</li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 col-md-4">
+                    <ul class="social-links">
+                        <li><a href="#"><i class="fab fa-facebook"></i></a></li>
+                        <li><a href="https://x.com/minthu" target="_blank"><i class="fab fa-twitter"></i></a></li>
+                        <li><a href="#"><i class="fab fa-linkedin"></i></a></li>
+                        <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ***** Header Area Start ***** -->
+    <header class="header-area header-sticky">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <nav class="main-nav">
+                        <!-- ***** Logo Start ***** -->
+                        <a href="index.html" class="logo">
+                            <h1>Villa</h1>
+                        </a>
+                        <!-- ***** Logo End ***** -->
+                        <!-- ***** Menu Start ***** -->
+                        <ul class="nav">
+                            <li><a href="index.html">Home</a></li>
+                            <li><a href="properties.html">Properties</a></li>
+                            <li><a href="property-details.html">Property Details</a></li>
+                            <li><a href="contact.html">Contact Us</a></li>
+                            <li><a href="schedule-visit.html" class="active"><i class="fa fa-calendar"></i>Schedule a visit</a></li>
+                        </ul>
+                        <a class='menu-trigger'>
+                            <span>Menu</span>
+                        </a>
+                        <!-- ***** Menu End ***** -->
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- ***** Header Area End ***** -->
+
+    <div class="main-banner">
+        <div class="owl-carousel owl-banner">
+            <div class="item item-1">
+                <div class="header-text">
+                    <span class="category">Schedule, <em>Your Visit</em></span>
+                    <h2>Find Your Dream<br>Property Today</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="schedule-content">
+        <div class="container">
+            <div class="schedule-form-container">
+                <h2>Schedule Your Visit</h2>
+                <form id="scheduleForm">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="startDate">Start Date</label>
+                                <input type="date" id="startDate" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="endDate">End Date</label>
+                                <input type="date" id="endDate" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="adults">Adults</label>
+                                <input type="number" id="adults" min="1" value="1" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="children05">Children (0-5)</label>
+                                <input type="number" id="children05" min="0" value="0">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="children612">Children (6-12)</label>
+                                <input type="number" id="children612" min="0" value="0">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <button type="button" id="disabledGuestsBtn" class="btn btn-secondary" style="margin-top: 28px; width: 100%;
+                                padding: 10px;
+                                border: 1px solid #ddd;
+                                border-radius: 5px;">Are there guests with disabilities?</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="disabledGuestsPanel" style="display: none;">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="disabledAdults">Disabled Adults</label>
+                                    <input type="number" id="disabledAdults" min="0" value="0">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="disabledChildren">Disabled Children (6-12)</label>
+                                    <input type="number" id="disabledChildren" min="0" value="0">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="checkbox-group">
+                        <label>
+                            <input type="checkbox" id="petService"> Pet Service (€30 for entire stay)
+                        </label>
+                    </div>
+                    <div class="checkbox-group">
+                        <label>
+                            <input type="checkbox" id="cribService"> Crib Service (€10 per night)
+                        </label>
+                    </div>
+                    <div class="checkbox-group">
+                        <label>
+                            <input type="checkbox" id="poolView"> Pool view (€10 per night)
+                        </label>
+                    </div>
+                    <div class="checkbox-group">
+                        <label>
+                            <input type="checkbox" id="loyaltyCustomer"> Loyalty Customer (10% discount on rate only)
+                        </label>
+                    </div>
+                    <div id="totalPrice">Total Price: €0.00</div>
+                    <button type="submit" class="orange-button">Book Now</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="container">
+            <div class="col-lg-8">
+                <p>Copyright © 2048 Villa Agency Co., Ltd. All rights reserved. 
+                
+                Design: <a rel="nofollow" href="https://templatemo.com" target="_blank">TemplateMo</a></p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Scripts -->
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/js/isotope.min.js"></script>
+    <script src="assets/js/owl-carousel.js"></script>
+    <script src="assets/js/counter.js"></script>
+    <script src="assets/js/prices.js"></script>
+    <script src="assets/js/custom.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('scheduleForm');
+            const disabledGuestsBtn = document.getElementById('disabledGuestsBtn');
+            const disabledGuestsPanel = document.getElementById('disabledGuestsPanel');
+            
+            // Load prices
+            const prices = loadPrices();
+            
+            if (form) {
+                form.addEventListener('input', calculateTotalPrice);
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    console.log('Booking submitted');
+                    // Add your booking logic here
+                });
+            } else {
+                console.error("Schedule form not found");
+            }
+            
+            disabledGuestsBtn.addEventListener('click', function() {
+                disabledGuestsPanel.style.display = disabledGuestsPanel.style.display === 'none' ? 'block' : 'none';
+            });
+        
+            function calculateTotalPrice() {
+                const startDate = new Date(document.getElementById('startDate').value);
+                const endDate = new Date(document.getElementById('endDate').value);
+                const adults = parseInt(document.getElementById('adults').value) || 0;
+                const children05 = parseInt(document.getElementById('children05').value) || 0;
+                const children612 = parseInt(document.getElementById('children612').value) || 0;
+                let disabledAdults = parseInt(document.getElementById('disabledAdults').value) || 0;
+                let disabledChildren = parseInt(document.getElementById('disabledChildren').value) || 0;
+                const petService = document.getElementById('petService').checked;
+                const cribService = document.getElementById('cribService').checked;
+                const poolView = document.getElementById('poolView').checked;
+                const loyaltyCustomer = document.getElementById('loyaltyCustomer').checked;
+                
+                // Validate disabled guests
+                if (disabledAdults > adults) {
+                    disabledAdults = adults;
+                    document.getElementById('disabledAdults').value = adults;
+                    alert("The number of disabled adults has been adjusted to match the total number of adults.");
+                }
+                
+                if (disabledChildren > children612) {
+                    disabledChildren = children612;
+                    document.getElementById('disabledChildren').value = children612;
+                    alert("The number of disabled children has been adjusted to match the total number of children (6-12).");
+                }
+        
+                if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
+                    document.getElementById('totalPrice').textContent = 'Total Price: €0.00';
+                    return;
+                }
+                
+                let basePrice = 0;
+                let clubCardCost = 0;
+                let extrasCost = 0;
+                let currentDate = new Date(startDate);
+                const nights = Math.max(Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24)), 0);
+                
+                while (currentDate <= endDate) {
+                    const dateString = currentDate.toISOString().split('T')[0];
+                    const dailyPrice = prices[dateString] || 0;
+                    
+                    // Calculate base price for regular guests
+                    let regularAdults = adults - disabledAdults;
+                    let regularChildren = children612 - disabledChildren;
+                    basePrice += dailyPrice * regularAdults;
+                    basePrice += (dailyPrice / 2) * regularChildren;
+                    
+                    // Calculate base price for disabled guests (10% discount)
+                    basePrice += (dailyPrice * 0.9) * disabledAdults;
+                    basePrice += ((dailyPrice / 2) * 0.9) * disabledChildren;
+                    
+                    // Calculate club card cost (not for disabled guests)
+                    clubCardCost += 6 * (regularAdults + regularChildren);
+                    
+                    currentDate.setDate(currentDate.getDate() + 1);
+                }
+                
+                // Apply loyalty discount (10% off base price only)
+                if (loyaltyCustomer) {
+                    basePrice *= 0.9;
+                }
+                
+                // Add pool view cost
+                if (poolView) {
+                    extrasCost += 10 * nights;
+                }
+                
+                // Add pet service cost
+                if (petService) {
+                    extrasCost += 30;
+                }
+                
+                // Add crib service cost
+                if (cribService) {
+                    extrasCost += 10 * nights;
+                }
+                
+                const total = basePrice + clubCardCost + extrasCost;
+                
+                document.getElementById('totalPrice').textContent = `Total Price: €${total.toFixed(2)}`;
+            }
+        
+            // Make sure to call this function when the form inputs change
+            document.getElementById('scheduleForm').addEventListener('input', calculateTotalPrice);
+            document.getElementById('poolView').addEventListener('change', calculateTotalPrice);
+            document.getElementById('loyaltyCustomer').addEventListener('change', calculateTotalPrice);
+        
+            // These event listeners are no longer necessary as the validation is now in calculateTotalPrice
+            // but we'll keep them for immediate feedback to the user
+            document.getElementById('disabledAdults').addEventListener('change', calculateTotalPrice);
+            document.getElementById('disabledChildren').addEventListener('change', calculateTotalPrice);
+        });
+        </script>
