@@ -311,6 +311,8 @@
     const poolView = document.getElementById('poolView').checked;
     const loyaltyCustomer = document.getElementById('loyaltyCustomer').checked;
     
+    console.log('Input values:', { startDate, endDate, adults, children05, children612, disabledAdults, disabledChildren, petService, cribService, poolView, loyaltyCustomer });
+
     // Validate disabled guests
     if (disabledAdults > adults) {
         disabledAdults = adults;
@@ -324,6 +326,8 @@
         alert("The number of disabled children has been adjusted to match the total number of children (6-12).");
     }
 
+    console.log('Adjusted disabled guests:', { disabledAdults, disabledChildren });
+
     if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
         document.getElementById('totalPrice').textContent = 'Total Price: €0.00';
         return;
@@ -335,62 +339,95 @@
     let currentDate = new Date(startDate);
     const nights = Math.max(Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24)), 0);
     
-    while (currentDate < endDate) {
+    console.log('Number of nights:', nights);
+
+    while (currentDate <= endDate) {
         const dateString = currentDate.toISOString().split('T')[0];
         const dailyPrice = prices[dateString] || 0;
         
+        console.log(`Calculating for date: ${dateString}, Daily price: €${dailyPrice}`);
+
+        let dailyBasePrice = 0;
+        
         // Calculate price for adults
         if (adults <= 2) {
-            basePrice += dailyPrice * adults;
+            dailyBasePrice += dailyPrice * adults;
+            console.log(`Adults price: €${dailyPrice} * ${adults} = €${dailyPrice * adults}`);
         } else {
-            basePrice += dailyPrice * 2; // First two adults at full price
+            dailyBasePrice += dailyPrice * 2; // First two adults at full price
             let discountedAdults = adults - 2;
             let regularDiscountedAdults = discountedAdults - disabledAdults;
             
+            console.log(`First two adults: €${dailyPrice} * 2 = €${dailyPrice * 2}`);
+            
             // Regular discounted adults (20% discount)
-            basePrice += dailyPrice * 0.8 * regularDiscountedAdults;
+            dailyBasePrice += dailyPrice * 0.8 * regularDiscountedAdults;
+            console.log(`Regular discounted adults: €${dailyPrice} * 0.8 * ${regularDiscountedAdults} = €${dailyPrice * 0.8 * regularDiscountedAdults}`);
             
             // Disabled adults (20% + 10% discount)
-            basePrice += dailyPrice * 0.8 * 0.9 * disabledAdults;
+            dailyBasePrice += dailyPrice * 0.8 * 0.9 * disabledAdults;
+            console.log(`Disabled adults: €${dailyPrice} * 0.8 * 0.9 * ${disabledAdults} = €${dailyPrice * 0.8 * 0.9 * disabledAdults}`);
         }
         
         // Regular children 6-12 (50% discount)
-        basePrice += (dailyPrice / 2) * (children612 - disabledChildren);
+        dailyBasePrice += (dailyPrice / 2) * (children612 - disabledChildren);
+        console.log(`Regular children 6-12: €${dailyPrice / 2} * ${children612 - disabledChildren} = €${(dailyPrice / 2) * (children612 - disabledChildren)}`);
         
         // Disabled children 6-12 (60% discount: 50% for age + 10% for disability)
-        basePrice += dailyPrice * 0.4 * disabledChildren;
+        dailyBasePrice += dailyPrice * 0.4 * disabledChildren;
+        console.log(`Disabled children 6-12: €${dailyPrice} * 0.4 * ${disabledChildren} = €${dailyPrice * 0.4 * disabledChildren}`);
+        
+        basePrice += dailyBasePrice;
+        console.log(`Daily base price: €${dailyBasePrice}`);
         
         // Calculate club card cost (not for disabled guests and children 0-5)
-        clubCardCost += 6 * (adults - disabledAdults + children612 - disabledChildren);
+        let dailyClubCardCost = 6 * (adults - disabledAdults + children612 - disabledChildren);
+        clubCardCost += dailyClubCardCost;
+        console.log(`Daily club card cost: €${dailyClubCardCost}`);
         
         currentDate.setDate(currentDate.getDate() + 1);
     }
     
+    console.log(`Total base price before loyalty discount: €${basePrice}`);
+    console.log(`Total club card cost: €${clubCardCost}`);
+
     // Apply loyalty discount (10% off base price only)
     if (loyaltyCustomer) {
+        let loyaltyDiscount = basePrice * 0.1;
         basePrice *= 0.9;
+        console.log(`Loyalty discount applied: -€${loyaltyDiscount}`);
     }
     
+    console.log(`Final base price: €${basePrice}`);
+
     // Add pool view cost
     if (poolView) {
-        extrasCost += 10 * nights;
+        let poolViewCost = 10 * nights;
+        extrasCost += poolViewCost;
+        console.log(`Pool view cost: €${poolViewCost}`);
     }
     
     // Add pet service cost
     if (petService) {
         extrasCost += 30;
+        console.log('Pet service cost: €30');
     }
     
     // Add crib service cost
     if (cribService) {
-        extrasCost += 10 * nights;
+        let cribCost = 10 * nights;
+        extrasCost += cribCost;
+        console.log(`Crib service cost: €${cribCost}`);
     }
     
+    console.log(`Total extras cost: €${extrasCost}`);
+
     const total = basePrice + clubCardCost + extrasCost;
     
+    console.log(`Final total price: €${total.toFixed(2)}`);
+
     document.getElementById('totalPrice').textContent = `Total Price: €${total.toFixed(2)}`;
-}        
-            // Make sure to call this function when the form inputs change
+}            // Make sure to call this function when the form inputs change
             document.getElementById('scheduleForm').addEventListener('input', calculateTotalPrice);
             document.getElementById('poolView').addEventListener('change', calculateTotalPrice);
             document.getElementById('loyaltyCustomer').addEventListener('change', calculateTotalPrice);
