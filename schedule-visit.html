@@ -17,73 +17,7 @@
     <link rel="stylesheet" href="assets/css/owl.css">
     <link rel="stylesheet" href="assets/css/animate.css">
     <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css" />
-
-    <style>
-        .schedule-content {
-            background-color: #f7f7f7;
-            padding: 50px 0;
-        }
-        .schedule-form-container {
-            background-color: #ffffff;
-            border-radius: 15px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-            padding: 40px;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        .schedule-form-container h2 {
-            text-align: center;
-            margin-bottom: 30px;
-            color: #1e1e1e;
-        }
-        .form-group {
-            margin-bottom: 20px;
-        }
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: 600;
-        }
-        .form-group input[type="date"],
-        .form-group input[type="number"] {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-        .checkbox-group {
-            margin-bottom: 15px;
-        }
-        .checkbox-group label {
-            display: flex;
-            align-items: center;
-        }
-        .checkbox-group input[type="checkbox"] {
-            margin-right: 10px;
-        }
-        #totalPrice {
-            font-size: 1.2em;
-            font-weight: bold;
-            margin-top: 20px;
-            text-align: right;
-        }
-        .orange-button {
-            background-color: #f35525;
-            color: #fff;
-            border: none;
-            padding: 12px 30px;
-            font-size: 15px;
-            text-transform: uppercase;
-            cursor: pointer;
-            border-radius: 5px;
-            display: block;
-            width: 100%;
-            transition: all 0.3s;
-        }
-        .orange-button:hover {
-            background-color: #1e1e1e;
-        }
-    </style>
+    <link rel="stylesheet" href="assets/css/reservation.css">
 </head>
 
 <body>
@@ -162,35 +96,28 @@
             </div>
         </div>
     </div>
+
     <div class="schedule-content">
         <div class="container">
             <div class="schedule-form-container">
                 <h2>Schedule Your Visit</h2>
                 <form id="scheduleForm">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="startDate">Start Date</label>
-                                <input type="date" id="startDate" required>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="endDate">End Date</label>
-                                <input type="date" id="endDate" required>
-                            </div>
+                    <div class="form-group">
+                        <label for="customSlotSelect">Seleziona il periodo:</label>
+                        <div id="customSlotSelect" class="custom-select-wrapper">
+                            <!-- The custom dropdown will be inserted here by JavaScript -->
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="adults">Adults</label>
+                                <label for="adults">Adulti</label>
                                 <input type="number" id="adults" min="1" value="1" required>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="children05">Children (0-5)</label>
+                                <label for="children05">Bambini (0-5)</label>
                                 <input type="number" id="children05" min="0" value="0">
                             </div>
                         </div>
@@ -198,16 +125,13 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="children612">Children (6-12)</label>
+                                <label for="children612">Bambini (6-12)</label>
                                 <input type="number" id="children612" min="0" value="0">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <button type="button" id="disabledGuestsBtn" class="btn btn-secondary" style="margin-top: 28px; width: 100%;
-                                padding: 10px;
-                                border: 1px solid #ddd;
-                                border-radius: 5px;">Are there guests with disabilities?</button>
+                                <button type="button" id="disabledGuestsBtn" class="btn btn-secondary" style="margin-top: 28px; width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">Ci sono ospiti con disabilità?</button>
                             </div>
                         </div>
                     </div>
@@ -215,13 +139,13 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="disabledAdults">Disabled Adults</label>
+                                    <label for="disabledAdults">Adulti con disabilità</label>
                                     <input type="number" id="disabledAdults" min="0" value="0">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="disabledChildren">Disabled Children (6-12)</label>
+                                    <label for="disabledChildren">Bambini con disabilità (6-12)</label>
                                     <input type="number" id="disabledChildren" min="0" value="0">
                                 </div>
                             </div>
@@ -229,26 +153,26 @@
                     </div>
                     <div class="checkbox-group">
                         <label>
-                            <input type="checkbox" id="petService"> Pet Service (€30 for entire stay)
+                            <input type="checkbox" id="petService"> Servizio animali (€30 per l'intero soggiorno)
                         </label>
                     </div>
                     <div class="checkbox-group">
                         <label>
-                            <input type="checkbox" id="cribService"> Crib Service (€10 per night)
+                            <input type="checkbox" id="cribService"> Servizio culla (€10 per notte)
                         </label>
                     </div>
                     <div class="checkbox-group">
                         <label>
-                            <input type="checkbox" id="poolView"> Pool view (€10 per night)
+                            <input type="checkbox" id="poolView"> Vista piscina (€10 per notte)
                         </label>
                     </div>
                     <div class="checkbox-group">
                         <label>
-                            <input type="checkbox" id="loyaltyCustomer"> Loyalty Customer (10% discount on rate only)
+                            <input type="checkbox" id="loyaltyCustomer"> Cliente fedele (sconto del 10% solo sulla tariffa)
                         </label>
                     </div>
-                    <div id="totalPrice">Total Price: €0.00</div>
-                    <button type="submit" class="orange-button">Book Now</button>
+                    <div id="totalPrice">Prezzo totale: €0.00</div>
+                    <button type="submit" class="orange-button">Prenota ora</button>
                 </form>
             </div>
         </div>
@@ -271,327 +195,8 @@
     <script src="assets/js/isotope.min.js"></script>
     <script src="assets/js/owl-carousel.js"></script>
     <script src="assets/js/counter.js"></script>
-    <script src="assets/js/prices.js"></script>
     <script src="assets/js/custom.js"></script>
+    <script src="assets/js/prices.js"></script>
     
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const form = document.getElementById('scheduleForm');
-            const disabledGuestsBtn = document.getElementById('disabledGuestsBtn');
-            const disabledGuestsPanel = document.getElementById('disabledGuestsPanel');
-            
-            // Load prices
-            const prices = loadPrices();
-            
-            if (form) {
-                form.addEventListener('input', calculateTotalPrice);
-                form.addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    const bookingMessage = generateBookingMessage();
-                    displayBookingMessage(bookingMessage);
-                });
-            } else {
-                console.error("Schedule form not found");
-            }
-            
-            disabledGuestsBtn.addEventListener('click', function() {
-                disabledGuestsPanel.style.display = disabledGuestsPanel.style.display === 'none' ? 'block' : 'none';
-            });
-        
-            function calculateTotalPrice() {
-    const startDate = new Date(document.getElementById('startDate').value);
-    const endDate = new Date(document.getElementById('endDate').value);
-    const adults = parseInt(document.getElementById('adults').value) || 0;
-    const children05 = parseInt(document.getElementById('children05').value) || 0;
-    const children612 = parseInt(document.getElementById('children612').value) || 0;
-    let disabledAdults = parseInt(document.getElementById('disabledAdults').value) || 0;
-    let disabledChildren = parseInt(document.getElementById('disabledChildren').value) || 0;
-    const petService = document.getElementById('petService').checked;
-    const cribService = document.getElementById('cribService').checked;
-    const poolView = document.getElementById('poolView').checked;
-    const loyaltyCustomer = document.getElementById('loyaltyCustomer').checked;
-    
-    console.log('Input values:', { startDate, endDate, adults, children05, children612, disabledAdults, disabledChildren, petService, cribService, poolView, loyaltyCustomer });
-
-    // Validate disabled guests
-    if (disabledAdults > adults) {
-        disabledAdults = adults;
-        document.getElementById('disabledAdults').value = adults;
-        alert("The number of disabled adults has been adjusted to match the total number of adults.");
-    }
-    
-    if (disabledChildren > children612) {
-        disabledChildren = children612;
-        document.getElementById('disabledChildren').value = children612;
-        alert("The number of disabled children has been adjusted to match the total number of children (6-12).");
-    }
-
-    console.log('Adjusted disabled guests:', { disabledAdults, disabledChildren });
-
-    if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
-        document.getElementById('totalPrice').textContent = 'Total Price: €0.00';
-        return;
-    }
-    
-    let basePrice = 0;
-    let clubCardCost = 0;
-    let extrasCost = 0;
-    let currentDate = new Date(startDate);
-    const nights = Math.max(Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24)), 0);
-    
-    console.log('Number of nights:', nights);
-
-    while (currentDate <= endDate) {
-        const dateString = currentDate.toISOString().split('T')[0];
-        const dailyPrice = prices[dateString] || 0;
-        
-        console.log(`Calculating for date: ${dateString}, Daily price: €${dailyPrice}`);
-
-        let dailyBasePrice = 0;
-        
-        // Calculate price for adults
-        if (adults <= 2) {
-            dailyBasePrice += dailyPrice * adults;
-            console.log(`Adults price: €${dailyPrice} * ${adults} = €${dailyPrice * adults}`);
-        } else {
-            dailyBasePrice += dailyPrice * 2; // First two adults at full price
-            let discountedAdults = adults - 2;
-            let regularDiscountedAdults = discountedAdults - disabledAdults;
-            
-            console.log(`First two adults: €${dailyPrice} * 2 = €${dailyPrice * 2}`);
-            
-            // Regular discounted adults (20% discount)
-            dailyBasePrice += dailyPrice * 0.8 * regularDiscountedAdults;
-            console.log(`Regular discounted adults: €${dailyPrice} * 0.8 * ${regularDiscountedAdults} = €${dailyPrice * 0.8 * regularDiscountedAdults}`);
-            
-            // Disabled adults (20% + 10% discount)
-            dailyBasePrice += dailyPrice * 0.8 * 0.9 * disabledAdults;
-            console.log(`Disabled adults: €${dailyPrice} * 0.8 * 0.9 * ${disabledAdults} = €${dailyPrice * 0.8 * 0.9 * disabledAdults}`);
-        }
-        
-        // Regular children 6-12 (50% discount)
-        dailyBasePrice += (dailyPrice / 2) * (children612 - disabledChildren);
-        console.log(`Regular children 6-12: €${dailyPrice / 2} * ${children612 - disabledChildren} = €${(dailyPrice / 2) * (children612 - disabledChildren)}`);
-        
-        // Disabled children 6-12 (60% discount: 50% for age + 10% for disability)
-        dailyBasePrice += dailyPrice * 0.4 * disabledChildren;
-        console.log(`Disabled children 6-12: €${dailyPrice} * 0.4 * ${disabledChildren} = €${dailyPrice * 0.4 * disabledChildren}`);
-        
-        basePrice += dailyBasePrice;
-        console.log(`Daily base price: €${dailyBasePrice}`);
-        
-        // Calculate club card cost (not for disabled guests and children 0-5)
-        let dailyClubCardCost = 6 * (adults - disabledAdults + children612 - disabledChildren);
-        clubCardCost += dailyClubCardCost;
-        console.log(`Daily club card cost: €${dailyClubCardCost}`);
-        
-        currentDate.setDate(currentDate.getDate() + 1);
-    }
-    
-    console.log(`Total base price before loyalty discount: €${basePrice}`);
-    console.log(`Total club card cost: €${clubCardCost}`);
-
-    // Apply loyalty discount (10% off base price only)
-    if (loyaltyCustomer) {
-        let loyaltyDiscount = basePrice * 0.1;
-        basePrice *= 0.9;
-        console.log(`Loyalty discount applied: -€${loyaltyDiscount}`);
-    }
-    
-    console.log(`Final base price: €${basePrice}`);
-
-    // Add pool view cost
-    if (poolView) {
-        let poolViewCost = 10 * nights;
-        extrasCost += poolViewCost;
-        console.log(`Pool view cost: €${poolViewCost}`);
-    }
-    
-    // Add pet service cost
-    if (petService) {
-        extrasCost += 30;
-        console.log('Pet service cost: €30');
-    }
-    
-    // Add crib service cost
-    if (cribService) {
-        let cribCost = 10 * nights;
-        extrasCost += cribCost;
-        console.log(`Crib service cost: €${cribCost}`);
-    }
-    
-    console.log(`Total extras cost: €${extrasCost}`);
-
-    const total = basePrice + clubCardCost + extrasCost;
-    
-    console.log(`Final total price: €${total.toFixed(2)}`);
-
-    document.getElementById('totalPrice').textContent = `Total Price: €${total.toFixed(2)}`;
-}            // Make sure to call this function when the form inputs change
-            document.getElementById('scheduleForm').addEventListener('input', calculateTotalPrice);
-            document.getElementById('poolView').addEventListener('change', calculateTotalPrice);
-            document.getElementById('loyaltyCustomer').addEventListener('change', calculateTotalPrice);
-        
-            // These event listeners are no longer necessary as the validation is now in calculateTotalPrice
-            // but we'll keep them for immediate feedback to the user
-            document.getElementById('disabledAdults').addEventListener('change', calculateTotalPrice);
-            document.getElementById('disabledChildren').addEventListener('change', calculateTotalPrice);
-        });
-
-function generateBookingMessage() {
-    const startDate = new Date(document.getElementById('startDate').value);
-    const endDate = new Date(document.getElementById('endDate').value);
-    const adults = parseInt(document.getElementById('adults').value) || 0;
-    const children05 = parseInt(document.getElementById('children05').value) || 0;
-    const children612 = parseInt(document.getElementById('children612').value) || 0;
-    const disabledAdults = parseInt(document.getElementById('disabledAdults').value) || 0;
-    const disabledChildren = parseInt(document.getElementById('disabledChildren').value) || 0;
-    const petService = document.getElementById('petService').checked;
-    const cribService = document.getElementById('cribService').checked;
-    const poolView = document.getElementById('poolView').checked;
-    const loyaltyCustomer = document.getElementById('loyaltyCustomer').checked;
-
-    const nights = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24));
-    const totalPrice = parseFloat(document.getElementById('totalPrice').textContent.split('€')[1]);
-    const deposit = totalPrice * 0.2;
-    const remainingPayment = totalPrice - deposit;
-
-    // Format dates as dd/mm/yyyy
-    const formatDate = (date) => {
-        return `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getFullYear()}`;
-    };
-
-    let message = `PREVENTIVO PER IL GRAND HOTEL SELINUNTE.\n\n`;
-
-    message += `🗓️ PERIODO DEL SOGGIORNO:\n`;
-    message += `Dal ${formatDate(startDate)} al ${formatDate(endDate)}\n`;
-    message += `Numero di notti: ${nights}\n\n`;
-
-    message += `🗓️ECCO LA NOSTRA MIGLIORE OFFERTA\n`;
-    message += `IL TOTALE IN PENSIONE COMPLETA CON TESSERE CLUB GIÀ INCLUSE NEL PREZZO E DI: ${totalPrice.toFixed(2)} EURO\n\n`;
-
-    message += `TIPOLOGIA CAMERA:\n`;
-    message += `${adults} AD ${children612} CHD ${children05} INF\n`;
-    if (disabledAdults > 0 || disabledChildren > 0) {
-        message += `di cui ${disabledAdults} adulti disabili e ${disabledChildren} bambini disabili\n`;
-    }
-    const clubCardCost = 6 * (adults - disabledAdults + children612 - disabledChildren) * nights;
-    message += `COSTO TESSERE CLUB: ${clubCardCost.toFixed(2)} (già incluso nel prezzo)\n\n`;
-
-    message += `OPZIONI EXTRA:\n`;
-    message += `culla ${cribService ? '✅' : '❌'}\n`;
-    message += `supplemento pet service ${petService ? '✅' : '❌'}\n`;
-    message += `vista piscina ${poolView ? '✅' : '❌'}\n`;
-    message += `⚠️ TUTTI I SERVIZI SOPRA SE RICHIESTI SARANNO GIÀ INCLUSI NEL PREZZO TOTALE.\n\n`;
-
-    message += `🕞CHECK IN 15:30 / 🕙CHECK OUT 10:00\n\n`;
-
-    message += `✅ PER CONFERMARE QUESTA PRENOTAZIONE CI MANDI IL SUO NOMINATIVO. ⬅️⬅️⬅️\n\n`;
-
-    message += `⚠️'NOTA BENE': IL PREZZO INDICATO SOPRA E IL TOTALE COMPLESSIVO IN PENSIONE COMPLETA E CON IL COSTO DELLE TESSERE CLUB GIÀ INSERITE PER TUTTI I COMPONENTI DELLA/E CAMERA/E, QUINDI CON NIENT'ALTRO DA AGGIUNGERE (ESCLUSA TASSA DI SOGGIORNO DA PAGARE IN LOCO).\n\n`;
-
-    message += `INFORMAZIONI GENERALI ⬇️\n\n`;
-
-    message += `I bambini da 0 a 5 anni gratuiti nel letto con i genitori.\n`;
-    message += `Da 6 ai 12 anni sconto del 50% in terzo e quarto letto.\n`;
-    message += `Dai 13 anni in su sconto del 20% in terzo e quarto letto.\n`;
-    message += `Supplemento Camera con vista piscina € 10,00 a notte (da richiedere al momento della conferma).\n`;
-    message += `Supplemento Culla: € 10,00 a notte\n`;
-    message += `Supplemento Cane: € 30,00 (in totale non a notte)\n`;
-    message += `Sconto del 10% per ospiti disabili\n`;
-    if (loyaltyCustomer) {
-        message += `Sconto fedeltà del 10% applicato alla tariffa base\n`;
-    }
-    message += `\n`;
-
-    message += `La tessera club ha un costo di € 6,00 a notte e a persona ed è gratuita fino ai 5 anni. Essa include tutti i nostri servizi: piscina con angolo idromassaggio e isoletta per bambini (2 sdraio per camera); spiaggia attrezzata all'interno della riserva naturale del Belice (1 ombrellone e 2 sdraio per camera fino ad esaurimento); navetta da e per la spiaggia; animazione diurna e serale per adulti e bambini con spettacoli di cabaret, giochi, tornei e serate a tema; area giochi per bambini; campo da tennis e calcetto; ping pong; Wi-Fi gratuito in tutta la struttura.\n\n`;
-
-    message += `Possibilità di scegliere la formula SOFT ALL INCLUSIVE\n`;
-    message += `€5,00 a notte a persona (a partire dai 6 anni)\n`;
-    message += `Il pacchetto include\n`;
-    message += `- Analcolici al Bar Piscina\n`;
-    message += `- crema caffe\n`;
-    message += `- Caffetteria Bar Piscina\n`;
-    message += `* L'offerta è valida solo se viene attivata da tutti i componenti della camera.\n\n`;
-
-    message += `La conferma della prenotazione avverrà al ricevimento di un acconto del 20% entro due giorni lavorativi tramite bonifico bancario e saldo in Hotel.\n\n`;
-
-    message += `*Tassa di soggiorno (€1,00 per persona e al giorno per un massimo di 7 giorni – bambini fino a 12 anni non compiuti esenti), se dovuta, secondo regolamento comunale consultabile in reception, da pagare in loco.\n\n`;
-
-    message += `Rimaniamo a vostra disposizione per ulteriori informazioni.\n\n`;
-
-    message += `MODALITÀ DI PAGAMENTO:\n`;
-    message += `- Acconto del 20%: €${deposit.toFixed(2)} da versare tramite bonifico bancario per confermare la prenotazione.\n`;
-    message += `- Saldo rimanente: €${remainingPayment.toFixed(2)} da pagare all'arrivo in struttura.\n\n`;
-    message += `Per confermare la prenotazione, si prega di effettuare il bonifico dell'acconto entro 2 giorni lavorativi.\n\n`;
-    
-    message += `⚠️ IMPORTANTE: La prenotazione sarà confermata solo dopo la ricezione dell'acconto. In caso di mancato pagamento entro i termini, la prenotazione potrebbe essere cancellata.\n\n`;
-
-    return message;
-}
-
-function displayBookingMessage(message) {
-    // Create a new div for the booking message
-    const messageDiv = document.createElement('div');
-    messageDiv.id = 'bookingMessageDiv';
-    messageDiv.style.marginTop = '20px';
-    messageDiv.style.padding = '20px';
-    messageDiv.style.backgroundColor = '#f0f0f0';
-    messageDiv.style.border = '1px solid #ddd';
-    messageDiv.style.borderRadius = '5px';
-
-    // Add the message text
-    const messageText = document.createElement('pre');
-    messageText.textContent = message;
-    messageText.style.whiteSpace = 'pre-wrap';
-    messageText.style.wordWrap = 'break-word';
-    messageDiv.appendChild(messageText);
-
-    // Create a container for buttons
-    const buttonContainer = document.createElement('div');
-    buttonContainer.style.display = 'flex';
-    buttonContainer.style.justifyContent = 'space-between';
-    buttonContainer.style.marginTop = '10px';
-
-    // Add a copy button
-    const copyButton = document.createElement('button');
-    copyButton.textContent = 'Copia messaggio';
-    copyButton.className = 'orange-button';
-    copyButton.style.flex = '1';
-    copyButton.style.marginRight = '10px';
-    copyButton.addEventListener('click', function() {
-        navigator.clipboard.writeText(message).then(function() {
-            alert('Messaggio copiato negli appunti!');
-        }, function(err) {
-            console.error('Impossibile copiare il testo: ', err);
-        });
-    });
-
-    // Add a WhatsApp forward button
-    const whatsappButton = document.createElement('button');
-    whatsappButton.textContent = 'Invia su WhatsApp';
-    whatsappButton.className = 'orange-button';
-    whatsappButton.style.flex = '1';
-    whatsappButton.addEventListener('click', function() {
-        const encodedMessage = encodeURIComponent(message);
-        const whatsappUrl = `https://web.whatsapp.com/send?text=${encodedMessage}`;
-        window.open(whatsappUrl, '_blank');
-    });
-
-    // Add buttons to the container
-    buttonContainer.appendChild(copyButton);
-    buttonContainer.appendChild(whatsappButton);
-
-    // Add the button container to the message div
-    messageDiv.appendChild(buttonContainer);
-
-    // Add the message div to the page
-    const form = document.getElementById('scheduleForm');
-    form.parentNode.insertBefore(messageDiv, form.nextSibling);
-
-    // Scroll to the message
-    messageDiv.scrollIntoView({ behavior: 'smooth' });
-}
-
-
-        </script>
+</body>
+</html>

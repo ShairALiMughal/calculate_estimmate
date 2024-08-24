@@ -1,0 +1,171 @@
+.schedule-content {
+    background-color: #f7f7f7;
+    padding: 50px 0;
+}
+.schedule-form-container {
+    background-color: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+.schedule-form-container h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #1e1e1e;
+}
+.form-group {
+    margin-bottom: 20px;
+}
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+.form-group input[type="date"],
+.form-group input[type="number"],
+.form-group select,
+.form-group input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+.checkbox-group {
+    margin-bottom: 15px;
+}
+.checkbox-group label {
+    display: flex;
+    align-items: center;
+}
+.checkbox-group input[type="checkbox"] {
+    margin-right: 10px;
+}
+#totalPrice {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-top: 20px;
+    text-align: right;
+}
+.orange-button {
+    background-color: #f35525;
+    color: #fff;
+    border: none;
+    padding: 12px 30px;
+    font-size: 15px;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 5px;
+    display: block;
+    width: 100%;
+    transition: all 0.3s;
+}
+.orange-button:hover {
+    background-color: #1e1e1e;
+}
+.custom-select-wrapper {
+    position: relative;
+    user-select: none;
+    width: 100%;
+}
+.custom-select {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+.custom-select__trigger {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    font-size: 16px;
+    font-weight: 300;
+    color: #3b3b3b;
+    height: 40px;
+    line-height: 40px;
+    background: #ffffff;
+    cursor: pointer;
+}
+.custom-options {
+    position: absolute;
+    display: block;
+    top: 100%;
+    left: 0;
+    right: 0;
+    border: 1px solid #ddd;
+    border-top: 0;
+    background: #fff;
+    transition: all 0.5s;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    z-index: 2;
+    max-height: 300px;
+    overflow-y: auto;
+}
+.custom-select.open .custom-options {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: all;
+}
+.custom-option {
+    position: relative;
+    display: block;
+    padding: 10px;
+    font-size: 14px;
+    font-weight: 300;
+    color: #3b3b3b;
+    line-height: 20px;
+    cursor: pointer;
+    transition: all 0.5s;
+}
+.custom-option:hover {
+    cursor: pointer;
+    background-color: #b2b2b2;
+}
+.custom-option.selected {
+    color: #ffffff;
+    background-color: #305c91;
+}
+.arrow {
+    position: relative;
+    height: 10px;
+    width: 10px;
+}
+.arrow::before, .arrow::after {
+    content: "";
+    position: absolute;
+    bottom: 0px;
+    width: 0.15rem;
+    height: 100%;
+    transition: all 0.5s;
+}
+.arrow::before {
+    left: -5px;
+    transform: rotate(-45deg);
+    background-color: #394a6d;
+}
+.arrow::after {
+    left: 5px;
+    transform: rotate(45deg);
+    background-color: #394a6d;
+}
+.open .arrow::before {
+    left: -5px;
+    transform: rotate(45deg);
+}
+.open .arrow::after {
+    left: 5px;
+    transform: rotate(-45deg);
+}
+.custom-select__search {
+    width: calc(100% - 20px);
+    margin: 10px;
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+}
