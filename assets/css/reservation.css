@@ -64,11 +64,13 @@
 .orange-button:hover {
     background-color: #1e1e1e;
 }
+
 .custom-select-wrapper {
     position: relative;
     user-select: none;
     width: 100%;
 }
+
 .custom-select {
     position: relative;
     display: flex;
@@ -76,12 +78,13 @@
     border: 1px solid #ddd;
     border-radius: 5px;
 }
+
 .custom-select__trigger {
     position: relative;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 10px;
+    padding: 0 22px;
     font-size: 16px;
     font-weight: 300;
     color: #3b3b3b;
@@ -89,7 +92,9 @@
     line-height: 40px;
     background: #ffffff;
     cursor: pointer;
+    width: 100%;
 }
+
 .custom-options {
     position: absolute;
     display: block;
@@ -106,36 +111,91 @@
     z-index: 2;
     max-height: 300px;
     overflow-y: auto;
+    overflow-x: hidden; /* Hide horizontal scrollbar */
 }
+
 .custom-select.open .custom-options {
     opacity: 1;
     visibility: visible;
     pointer-events: all;
 }
+
 .custom-option {
     position: relative;
     display: block;
-    padding: 10px;
-    font-size: 14px;
+    padding: 10px 22px;
+    font-size: 16px;
     font-weight: 300;
     color: #3b3b3b;
-    line-height: 20px;
     cursor: pointer;
     transition: all 0.5s;
+    white-space: nowrap; /* Prevent text wrapping */
+    overflow: hidden; /* Hide overflowing text */
+    text-overflow: ellipsis; /* Show ellipsis for overflowing text */
 }
+
 .custom-option:hover {
-    cursor: pointer;
-    background-color: #b2b2b2;
+    background-color: #f0f0f0;
 }
-.custom-option.selected {
-    color: #ffffff;
-    background-color: #305c91;
-}
-.arrow {
-    position: relative;
-    height: 10px;
+
+/* Scrollbar styles */
+.custom-options::-webkit-scrollbar {
     width: 10px;
 }
+
+.custom-options::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.custom-options::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 5px;
+}
+
+.custom-options::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* For Firefox */
+.custom-options {
+    scrollbar-width: thin;
+    scrollbar-color: #888 #f1f1f1;
+}
+
+.custom-option:hover {
+    background-color: #f0f0f0;
+}
+
+/* Scrollbar styles */
+.custom-options::-webkit-scrollbar {
+    width: 10px;
+}
+
+.custom-options::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.custom-options::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 5px;
+}
+
+.custom-options::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* For Firefox */
+.custom-options {
+    scrollbar-width: thin;
+    scrollbar-color: #888 #f1f1f1;
+}
+
+.arrow {
+    position: relative;
+    height: 15px;
+    width: 15px;
+}
+
 .arrow::before, .arrow::after {
     content: "";
     position: absolute;
@@ -144,27 +204,32 @@
     height: 100%;
     transition: all 0.5s;
 }
+
 .arrow::before {
     left: -5px;
-    transform: rotate(-45deg);
+    transform: rotate(45deg);
     background-color: #394a6d;
 }
+
 .arrow::after {
     left: 5px;
-    transform: rotate(45deg);
+    transform: rotate(-45deg);
     background-color: #394a6d;
 }
+
 .open .arrow::before {
     left: -5px;
-    transform: rotate(45deg);
-}
-.open .arrow::after {
-    left: 5px;
     transform: rotate(-45deg);
 }
+
+.open .arrow::after {
+    left: 5px;
+    transform: rotate(45deg);
+}
+
 .custom-select__search {
-    width: calc(100% - 20px);
-    margin: 10px;
+    width: calc(100% - 44px);
+    margin: 10px 22px;
     padding: 5px;
     border: 1px solid #ddd;
     border-radius: 3px;

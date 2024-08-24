@@ -52,7 +52,7 @@ const slots = [
   { start: "2024-09-22", end: "2024-09-29", nights: 7, price: 409, description: "Dal 22 al 29 settembre 409€ (7 notti)" },
   { start: "2024-09-22", end: "2024-09-26", nights: 4, price: 240, description: "Dal 22 al 26 settembre 240€ (4 notti)" },
   { start: "2024-09-26", end: "2024-09-29", nights: 3, price: 190, description: "Dal 26 al 29 settembre 190€ (3 notti)" },
-  { start: "2024-06-07", end: "2024-06-09", nights: 2, price: 150, description: "Dal 7 al 8 giugno 150€ a persona 2 notti" },
+  { start: "2024-06-07", end: "2024-06-09", nights: 2, price: 150, description: "Dal 7 al 9 giugno 150€ a persona 2 notti" },
   { start: "2024-06-14", end: "2024-06-16", nights: 2, price: 150, description: "Dal 14 al 16 giugno 150€ a persona 2 notti" },
   { start: "2024-07-05", end: "2024-07-07", nights: 2, price: 170, description: "Dal 5 al 7 luglio 170€ a persona 2 notti" },
   { start: "2024-07-12", end: "2024-07-14", nights: 2, price: 170, description: "Dal 12 al 14 170€ a persona 2 notti" },
@@ -78,79 +78,82 @@ function loadSlots() {
 saveSlots();
 
 document.addEventListener('DOMContentLoaded', function() {
-    const customSlotSelect = document.getElementById('customSlotSelect');
-    
-    // Create the custom select structure
-    customSlotSelect.innerHTML = `
-        <div class="custom-select">
-            <div class="custom-select__trigger"><span>Seleziona un periodo</span><div class="arrow"></div></div>
-            <div class="custom-options">
-                <input type="text" class="custom-select__search" placeholder="Cerca periodo...">
-                <!-- Options will be inserted here -->
-            </div>
-        </div>
-    `;
+  const customSlotSelect = document.getElementById('customSlotSelect');
+  
+  // Create the custom select structure
+  customSlotSelect.innerHTML = `
+      <div class="custom-select">
+          <div class="custom-select__trigger"><span>Seleziona un periodo</span><div class="arrow"></div></div>
+          <div class="custom-options">
+              <input type="text" class="custom-select__search" placeholder="Cerca periodo...">
+              <!-- Options will be inserted here -->
+          </div>
+      </div>
+  `;
 
-    const customSelect = customSlotSelect.querySelector('.custom-select');
-    const optionsContainer = customSlotSelect.querySelector('.custom-options');
-    const searchInput = customSlotSelect.querySelector('.custom-select__search');
-    const triggerSpan = customSlotSelect.querySelector('.custom-select__trigger span');
+  const customSelect = customSlotSelect.querySelector('.custom-select');
+  const optionsContainer = customSlotSelect.querySelector('.custom-options');
+  const searchInput = customSlotSelect.querySelector('.custom-select__search');
+  const triggerSpan = customSlotSelect.querySelector('.custom-select__trigger span');
 
-    // Populate the custom dropdown
-    slots.forEach(slot => {
-        const option = document.createElement('span');
-        option.className = 'custom-option';
-        option.setAttribute('data-value', JSON.stringify(slot));
-        option.textContent = slot.description;
-        
-        // Apply color based on number of nights
-        if (slot.nights === 2) {
-            option.style.backgroundColor = '#90EE90'; // Light green
-        } else if (slot.nights === 3) {
-            option.style.backgroundColor = '#FFFFE0'; // Light yellow
-        } else if (slot.nights === 4) {
-            option.style.backgroundColor = '#FFA500'; // Orange
-        } else if (slot.nights === 7) {
-            option.style.backgroundColor = '#FFB6C1'; // Light red
-        }
-        
-        optionsContainer.appendChild(option);
-    });
+  // Populate the custom dropdown
+  slots.forEach(slot => {
+      const option = document.createElement('span');
+      option.className = 'custom-option';
+      option.setAttribute('data-value', JSON.stringify(slot));
+      option.textContent = slot.description;
+      
+      // Apply color based on number of nights
+      if (slot.nights === 2) {
+          option.style.backgroundColor = '#90EE90'; // Light green
+      } else if (slot.nights === 3) {
+          option.style.backgroundColor = '#FFFFE0'; // Light yellow
+      } else if (slot.nights === 4) {
+          option.style.backgroundColor = '#FFA500'; // Orange
+      } else if (slot.nights === 7) {
+          option.style.backgroundColor = '#FFB6C1'; // Light red
+      }
+      
+      optionsContainer.appendChild(option);
+  });
 
-    // Toggle custom select
-    customSelect.addEventListener('click', function(e) {
-        if (!e.target.classList.contains('custom-select__search')) {
-            this.classList.toggle('open');
-        }
-    });
+  // Toggle custom select
+  customSelect.addEventListener('click', function(e) {
+    if (!e.target.classList.contains('custom-select__search')) {
+        this.classList.toggle('open');
+    }
+    e.stopPropagation();
+});
 
-    // Search functionality
-    searchInput.addEventListener('input', function() {
-        const searchTerm = this.value.toLowerCase();
-        const options = optionsContainer.querySelectorAll('.custom-option');
-        options.forEach(option => {
-            const text = option.textContent.toLowerCase();
-            option.style.display = text.includes(searchTerm) ? 'block' : 'none';
-        });
-    });
+searchInput.addEventListener('click', function(e) {
+  e.stopPropagation();
+});
+ // Search functionality
+searchInput.addEventListener('input', function(e) {
+  e.stopPropagation();
+  const searchTerm = this.value.toLowerCase();
+  const options = optionsContainer.querySelectorAll('.custom-option');
+  options.forEach(option => {
+      const text = option.textContent.toLowerCase();
+      option.style.display = text.includes(searchTerm) ? 'block' : 'none';
+  });
+});
 
-    // Select option
-    optionsContainer.addEventListener('click', function(e) {
-      if (e.target.classList.contains('custom-option')) {
+   // Select option
+   optionsContainer.addEventListener('click', function(e) {
+    if (e.target.classList.contains('custom-option')) {
         triggerSpan.textContent = e.target.textContent;
         customSelect.setAttribute('data-value', e.target.getAttribute('data-value'));
-        customSelect.classList.remove('open'); // This line hides the dropdown
+        customSelect.classList.remove('open');
         calculateTotalPrice();
-        }
-    });
+    }
+    e.stopPropagation();
+});
 
-    // Close custom select when clicking outside
-    document.addEventListener('click', function(e) {
-        const isClickInside = customSelect.contains(e.target);
-        if (!isClickInside) {
-            customSelect.classList.remove('open');
-        }
-    });
+  // Close custom select when clicking outside
+  document.addEventListener('click', function() {
+      customSelect.classList.remove('open');
+  });
 
   const disabledGuestsBtn = document.getElementById('disabledGuestsBtn');
   const disabledGuestsPanel = document.getElementById('disabledGuestsPanel');
@@ -162,18 +165,6 @@ document.addEventListener('DOMContentLoaded', function() {
           disabledGuestsPanel.style.display = 'none';
       }
   });
-
-  // Add search functionality
-  slotSearch.addEventListener('input', function() {
-      const searchTerm = this.value.toLowerCase();
-      Array.from(slotSelect.options).forEach(option => {
-          const text = option.textContent.toLowerCase();
-          option.style.display = text.includes(searchTerm) ? '' : 'none';
-      });
-  });
-
-  // Update calculation when slot is selected
-  slotSelect.addEventListener('change', calculateTotalPrice);
 
   // Other event listeners
   document.getElementById('scheduleForm').addEventListener('input', calculateTotalPrice);
@@ -349,66 +340,117 @@ return message;
 }
 
 function displayBookingMessage(message) {
-// Create a new div for the booking message
-const messageDiv = document.createElement('div');
-messageDiv.id = 'bookingMessageDiv';
-messageDiv.style.marginTop = '20px';
-messageDiv.style.padding = '20px';
-messageDiv.style.backgroundColor = '#f0f0f0';
-messageDiv.style.border = '1px solid #ddd';
-messageDiv.style.borderRadius = '5px';
+  // Remove existing message box if present
+  const existingMessageDiv = document.getElementById('bookingMessageDiv');
+  if (existingMessageDiv) {
+      existingMessageDiv.remove();
+  }
 
-// Add the message text
-const messageText = document.createElement('pre');
-messageText.textContent = message;
-messageText.style.whiteSpace = 'pre-wrap';
-messageText.style.wordWrap = 'break-word';
-messageDiv.appendChild(messageText);
+  // Create a new div for the booking message
+  const messageDiv = document.createElement('div');
+  messageDiv.id = 'bookingMessageDiv';
+  messageDiv.style.marginTop = '20px';
+  messageDiv.style.padding = '20px';
+  messageDiv.style.backgroundColor = '#f0f0f0';
+  messageDiv.style.border = '1px solid #ddd';
+  messageDiv.style.borderRadius = '5px';
 
-// Create a container for buttons
-const buttonContainer = document.createElement('div');
-buttonContainer.style.display = 'flex';
-buttonContainer.style.justifyContent = 'space-between';
-buttonContainer.style.marginTop = '10px';
+  // Create a container for buttons
+  const buttonContainer = document.createElement('div');
+  buttonContainer.style.display = 'flex';
+  buttonContainer.style.justifyContent = 'space-between';
+  buttonContainer.style.marginBottom = '10px';
 
-// Add a copy button
-const copyButton = document.createElement('button');
-copyButton.textContent = 'Copia messaggio';
-copyButton.className = 'orange-button';
-copyButton.style.flex = '1';
-copyButton.style.marginRight = '10px';
-copyButton.addEventListener('click', function() {
-    navigator.clipboard.writeText(message).then(function() {
-        alert('Messaggio copiato negli appunti!');
-    }, function(err) {
-        console.error('Impossibile copiare il testo: ', err);
-    });
-});
+  // Add a copy button
+  const copyButton = document.createElement('button');
+  copyButton.textContent = 'Copia messaggio';
+  copyButton.className = 'orange-button';
+  copyButton.style.flex = '1';
+  copyButton.style.marginRight = '5px';
+  copyButton.addEventListener('click', function() {
+      navigator.clipboard.writeText(message).then(function() {
+          alert('Messaggio copiato negli appunti!');
+      }, function(err) {
+          console.error('Impossibile copiare il testo: ', err);
+      });
+  });
 
-// Add a WhatsApp forward button
-const whatsappButton = document.createElement('button');
-whatsappButton.textContent = 'Invia su WhatsApp';
-whatsappButton.className = 'orange-button';
-whatsappButton.style.flex = '1';
-whatsappButton.addEventListener('click', function() {
-    const encodedMessage = encodeURIComponent(message);
-    const whatsappUrl = `https://web.whatsapp.com/send?text=${encodedMessage}`;
-    window.open(whatsappUrl, '_blank');
-});
+  // Add a close button
+  const closeButton = document.createElement('button');
+  closeButton.textContent = 'Chiudi';
+  closeButton.className = 'orange-button';
+  closeButton.style.flex = '1';
+  closeButton.style.marginLeft = '5px';
+  closeButton.style.marginRight = '5px';
+  closeButton.addEventListener('click', function() {
+      messageDiv.style.display = 'none';
+      resetForm();
+  });
 
-// Add buttons to the container
-buttonContainer.appendChild(copyButton);
-buttonContainer.appendChild(whatsappButton);
+  // Add a WhatsApp forward button
+  const whatsappButton = document.createElement('button');
+  whatsappButton.textContent = 'Invia su WhatsApp';
+  whatsappButton.className = 'orange-button';
+  whatsappButton.style.flex = '1';
+  whatsappButton.style.marginLeft = '5px';
+  whatsappButton.addEventListener('click', function() {
+      const encodedMessage = encodeURIComponent(message);
+      const whatsappUrl = `https://web.whatsapp.com/send?text=${encodedMessage}`;
+      window.open(whatsappUrl, '_blank');
+  });
 
-// Add the button container to the message div
-messageDiv.appendChild(buttonContainer);
+  // Add buttons to the container
+  buttonContainer.appendChild(copyButton);
+  buttonContainer.appendChild(closeButton);
+  buttonContainer.appendChild(whatsappButton);
 
-// Add the message div to the page
-const form = document.getElementById('scheduleForm');
-form.parentNode.insertBefore(messageDiv, form.nextSibling);
+  // Add the button container to the message div
+  messageDiv.appendChild(buttonContainer);
 
-// Scroll to the message
-messageDiv.scrollIntoView({ behavior: 'smooth' });
+  // Add the message text
+  const messageText = document.createElement('pre');
+  messageText.textContent = message;
+  messageText.style.whiteSpace = 'pre-wrap';
+  messageText.style.wordWrap = 'break-word';
+  messageDiv.appendChild(messageText);
+
+  // Add the message div to the page
+  const form = document.getElementById('scheduleForm');
+  form.parentNode.insertBefore(messageDiv, form.nextSibling);
+
+  // Scroll to the message
+  messageDiv.scrollIntoView({ behavior: 'smooth' });
+}
+
+// Function to reset the form
+function resetForm() {
+  // Reset custom select
+  const customSelect = document.querySelector('.custom-select');
+  const triggerSpan = customSelect.querySelector('.custom-select__trigger span');
+  triggerSpan.textContent = 'Seleziona un periodo';
+  customSelect.removeAttribute('data-value');
+
+  // Reset number inputs
+  document.getElementById('adults').value = '1';
+  document.getElementById('children05').value = '0';
+  document.getElementById('children612').value = '0';
+  document.getElementById('disabledAdults').value = '0';
+  document.getElementById('disabledChildren').value = '0';
+
+  // Reset checkboxes
+  document.getElementById('petService').checked = false;
+  document.getElementById('cribService').checked = false;
+  document.getElementById('poolView').checked = false;
+  document.getElementById('loyaltyCustomer').checked = false;
+
+  // Hide disabled guests panel
+  document.getElementById('disabledGuestsPanel').style.display = 'none';
+
+  // Reset total price
+  document.getElementById('totalPrice').textContent = 'Prezzo totale: €0.00';
+
+  // Recalculate total price (in case you have any dependencies)
+  calculateTotalPrice();
 }
 
 // Event listener for form submission
