@@ -131,22 +131,22 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <button type="button" id="disabledGuestsBtn" class="btn btn-secondary" style="margin-top: 28px; width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">Ci sono ospiti con disabilità?</button>
+                                <button type="button" id="discountBtn" class="btn btn-secondary" style="margin-top: 28px; width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">Applica Sconti</button>
                             </div>
                         </div>
                     </div>
-                    <div id="disabledGuestsPanel" style="display: none;">
+                    <div id="discountPanel" style="display: none;">
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="disabledAdults">Adulti con disabilità</label>
-                                    <input type="number" id="disabledAdults" min="0" value="0">
+                                    <label for="customDiscount">Sconto Personalizzato (€)</label>
+                                    <input type="number" id="customDiscount" min="0" value="0" step="0.01">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="disabledChildren">Bambini con disabilità (6-12)</label>
-                                    <input type="number" id="disabledChildren" min="0" value="0">
+                                    <label for="percentageDiscount">Sconto Percentuale (%)</label>
+                                    <input type="number" id="percentageDiscount" min="0" max="100" value="0" step="0.1">
                                 </div>
                             </div>
                         </div>
@@ -171,13 +171,17 @@
                             <input type="checkbox" id="loyaltyCustomer"> Cliente fedele (sconto del 10% solo sulla tariffa)
                         </label>
                     </div>
+                    <div class="checkbox-group">
+                        <label>
+                            <input type="checkbox" id="removeClubCard"> Rimuovi costo tessera club
+                        </label>
+                    </div>
                     <div id="totalPrice">Prezzo totale: €0.00</div>
                     <button type="submit" class="orange-button">Prenota ora</button>
                 </form>
             </div>
         </div>
-    </div>
-    
+    </div> 
     <footer>
         <div class="container">
             <div class="col-lg-8">

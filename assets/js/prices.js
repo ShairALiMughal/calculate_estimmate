@@ -117,347 +117,421 @@ document.addEventListener('DOMContentLoaded', function() {
       optionsContainer.appendChild(option);
   });
 
+  // Select option
+  optionsContainer.addEventListener('click', function(e) {
+    if (e.target.classList.contains('custom-option')) {
+        triggerSpan.textContent = e.target.textContent;
+        customSelect.setAttribute('data-value', e.target.getAttribute('data-value'));
+        customSelect.classList.remove('open');
+        calculateTotalPrice();
+
+        // Explicitly close the dropdown
+        customSelect.classList.remove('open');
+        
+        // Prevent the click event from bubbling up
+        e.stopPropagation();
+    }
+  });
+
+  // Close custom select when clicking outside
+  document.addEventListener('click', function(e) {
+    if (!customSelect.contains(e.target)) {
+      customSelect.classList.remove('open');
+    }
+  });
   // Toggle custom select
   customSelect.addEventListener('click', function(e) {
     if (!e.target.classList.contains('custom-select__search')) {
         this.classList.toggle('open');
     }
-    e.stopPropagation();
-});
-
-searchInput.addEventListener('click', function(e) {
-  e.stopPropagation();
-});
- // Search functionality
-searchInput.addEventListener('input', function(e) {
-  e.stopPropagation();
-  const searchTerm = this.value.toLowerCase();
-  const options = optionsContainer.querySelectorAll('.custom-option');
-  options.forEach(option => {
-      const text = option.textContent.toLowerCase();
-      option.style.display = text.includes(searchTerm) ? 'block' : 'none';
   });
-});
 
-   // Select option
-   optionsContainer.addEventListener('click', function(e) {
+  searchInput.addEventListener('click', function(e) {
+    e.stopPropagation();
+  });
+
+  // Search functionality
+  searchInput.addEventListener('input', function(e) {
+    const searchTerm = this.value.toLowerCase();
+    const options = optionsContainer.querySelectorAll('.custom-option');
+    options.forEach(option => {
+        const text = option.textContent.toLowerCase();
+        option.style.display = text.includes(searchTerm) ? 'block' : 'none';
+    });
+  });
+
+  // Select option
+  optionsContainer.addEventListener('click', function(e) {
     if (e.target.classList.contains('custom-option')) {
         triggerSpan.textContent = e.target.textContent;
         customSelect.setAttribute('data-value', e.target.getAttribute('data-value'));
         customSelect.classList.remove('open');
         calculateTotalPrice();
     }
-    e.stopPropagation();
-});
+  });
 
   // Close custom select when clicking outside
-  document.addEventListener('click', function() {
+  document.addEventListener('click', function(e) {
+    if (!customSelect.contains(e.target)) {
       customSelect.classList.remove('open');
+    }
   });
 
-  const disabledGuestsBtn = document.getElementById('disabledGuestsBtn');
-  const disabledGuestsPanel = document.getElementById('disabledGuestsPanel');
+  const discountBtn = document.getElementById('discountBtn');
+  const discountPanel = document.getElementById('discountPanel');
 
-  disabledGuestsBtn.addEventListener('click', function() {
-      if (disabledGuestsPanel.style.display === 'none' || disabledGuestsPanel.style.display === '') {
-          disabledGuestsPanel.style.display = 'block';
-      } else {
-          disabledGuestsPanel.style.display = 'none';
-      }
+  discountBtn.addEventListener('click', function() {
+    discountPanel.style.display = discountPanel.style.display === 'none' ? 'block' : 'none';
   });
 
-  // Other event listeners
-  document.getElementById('scheduleForm').addEventListener('input', calculateTotalPrice);
-  document.getElementById('poolView').addEventListener('change', calculateTotalPrice);
-  document.getElementById('loyaltyCustomer').addEventListener('change', calculateTotalPrice);
-  document.getElementById('disabledAdults').addEventListener('change', calculateTotalPrice);
-  document.getElementById('disabledChildren').addEventListener('change', calculateTotalPrice);
+  // Add event listeners to all form inputs
+  const form = document.getElementById('scheduleForm');
+  form.querySelectorAll('input, select').forEach(input => {
+    input.addEventListener('change', calculateTotalPrice);
+    input.addEventListener('input', calculateTotalPrice);
+  });
+
+  // Initial calculation
+  calculateTotalPrice();
 });
 
 function calculateTotalPrice() {
-  const customSelect = document.querySelector('.custom-select');
+    const customSelect = document.querySelector('.custom-select');
     const selectedSlot = JSON.parse(customSelect.getAttribute('data-value') || '{}');
-  if (!selectedSlot.price) {
-      document.getElementById('totalPrice').textContent = 'Prezzo totale: €0.00';
-      return;
-  }
+    if (!selectedSlot.price) {
+        document.getElementById('totalPrice').textContent = 'Prezzo totale: €0.00';
+        return;
+    }
 
-  const adults = parseInt(document.getElementById('adults').value) || 0;
-  const children05 = parseInt(document.getElementById('children05').value) || 0;
-  const children612 = parseInt(document.getElementById('children612').value) || 0;
-  let disabledAdults = parseInt(document.getElementById('disabledAdults').value) || 0;
-  let disabledChildren = parseInt(document.getElementById('disabledChildren').value) || 0;
-  const petService = document.getElementById('petService').checked;
-  const cribService = document.getElementById('cribService').checked;
-  const poolView = document.getElementById('poolView').checked;
-  const loyaltyCustomer = document.getElementById('loyaltyCustomer').checked;
+    const adults = parseInt(document.getElementById('adults').value) || 0;
+    const children05 = parseInt(document.getElementById('children05').value) || 0;
+    const children612 = parseInt(document.getElementById('children612').value) || 0;
+    const petService = document.getElementById('petService').checked;
+    const cribService = document.getElementById('cribService').checked;
+    const poolView = document.getElementById('poolView').checked;
+    const loyaltyCustomer = document.getElementById('loyaltyCustomer').checked;
+    const removeClubCard = document.getElementById('removeClubCard').checked;
+    const percentageDiscount = parseFloat(document.getElementById('percentageDiscount').value) || 0;
+    const customDiscount = parseFloat(document.getElementById('customDiscount').value) || 0;
 
-  // Validate disabled guests
-  // Validate disabled guests
-  if (disabledAdults > adults) {
-    disabledAdults = adults;
-    document.getElementById('disabledAdults').value = adults;
-    alert("Il numero di adulti con disabilità è stato adeguato al numero totale di adulti.");
+    let basePrice = selectedSlot.price;
+    let totalPrice = 0;
+
+    // Calculate price for adults
+    if (adults <= 2) {
+        totalPrice += basePrice * adults;
+    } else {
+        totalPrice += basePrice * 2; // Full price for first two adults
+        let discountedAdults = adults - 2;
+        let discountedPrice = basePrice * 0.8; // 20% off for additional adults
+        totalPrice += discountedPrice * discountedAdults;
+    }
+
+    // Calculate price for children 6-12
+    let childPrice = basePrice * 0.5; // 50% off base price for children
+    totalPrice += childPrice * children612;
+
+    // Calculate club card cost
+    let clubCardCost = 0;
+    if (!removeClubCard) {
+        let peoplePayingClubCard = adults + children612;
+        clubCardCost = 6 * peoplePayingClubCard * selectedSlot.nights;
+    }
+    totalPrice += clubCardCost;
+
+    // Apply loyalty discount
+    if (loyaltyCustomer) {
+        totalPrice *= 0.9; // 10% discount on total price
+    }
+
+    // Apply custom discount
+    totalPrice = Math.max(0, totalPrice - customDiscount);
+
+    // Apply percentage discount
+    if (percentageDiscount > 0) {
+        totalPrice *= (1 - percentageDiscount / 100);
+    }
+
+    // Add extras
+    let extrasCost = 0;
+    if (poolView) extrasCost += 10 * selectedSlot.nights;
+    if (petService) extrasCost += 30;
+    if (cribService) extrasCost += 10 * selectedSlot.nights;
+
+    totalPrice += extrasCost;
+
+    document.getElementById('totalPrice').textContent = `Prezzo totale: €${totalPrice.toFixed(2)}`;
+
+    // Debug output
+    console.log('Base Price:', basePrice);
+    console.log('Club Card Cost:', clubCardCost);
+    console.log('Extras Cost:', extrasCost);
+    console.log('Total:', totalPrice);
 }
 
-if (disabledChildren > children612) {
-    disabledChildren = children612;
-    document.getElementById('disabledChildren').value = children612;
-    alert("Il numero di bambini con disabilità è stato adeguato al numero totale di bambini (6-12).");
-}
 
-let basePrice = selectedSlot.price * adults;
-let clubCardCost = 6 * (adults - disabledAdults + children612 - disabledChildren) * selectedSlot.nights;
-let extrasCost = 0;
+// Auto-update functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('scheduleForm');
+    const inputs = form.querySelectorAll('input, select');
+    
+    inputs.forEach(input => {
+        input.addEventListener('change', calculateTotalPrice);
+    });
 
-// Apply discounts for additional adults
-if (adults > 2) {
-    const discountedAdults = adults - 2;
-    const regularDiscountedAdults = discountedAdults - disabledAdults;
-    basePrice -= selectedSlot.price * 0.2 * regularDiscountedAdults; // 20% discount
-    basePrice -= selectedSlot.price * 0.3 * disabledAdults; // 30% discount for disabled adults
-}
+    // Special handling for custom select
+    const customSelect = document.querySelector('.custom-select');
+    const options = customSelect.querySelectorAll('.custom-option');
+    
+    options.forEach(option => {
+        option.addEventListener('click', function() {
+            setTimeout(calculateTotalPrice, 0); // Delay to ensure custom select has updated
+        });
+    });
 
-// Apply discounts for children
-basePrice += (selectedSlot.price / 2) * (children612 - disabledChildren); // 50% for regular children 6-12
-basePrice += selectedSlot.price * 0.4 * disabledChildren; // 60% discount for disabled children 6-12
-
-// Apply loyalty discount
-if (loyaltyCustomer) {
-    basePrice *= 0.9; // 10% discount
-}
-
-// Add extras
-if (poolView) {
-    extrasCost += 10 * selectedSlot.nights;
-}
-if (petService) {
-    extrasCost += 30;
-}
-if (cribService) {
-    extrasCost += 10 * selectedSlot.nights;
-}
-
-const total = basePrice + clubCardCost + extrasCost;
-document.getElementById('totalPrice').textContent = `Prezzo totale: €${total.toFixed(2)}`;
-}
+    // Initial calculation
+    calculateTotalPrice();
+});
 
 function generateBookingMessage() {
-  const customSelect = document.querySelector('.custom-select');
-  const selectedSlot = JSON.parse(customSelect.getAttribute('data-value') || '{}');
-if (!selectedSlot.price) {
-    alert("Per favore, seleziona un periodo prima di generare il messaggio di prenotazione.");
-    return;
-}
-
-const adults = parseInt(document.getElementById('adults').value) || 0;
-const children05 = parseInt(document.getElementById('children05').value) || 0;
-const children612 = parseInt(document.getElementById('children612').value) || 0;
-const disabledAdults = parseInt(document.getElementById('disabledAdults').value) || 0;
-const disabledChildren = parseInt(document.getElementById('disabledChildren').value) || 0;
-const petService = document.getElementById('petService').checked;
-const cribService = document.getElementById('cribService').checked;
-const poolView = document.getElementById('poolView').checked;
-const loyaltyCustomer = document.getElementById('loyaltyCustomer').checked;
-
-const totalPrice = parseFloat(document.getElementById('totalPrice').textContent.split('€')[1]);
-const deposit = totalPrice * 0.2;
-const remainingPayment = totalPrice - deposit;
-
-// Format dates as dd/mm/yyyy
-const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    return `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getFullYear()}`;
-};
-
-let message = `PREVENTIVO PER IL GRAND HOTEL SELINUNTE.\n\n`;
-
-message += `🗓️ PERIODO DEL SOGGIORNO:\n`;
-message += `Dal ${formatDate(selectedSlot.start)} al ${formatDate(selectedSlot.end)}\n`;
-message += `Numero di notti: ${selectedSlot.nights}\n\n`;
-
-message += `🗓️ECCO LA NOSTRA MIGLIORE OFFERTA\n`;
-message += `IL TOTALE IN PENSIONE COMPLETA CON TESSERE CLUB GIÀ INCLUSE NEL PREZZO E DI: ${totalPrice.toFixed(2)} EURO\n\n`;
-
-message += `TIPOLOGIA CAMERA:\n`;
-message += `${adults} AD ${children612} CHD ${children05} INF\n`;
-if (disabledAdults > 0 || disabledChildren > 0) {
-    message += `di cui ${disabledAdults} adulti con disabilità e ${disabledChildren} bambini con disabilità\n`;
-}
-const clubCardCost = 6 * (adults - disabledAdults + children612 - disabledChildren) * selectedSlot.nights;
-message += `COSTO TESSERE CLUB: ${clubCardCost.toFixed(2)} (già incluso nel prezzo)\n\n`;
-
-message += `OPZIONI EXTRA:\n`;
-message += `culla ${cribService ? '✅' : '❌'}\n`;
-message += `supplemento pet service ${petService ? '✅' : '❌'}\n`;
-message += `vista piscina ${poolView ? '✅' : '❌'}\n`;
-message += `⚠️ TUTTI I SERVIZI SOPRA SE RICHIESTI SARANNO GIÀ INCLUSI NEL PREZZO TOTALE.\n\n`;
-
-message += `🕞CHECK IN 15:30 / 🕙CHECK OUT 10:00\n\n`;
-
-message += `✅ PER CONFERMARE QUESTA PRENOTAZIONE CI MANDI IL SUO NOMINATIVO. ⬅️⬅️⬅️\n\n`;
-
-message += `⚠️'NOTA BENE': IL PREZZO INDICATO SOPRA E IL TOTALE COMPLESSIVO IN PENSIONE COMPLETA E CON IL COSTO DELLE TESSERE CLUB GIÀ INSERITE PER TUTTI I COMPONENTI DELLA/E CAMERA/E, QUINDI CON NIENT'ALTRO DA AGGIUNGERE (ESCLUSA TASSA DI SOGGIORNO DA PAGARE IN LOCO).\n\n`;
-
-message += `INFORMAZIONI GENERALI ⬇️\n\n`;
-
-message += `I bambini da 0 a 5 anni gratuiti nel letto con i genitori.\n`;
-message += `Da 6 ai 12 anni sconto del 50% in terzo e quarto letto.\n`;
-message += `Dai 13 anni in su sconto del 20% in terzo e quarto letto.\n`;
-message += `Supplemento Camera con vista piscina € 10,00 a notte (da richiedere al momento della conferma).\n`;
-message += `Supplemento Culla: € 10,00 a notte\n`;
-message += `Supplemento Cane: € 30,00 (in totale non a notte)\n`;
-message += `Sconto del 10% per ospiti con disabilità\n`;
-if (loyaltyCustomer) {
-    message += `Sconto fedeltà del 10% applicato alla tariffa base\n`;
-}
-message += `\n`;
-
-message += `La tessera club ha un costo di € 6,00 a notte e a persona ed è gratuita fino ai 5 anni. Essa include tutti i nostri servizi: piscina con angolo idromassaggio e isoletta per bambini (2 sdraio per camera); spiaggia attrezzata all'interno della riserva naturale del Belice (1 ombrellone e 2 sdraio per camera fino ad esaurimento); navetta da e per la spiaggia; animazione diurna e serale per adulti e bambini con spettacoli di cabaret, giochi, tornei e serate a tema; area giochi per bambini; campo da tennis e calcetto; ping pong; Wi-Fi gratuito in tutta la struttura.\n\n`;
-
-message += `Possibilità di scegliere la formula SOFT ALL INCLUSIVE\n`;
-message += `€5,00 a notte a persona (a partire dai 6 anni)\n`;
-message += `Il pacchetto include\n`;
-message += `- Analcolici al Bar Piscina\n`;
-message += `- crema caffe\n`;
-message += `- Caffetteria Bar Piscina\n`;
-message += `* L'offerta è valida solo se viene attivata da tutti i componenti della camera.\n\n`;
-
-message += `La conferma della prenotazione avverrà al ricevimento di un acconto del 20% entro due giorni lavorativi tramite bonifico bancario e saldo in Hotel.\n\n`;
-
-message += `*Tassa di soggiorno (€1,00 per persona e al giorno per un massimo di 7 giorni – bambini fino a 12 anni non compiuti esenti), se dovuta, secondo regolamento comunale consultabile in reception, da pagare in loco.\n\n`;
-
-message += `Rimaniamo a vostra disposizione per ulteriori informazioni.\n\n`;
-
-message += `MODALITÀ DI PAGAMENTO:\n`;
-message += `- Acconto del 20%: €${deposit.toFixed(2)} da versare tramite bonifico bancario per confermare la prenotazione.\n`;
-message += `- Saldo rimanente: €${remainingPayment.toFixed(2)} da pagare all'arrivo in struttura.\n\n`;
-message += `Per confermare la prenotazione, si prega di effettuare il bonifico dell'acconto entro 2 giorni lavorativi.\n\n`;
-
-message += `⚠️ IMPORTANTE: La prenotazione sarà confermata solo dopo la ricezione dell'acconto. In caso di mancato pagamento entro i termini, la prenotazione potrebbe essere cancellata.\n\n`;
-
-return message;
-}
-
-function displayBookingMessage(message) {
-  // Remove existing message box if present
-  const existingMessageDiv = document.getElementById('bookingMessageDiv');
-  if (existingMessageDiv) {
-      existingMessageDiv.remove();
+    const customSelect = document.querySelector('.custom-select');
+    const selectedSlot = JSON.parse(customSelect.getAttribute('data-value') || '{}');
+    if (!selectedSlot.price) {
+      alert("Per favore, seleziona un periodo prima di generare il messaggio di prenotazione.");
+      return null;
+    }
+  
+    const adults = parseInt(document.getElementById('adults')?.value) || 0;
+    const children05 = parseInt(document.getElementById('children05')?.value) || 0;
+    const children612 = parseInt(document.getElementById('children612')?.value) || 0;
+    const petService = document.getElementById('petService')?.checked || false;
+    const cribService = document.getElementById('cribService')?.checked || false;
+    const poolView = document.getElementById('poolView')?.checked || false;
+    const loyaltyCustomer = document.getElementById('loyaltyCustomer')?.checked || false;
+    const removeClubCard = document.getElementById('removeClubCard')?.checked || false;
+  
+    const totalPriceElement = document.getElementById('totalPrice');
+    const totalPrice = totalPriceElement ? parseFloat(totalPriceElement.textContent.split('€')[1]) : 0;
+    const deposit = totalPrice * 0.2;
+    const remainingPayment = totalPrice - deposit;
+  
+    // Format dates as dd/mm/yyyy
+    const formatDate = (dateString) => {
+      const date = new Date(dateString);
+      return `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getFullYear()}`;
+    };
+  
+    let message = `PREVENTIVO PER IL GRAND HOTEL SELINUNTE.\n\n`;
+  
+    message += `🗓️ PERIODO DEL SOGGIORNO:\n`;
+    message += `Dal ${formatDate(selectedSlot.start)} al ${formatDate(selectedSlot.end)}\n`;
+    message += `Numero di notti: ${selectedSlot.nights}\n\n`;
+  
+    message += `🗓️ECCO LA NOSTRA MIGLIORE OFFERTA\n`;
+    message += `IL TOTALE IN PENSIONE COMPLETA CON TESSERE CLUB GIÀ INCLUSE NEL PREZZO E DI: ${totalPrice.toFixed(2)} EURO\n\n`;
+  
+    message += `TIPOLOGIA CAMERA:\n`;
+    message += `${adults} AD ${children612} CHD ${children05} INF\n`;
+  
+    const clubCardCost = removeClubCard ? 0 : 6 * (adults + children612) * selectedSlot.nights;
+    if (!removeClubCard) {
+      message += `COSTO TESSERE CLUB: ${clubCardCost.toFixed(2)} (già incluso nel prezzo)\n\n`;
+    } else {
+      message += `TESSERE CLUB: Non incluse\n\n`;
+    }
+  
+    message += `OPZIONI EXTRA:\n`;
+    message += `culla ${cribService ? '✅' : '❌'}\n`;
+    message += `supplemento pet service ${petService ? '✅' : '❌'}\n`;
+    message += `vista piscina ${poolView ? '✅' : '❌'}\n`;
+    message += `⚠️ TUTTI I SERVIZI SOPRA SE RICHIESTI SARANNO GIÀ INCLUSI NEL PREZZO TOTALE.\n\n`;
+  
+    message += `🕞CHECK IN 15:30 / 🕙CHECK OUT 10:00\n\n`;
+  
+    message += `✅ PER CONFERMARE QUESTA PRENOTAZIONE CI MANDI IL SUO NOMINATIVO. ⬅️⬅️⬅️\n\n`;
+  
+    message += `⚠️'NOTA BENE': IL PREZZO INDICATO SOPRA E IL TOTALE COMPLESSIVO IN PENSIONE COMPLETA E CON IL COSTO DELLE TESSERE CLUB GIÀ INSERITE PER TUTTI I COMPONENTI DELLA/E CAMERA/E, QUINDI CON NIENT'ALTRO DA AGGIUNGERE (ESCLUSA TASSA DI SOGGIORNO DA PAGARE IN LOCO).\n\n`;
+  
+    message += `INFORMAZIONI GENERALI ⬇️\n\n`;
+  
+    message += `I bambini da 0 a 5 anni gratuiti nel letto con i genitori.\n`;
+    message += `Da 6 ai 12 anni sconto del 50% in terzo e quarto letto.\n`;
+    message += `Dai 13 anni in su sconto del 20% in terzo e quarto letto.\n`;
+    message += `Supplemento Camera con vista piscina € 10,00 a notte (da richiedere al momento della conferma).\n`;
+    message += `Supplemento Culla: € 10,00 a notte\n`;
+    message += `Supplemento Cane: € 30,00 (in totale non a notte)\n`;
+    if (loyaltyCustomer) {
+      message += `Sconto fedeltà del 10% applicato alla tariffa base\n`;
+    }
+    message += `\n`;
+  
+    message += `La tessera club ha un costo di € 6,00 a notte e a persona ed è gratuita fino ai 5 anni. Essa include tutti i nostri servizi: piscina con angolo idromassaggio e isoletta per bambini (2 sdraio per camera); spiaggia attrezzata all'interno della riserva naturale del Belice (1 ombrellone e 2 sdraio per camera fino ad esaurimento); navetta da e per la spiaggia; animazione diurna e serale per adulti e bambini con spettacoli di cabaret, giochi, tornei e serate a tema; area giochi per bambini; campo da tennis e calcetto; ping pong; Wi-Fi gratuito in tutta la struttura.\n\n`;
+  
+    message += `Possibilità di scegliere la formula SOFT ALL INCLUSIVE\n`;
+    message += `€5,00 a notte a persona (a partire dai 6 anni)\n`;
+    message += `Il pacchetto include\n`;
+    message += `- Analcolici al Bar Piscina\n`;
+    message += `- crema caffe\n`;
+    message += `- Caffetteria Bar Piscina\n`;
+    message += `* L'offerta è valida solo se viene attivata da tutti i componenti della camera.\n\n`;
+  
+    message += `La conferma della prenotazione avverrà al ricevimento di un acconto del 20% entro due giorni lavorativi tramite bonifico bancario e saldo in Hotel.\n\n`;
+  
+    message += `*Tassa di soggiorno (€1,00 per persona e al giorno per un massimo di 7 giorni – bambini fino a 12 anni non compiuti esenti), se dovuta, secondo regolamento comunale consultabile in reception, da pagare in loco.\n\n`;
+  
+    message += `Rimaniamo a vostra disposizione per ulteriori informazioni.\n\n`;
+  
+    message += `MODALITÀ DI PAGAMENTO:\n`;
+    message += `- Acconto del 20%: €${deposit.toFixed(2)} da versare tramite bonifico bancario per confermare la prenotazione.\n`;
+    message += `- Saldo rimanente: €${remainingPayment.toFixed(2)} da pagare all'arrivo in struttura.\n\n`;
+    message += `Per confermare la prenotazione, si prega di effettuare il bonifico dell'acconto entro 2 giorni lavorativi.\n\n`;
+  
+    message += `⚠️ IMPORTANTE: La prenotazione sarà confermata solo dopo la ricezione dell'acconto. In caso di mancato pagamento entro i termini, la prenotazione potrebbe essere cancellata.\n\n`;
+  
+    return message;
   }
 
-  // Create a new div for the booking message
-  const messageDiv = document.createElement('div');
-  messageDiv.id = 'bookingMessageDiv';
-  messageDiv.style.marginTop = '20px';
-  messageDiv.style.padding = '20px';
-  messageDiv.style.backgroundColor = '#f0f0f0';
-  messageDiv.style.border = '1px solid #ddd';
-  messageDiv.style.borderRadius = '5px';
-
-  // Create a container for buttons
-  const buttonContainer = document.createElement('div');
-  buttonContainer.style.display = 'flex';
-  buttonContainer.style.justifyContent = 'space-between';
-  buttonContainer.style.marginBottom = '10px';
-
-  // Add a copy button
-  const copyButton = document.createElement('button');
-  copyButton.textContent = 'Copia messaggio';
-  copyButton.className = 'orange-button';
-  copyButton.style.flex = '1';
-  copyButton.style.marginRight = '5px';
-  copyButton.addEventListener('click', function() {
-      navigator.clipboard.writeText(message).then(function() {
-          alert('Messaggio copiato negli appunti!');
-      }, function(err) {
-          console.error('Impossibile copiare il testo: ', err);
-      });
-  });
-
-  // Add a close button
-  const closeButton = document.createElement('button');
-  closeButton.textContent = 'Chiudi';
-  closeButton.className = 'orange-button';
-  closeButton.style.flex = '1';
-  closeButton.style.marginLeft = '5px';
-  closeButton.style.marginRight = '5px';
-  closeButton.addEventListener('click', function() {
-      messageDiv.style.display = 'none';
-      resetForm();
-  });
-
-  // Add a WhatsApp forward button
+function displayBookingMessage(message) {
+    // Remove existing message box if present
+    const existingMessageDiv = document.getElementById('bookingMessageDiv');
+    if (existingMessageDiv) {
+        existingMessageDiv.remove();
+    }
+  
+    // Create a new div for the booking message
+    const messageDiv = document.createElement('div');
+    messageDiv.id = 'bookingMessageDiv';
+    messageDiv.style.marginTop = '20px';
+    messageDiv.style.padding = '20px';
+    messageDiv.style.backgroundColor = '#f0f0f0';
+    messageDiv.style.border = '1px solid #ddd';
+    messageDiv.style.borderRadius = '5px';
+  
+    // Create a container for buttons
+    const buttonContainer = document.createElement('div');
+    buttonContainer.style.display = 'flex';
+    buttonContainer.style.justifyContent = 'space-between';
+    buttonContainer.style.marginBottom = '10px';
+  
+    // Add a copy button
+    const copyButton = document.createElement('button');
+    copyButton.textContent = 'Copia messaggio';
+    copyButton.className = 'orange-button';
+    copyButton.style.flex = '1';
+    copyButton.style.marginRight = '5px';
+    copyButton.addEventListener('click', function() {
+        navigator.clipboard.writeText(message).then(function() {
+            alert('Messaggio copiato negli appunti!');
+        }, function(err) {
+            console.error('Impossibile copiare il testo: ', err);
+        });
+    });
+  
+    // Add a close button
+    const closeButton = document.createElement('button');
+    closeButton.textContent = 'Chiudi';
+    closeButton.className = 'orange-button';
+    closeButton.style.flex = '1';
+    closeButton.style.marginLeft = '5px';
+    closeButton.style.marginRight = '5px';
+    closeButton.addEventListener('click', function() {
+        messageDiv.style.display = 'none';
+        resetForm();
+    });
+  
+    // Add a WhatsApp button
   const whatsappButton = document.createElement('button');
   whatsappButton.textContent = 'Invia su WhatsApp';
   whatsappButton.className = 'orange-button';
   whatsappButton.style.flex = '1';
   whatsappButton.style.marginLeft = '5px';
   whatsappButton.addEventListener('click', function() {
-      const encodedMessage = encodeURIComponent(message);
-      const whatsappUrl = `https://web.whatsapp.com/send?text=${encodedMessage}`;
-      window.open(whatsappUrl, '_blank');
+    navigator.clipboard.writeText(message).then(function() {
+      // Try to focus on an existing WhatsApp Web tab or open a new one
+      const whatsappUrl = 'https://web.whatsapp.com/';
+      const newWindow = window.open(whatsappUrl, 'whatsappTab');
+      
+      if (newWindow === null) {
+        // If window.open returns null, it means the popup was blocked or failed
+        alert('Messaggio copiato negli appunti. Per favore, apri WhatsApp Web manualmente.');
+      } else {
+        // If a new window was opened or an existing one was focused
+        newWindow.focus();
+        alert('Messaggio copiato negli appunti. WhatsApp Web è stato aperto o messo in primo piano.');
+      }
+    }, function(err) {
+      console.error('Impossibile copiare il testo: ', err);
+      alert('Errore nel copiare il messaggio. Per favore, copia manualmente prima di aprire WhatsApp.');
+    });
   });
+  
+    // Add buttons to the container
+    buttonContainer.appendChild(copyButton);
+    buttonContainer.appendChild(closeButton);
+    buttonContainer.appendChild(whatsappButton);
+  
+    // Add the button container to the message div
+    messageDiv.appendChild(buttonContainer);
+  
+    // Add the message text
+    const messageText = document.createElement('pre');
+    messageText.textContent = message;
+    messageText.style.whiteSpace = 'pre-wrap';
+    messageText.style.wordWrap = 'break-word';
+    messageDiv.appendChild(messageText);
+  
+    // Add the message div to the page
+    const form = document.getElementById('scheduleForm');
+    form.parentNode.insertBefore(messageDiv, form.nextSibling);
+  
+    // Scroll to the message
+    messageDiv.scrollIntoView({ behavior: 'smooth' });
+  }
 
-  // Add buttons to the container
-  buttonContainer.appendChild(copyButton);
-  buttonContainer.appendChild(closeButton);
-  buttonContainer.appendChild(whatsappButton);
-
-  // Add the button container to the message div
-  messageDiv.appendChild(buttonContainer);
-
-  // Add the message text
-  const messageText = document.createElement('pre');
-  messageText.textContent = message;
-  messageText.style.whiteSpace = 'pre-wrap';
-  messageText.style.wordWrap = 'break-word';
-  messageDiv.appendChild(messageText);
-
-  // Add the message div to the page
-  const form = document.getElementById('scheduleForm');
-  form.parentNode.insertBefore(messageDiv, form.nextSibling);
-
-  // Scroll to the message
-  messageDiv.scrollIntoView({ behavior: 'smooth' });
-}
-
-// Function to reset the form
-function resetForm() {
-  // Reset custom select
-  const customSelect = document.querySelector('.custom-select');
-  const triggerSpan = customSelect.querySelector('.custom-select__trigger span');
-  triggerSpan.textContent = 'Seleziona un periodo';
-  customSelect.removeAttribute('data-value');
-
-  // Reset number inputs
-  document.getElementById('adults').value = '1';
-  document.getElementById('children05').value = '0';
-  document.getElementById('children612').value = '0';
-  document.getElementById('disabledAdults').value = '0';
-  document.getElementById('disabledChildren').value = '0';
-
-  // Reset checkboxes
-  document.getElementById('petService').checked = false;
-  document.getElementById('cribService').checked = false;
-  document.getElementById('poolView').checked = false;
-  document.getElementById('loyaltyCustomer').checked = false;
-
-  // Hide disabled guests panel
-  document.getElementById('disabledGuestsPanel').style.display = 'none';
-
-  // Reset total price
-  document.getElementById('totalPrice').textContent = 'Prezzo totale: €0.00';
-
-  // Recalculate total price (in case you have any dependencies)
-  calculateTotalPrice();
-}
+  function resetForm() {
+    // Reset custom select
+    const customSelect = document.querySelector('.custom-select');
+    const triggerSpan = customSelect.querySelector('.custom-select__trigger span');
+    triggerSpan.textContent = 'Seleziona un periodo';
+    customSelect.removeAttribute('data-value');
+  
+    // Reset number inputs
+    document.getElementById('adults').value = '1';
+    document.getElementById('children05').value = '0';
+    document.getElementById('children612').value = '0';
+  
+    // Reset discount inputs
+    document.getElementById('customDiscount').value = '0';
+    document.getElementById('percentageDiscount').value = '0';
+  
+    // Reset checkboxes
+    document.getElementById('petService').checked = false;
+    document.getElementById('cribService').checked = false;
+    document.getElementById('poolView').checked = false;
+    document.getElementById('loyaltyCustomer').checked = false;
+    document.getElementById('removeClubCard').checked = false;
+  
+    // Hide discount panel
+    document.getElementById('discountPanel').style.display = 'none';
+  
+    // Reset total price
+    document.getElementById('totalPrice').textContent = 'Prezzo totale: €0.00';
+  
+    // Recalculate total price (in case you have any dependencies)
+    calculateTotalPrice();
+  
+    // Hide the booking message if it exists
+    const bookingMessageDiv = document.getElementById('bookingMessageDiv');
+    if (bookingMessageDiv) {
+      bookingMessageDiv.style.display = 'none';
+    }
+  }
 
 // Event listener for form submission
 document.getElementById('scheduleForm').addEventListener('submit', function(e) {
-e.preventDefault();
-const bookingMessage = generateBookingMessage();
-displayBookingMessage(bookingMessage);
+    e.preventDefault();
+    const bookingMessage = generateBookingMessage();
+    displayBookingMessage(bookingMessage);
 });
 
 // Export the slots and functions if using modules
