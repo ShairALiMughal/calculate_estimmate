@@ -413,19 +413,22 @@ function displayBookingMessage(message) {
     buttonContainer.style.justifyContent = 'space-between';
     buttonContainer.style.marginBottom = '10px';
   
-    // Add a copy button
-    const copyButton = document.createElement('button');
-    copyButton.textContent = 'Copia messaggio';
-    copyButton.className = 'orange-button';
-    copyButton.style.flex = '1';
-    copyButton.style.marginRight = '5px';
-    copyButton.addEventListener('click', function() {
-        navigator.clipboard.writeText(message).then(function() {
+   // Modify the existing copyButton creation and event listener in the displayBookingMessage function
+const copyButton = document.createElement('button');
+copyButton.textContent = 'Copia messaggio';
+copyButton.className = 'orange-button';
+copyButton.style.flex = '1';
+copyButton.style.marginRight = '5px';
+copyButton.addEventListener('click', function() {
+    copyToClipboard(message)
+        .then(() => {
             alert('Messaggio copiato negli appunti!');
-        }, function(err) {
+        })
+        .catch((err) => {
             console.error('Impossibile copiare il testo: ', err);
+            alert('Impossibile copiare automaticamente. Per favore, seleziona e copia il messaggio manualmente.');
         });
-    });
+});
   
     // Add a close button
     const closeButton = document.createElement('button');
@@ -439,31 +442,20 @@ function displayBookingMessage(message) {
         resetForm();
     });
   
-    // Add a WhatsApp button
-  const whatsappButton = document.createElement('button');
-  whatsappButton.textContent = 'Invia su WhatsApp';
-  whatsappButton.className = 'orange-button';
-  whatsappButton.style.flex = '1';
-  whatsappButton.style.marginLeft = '5px';
-  whatsappButton.addEventListener('click', function() {
-    navigator.clipboard.writeText(message).then(function() {
-      // Try to focus on an existing WhatsApp Web tab or open a new one
-      const whatsappUrl = 'https://web.whatsapp.com/';
-      const newWindow = window.open(whatsappUrl, 'whatsappTab');
-      
-      if (newWindow === null) {
-        // If window.open returns null, it means the popup was blocked or failed
-        alert('Messaggio copiato negli appunti. Per favore, apri WhatsApp Web manualmente.');
-      } else {
-        // If a new window was opened or an existing one was focused
-        newWindow.focus();
-        alert('Messaggio copiato negli appunti. WhatsApp Web è stato aperto o messo in primo piano.');
-      }
-    }, function(err) {
-      console.error('Impossibile copiare il testo: ', err);
-      alert('Errore nel copiare il messaggio. Per favore, copia manualmente prima di aprire WhatsApp.');
-    });
+   // Modify the existing whatsappButton creation and event listener in the displayBookingMessage function
+const whatsappButton = document.createElement('button');
+whatsappButton.textContent = 'Invia su WhatsApp';
+whatsappButton.className = 'orange-button';
+whatsappButton.style.flex = '1';
+whatsappButton.style.marginLeft = '5px';
+whatsappButton.addEventListener('click', function() {
+  navigator.clipboard.writeText(message).then(function() {
+    openWhatsApp();
+  }, function(err) {
+    console.error('Impossibile copiare il testo: ', err);
+    alert('Errore nel copiare il messaggio. Per favore, copia manualmente prima di aprire WhatsApp.');
   });
+});
   
     // Add buttons to the container
     buttonContainer.appendChild(copyButton);
@@ -486,6 +478,67 @@ function displayBookingMessage(message) {
   
     // Scroll to the message
     messageDiv.scrollIntoView({ behavior: 'smooth' });
+  }
+
+
+  // Add this function to your existing JavaScript code
+function copyToClipboard(text) {
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+      // Modern browsers
+      return navigator.clipboard.writeText(text);
+  } else {
+      // Fallback for older browsers
+      return new Promise((resolve, reject) => {
+          const textArea = document.createElement("textarea");
+          textArea.value = text;
+          textArea.style.position = "fixed";  // Avoid scrolling to bottom
+          document.body.appendChild(textArea);
+          textArea.focus();
+          textArea.select();
+
+          try {
+              const successful = document.execCommand('copy');
+              document.body.removeChild(textArea);
+              if (successful) {
+                  resolve();
+              } else {
+                  reject(new Error('Copia non riuscita'));
+              }
+          } catch (err) {
+              document.body.removeChild(textArea);
+              reject(err);
+          }
+      });
+  }
+}
+
+  function openWhatsApp() {
+    const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+    
+    let whatsappUrl;
+    
+    if (/android/i.test(userAgent)) {
+      // Android devices
+      whatsappUrl = 'intent://send#Intent;scheme=whatsapp;package=com.whatsapp;end';
+    } else if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+      // iOS devices
+      whatsappUrl = 'whatsapp://';
+    } else {
+      // Desktop (Windows, macOS, Linux)
+      whatsappUrl = 'https://web.whatsapp.com/';
+    }
+  
+    // Try to open WhatsApp
+    const newWindow = window.open(whatsappUrl, '_blank');
+    
+    if (newWindow === null) {
+      // If window.open returns null, it means the popup was blocked or failed
+      alert('Impossibile aprire WhatsApp. Per favore, apri WhatsApp manualmente.');
+    } else {
+      // If a new window was opened or an existing one was focused
+      newWindow.focus();
+      alert('Il messaggio è stato copiato negli appunti. WhatsApp è stato aperto. Incolla il messaggio nella chat desiderata.');
+    }
   }
 
   function resetForm() {
