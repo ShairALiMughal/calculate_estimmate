@@ -442,19 +442,21 @@ copyButton.addEventListener('click', function() {
         resetForm();
     });
   
-   // Modify the existing whatsappButton creation and event listener in the displayBookingMessage function
+// Modify the existing whatsappButton creation and event listener in the displayBookingMessage function
 const whatsappButton = document.createElement('button');
 whatsappButton.textContent = 'Invia su WhatsApp';
 whatsappButton.className = 'orange-button';
 whatsappButton.style.flex = '1';
 whatsappButton.style.marginLeft = '5px';
 whatsappButton.addEventListener('click', function() {
-  navigator.clipboard.writeText(message).then(function() {
-    openWhatsApp();
-  }, function(err) {
-    console.error('Impossibile copiare il testo: ', err);
-    alert('Errore nel copiare il messaggio. Per favore, copia manualmente prima di aprire WhatsApp.');
-  });
+  copyToClipboard(message)
+    .then(() => {
+      openWhatsApp();
+    })
+    .catch((err) => {
+      console.error('Impossibile copiare il testo: ', err);
+      alert('Errore nel copiare il messaggio. Per favore, copia manualmente prima di aprire WhatsApp.');
+    });
 });
   
     // Add buttons to the container
