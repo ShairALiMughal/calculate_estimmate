@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <title>Villa Agency - Schedule a Visit</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="assets/css/fontawesome.css">
+    <link rel="stylesheet" href="assets/css/templatemo-villa-agency.css">
+    <link rel="stylesheet" href="assets/css/owl.css">
+    <link rel="stylesheet" href="assets/css/animate.css">
+    <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="assets/css/reservation.css">
+</head>
+
+<body>
+
+    <!-- ***** Preloader Start ***** -->
+    <div id="js-preloader" class="js-preloader">
+        <div class="preloader-inner">
+            <span class="dot"></span>
+            <div class="dots">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </div>
+    <!-- ***** Preloader End ***** -->
+
+    <div class="sub-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-8">
+                    <ul class="info">
+                        <li><i class="fa fa-envelope"></i> info@GrandHotelSelinunte.com</li>
+                        <li><i class="fa fa-map"></i> Contrada, Via Trenta Salme, 91022 Marinella TP, Italy</li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 col-md-4">
+                    <ul class="social-links">
+                        <li><a href="#"><i class="fab fa-facebook"></i></a></li>
+                        <li><a href="https://x.com/minthu" target="_blank"><i class="fab fa-twitter"></i></a></li>
+                        <li><a href="#"><i class="fab fa-linkedin"></i></a></li>
+                        <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ***** Header Area Start ***** -->
+    <header class="header-area header-sticky">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <nav class="main-nav">
+                        <!-- ***** Logo Start ***** -->
+                        <a href="index.html" class="logo">
+                            <img src="assets/images/logo.png" alt="" style="max-height: 70px; min-height: 7px; width: auto; margin-top: 7%;">
+                        </a>
+                        <!-- ***** Logo End ***** -->
+                        <!-- ***** Menu Start ***** -->
+                        <ul class="nav">
+                            <li><a href="index.html">Home</a></li>
+                            <li><a href="properties.html">Properties</a></li>
+                            <li><a href="property-details.html">Property Details</a></li>
+                            <li><a href="contact.html">Contact Us</a></li>
+                            <li><a href="schedule-visitdaily.html">Schedule vist on daily basis</a></li>
+                            <li><a href="schedule-visit.html" class="active"><i class="fa fa-calendar"></i>Schedule a visit</a></li>
+                        </ul>
+                        <a class='menu-trigger'>
+                            <span>Menu</span>
+                        </a>
+                        <!-- ***** Menu End ***** -->
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- ***** Header Area End ***** -->
+    <div class="main-banner">
+        <div class="owl-carousel owl-banner">
+            <div class="item item-1">
+                <div class="header-text">
+                    <span class="category">Schedule, <em>Your Visit</em></span>
+                    <h2>Find Your Dream<br>Property Today</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="schedule-content">
+        <div class="container">
+            <div class="schedule-content">
+                <div class="container">
+                    <div class="schedule-form-container">
+                        <h2>Schedule Your Visit daily prices</h2>
+                        <form id="scheduleForm">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="startDate">Data di arrivo:</label>
+                                        <input type="date" id="startDate" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="endDate">Data di partenza:</label>
+                                        <input type="date" id="endDate" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="adults">Adulti</label>
+                                        <input type="number" id="adults" min="1" value="1" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="children05">Bambini (0-5)</label>
+                                        <input type="number" id="children05" min="0" value="0">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="children612">Bambini (6-12)</label>
+                                        <input type="number" id="children612" min="0" value="0">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <button type="button" id="discountBtn" class="btn btn-secondary" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">Applica Sconti</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="discountPanel" style="display: none;">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="customDiscount">Sconto Personalizzato (€)</label>
+                                            <input type="number" id="customDiscount" min="0" value="0" step="0.01">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="percentageDiscount">Sconto Percentuale (%)</label>
+                                            <input type="number" id="percentageDiscount" min="0" max="100" value="0" step="0.1">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="checkbox-group">
+                                <label>
+                                    <input type="checkbox" id="petService"> Servizio animali (€30 per l'intero soggiorno)
+                                </label>
+                            </div>
+                            <div class="checkbox-group">
+                                <label>
+                                    <input type="checkbox" id="cribService"> Servizio culla (€10 per notte)
+                                </label>
+                            </div>
+                            <div class="checkbox-group">
+                                <label>
+                                    <input type="checkbox" id="poolView"> Vista piscina (€10 per notte)
+                                </label>
+                            </div>
+                            <div class="checkbox-group">
+                                <label>
+                                    <input type="checkbox" id="loyaltyCustomer"> Cliente fedele (sconto del 10% solo sulla tariffa)
+                                </label>
+                            </div>
+                            <div class="checkbox-group">
+                                <label>
+                                    <input type="checkbox" id="removeClubCard"> Rimuovi costo tessera club
+                                </label>
+                            </div>
+                            <div id="totalPrice">Prezzo totale: €0.00</div>
+                            <button type="submit" class="orange-button">Prenota ora</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+    <footer>
+        <div class="container">
+            <div class="col-lg-8">
+                <p>Copyright © 2048 Grand Hotel Selinunte All rights reserved. 
+                
+                Design: <a rel="nofollow" href="https://templatemo.com" target="_blank">TemplateMo</a></p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Scripts -->
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/js/isotope.min.js"></script>
+    <script src="assets/js/owl-carousel.js"></script>
+    <script src="assets/js/counter.js"></script>
+    <script src="assets/js/custom.js"></script>
+    <script src="assets/js/dailyprices.js"></script>
+    
+</body>
+</html>

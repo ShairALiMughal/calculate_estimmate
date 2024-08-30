@@ -103,4 +103,3 @@
       $this.countTo(options);
     }
   });
-  
