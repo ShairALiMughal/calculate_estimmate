@@ -392,13 +392,13 @@ function generateBookingMessage() {
     return message;
   }
 
-function displayBookingMessage(message) {
+  function displayBookingMessage(message) {
     // Remove existing message box if present
     const existingMessageDiv = document.getElementById('bookingMessageDiv');
     if (existingMessageDiv) {
         existingMessageDiv.remove();
     }
-  
+
     // Create a new div for the booking message
     const messageDiv = document.createElement('div');
     messageDiv.id = 'bookingMessageDiv';
@@ -407,82 +407,106 @@ function displayBookingMessage(message) {
     messageDiv.style.backgroundColor = '#f0f0f0';
     messageDiv.style.border = '1px solid #ddd';
     messageDiv.style.borderRadius = '5px';
-  
+    messageDiv.style.width = '100%'; // Ensure the div takes full width
+    messageDiv.style.boxSizing = 'border-box'; // Ensure padding is included in the width
+
     // Create a container for buttons
     const buttonContainer = document.createElement('div');
     buttonContainer.style.display = 'flex';
-    buttonContainer.style.justifyContent = 'space-between';
+    buttonContainer.style.flexDirection = 'column'; // Stack buttons vertically on mobile
+    buttonContainer.style.gap = '10px'; // Add space between buttons
     buttonContainer.style.marginBottom = '10px';
-  
-   // Modify the existing copyButton creation and event listener in the displayBookingMessage function
-const copyButton = document.createElement('button');
-copyButton.textContent = 'Copia messaggio';
-copyButton.className = 'orange-button';
-copyButton.style.flex = '1';
-copyButton.style.marginRight = '5px';
-copyButton.addEventListener('click', function() {
-    copyToClipboard(message)
-        .then(() => {
-            alert('Messaggio copiato negli appunti!');
-        })
-        .catch((err) => {
-            console.error('Impossibile copiare il testo: ', err);
-            alert('Impossibile copiare automaticamente. Per favore, seleziona e copia il messaggio manualmente.');
-        });
-});
-  
+
+    // Modify the existing copyButton creation and event listener in the displayBookingMessage function
+    const copyButton = document.createElement('button');
+    copyButton.textContent = 'Copia messaggio';
+    copyButton.className = 'orange-button';
+    copyButton.style.width = '100%'; // Make button take full width
+    copyButton.addEventListener('click', function() {
+        copyToClipboard(message)
+            .then(() => {
+                alert('Messaggio copiato negli appunti!');
+            })
+            .catch((err) => {
+                console.error('Impossibile copiare il testo: ', err);
+                alert('Impossibile copiare automaticamente. Per favore, seleziona e copia il messaggio manualmente.');
+            });
+    });
+
     // Add a close button
     const closeButton = document.createElement('button');
     closeButton.textContent = 'Chiudi';
     closeButton.className = 'orange-button';
-    closeButton.style.flex = '1';
-    closeButton.style.marginLeft = '5px';
-    closeButton.style.marginRight = '5px';
+    closeButton.style.width = '100%'; // Make button take full width
     closeButton.addEventListener('click', function() {
         messageDiv.style.display = 'none';
         resetForm();
     });
-  
-// Modify the existing whatsappButton creation and event listener in the displayBookingMessage function
-const whatsappButton = document.createElement('button');
-whatsappButton.textContent = 'Invia su WhatsApp';
-whatsappButton.className = 'orange-button';
-whatsappButton.style.flex = '1';
-whatsappButton.style.marginLeft = '5px';
-whatsappButton.addEventListener('click', function() {
-  copyToClipboard(message)
-    .then(() => {
-      openWhatsApp();
-    })
-    .catch((err) => {
-      console.error('Impossibile copiare il testo: ', err);
-      alert('Errore nel copiare il messaggio. Per favore, copia manualmente prima di aprire WhatsApp.');
+
+    // Modify the existing whatsappButton creation and event listener in the displayBookingMessage function
+    const whatsappButton = document.createElement('button');
+    whatsappButton.textContent = 'Invia su WhatsApp';
+    whatsappButton.className = 'orange-button';
+    whatsappButton.style.width = '100%'; // Make button take full width
+    whatsappButton.addEventListener('click', function() {
+        copyToClipboard(message)
+            .then(() => {
+                openWhatsApp();
+            })
+            .catch((err) => {
+                console.error('Impossibile copiare il testo: ', err);
+                alert('Errore nel copiare il messaggio. Per favore, copia manualmente prima di aprire WhatsApp.');
+            });
     });
-});
-  
+
     // Add buttons to the container
     buttonContainer.appendChild(copyButton);
     buttonContainer.appendChild(closeButton);
     buttonContainer.appendChild(whatsappButton);
-  
+
     // Add the button container to the message div
     messageDiv.appendChild(buttonContainer);
-  
+
     // Add the message text
     const messageText = document.createElement('pre');
     messageText.textContent = message;
     messageText.style.whiteSpace = 'pre-wrap';
     messageText.style.wordWrap = 'break-word';
     messageDiv.appendChild(messageText);
-  
+
     // Add the message div to the page
     const form = document.getElementById('scheduleForm');
     form.parentNode.insertBefore(messageDiv, form.nextSibling);
-  
+
     // Scroll to the message
     messageDiv.scrollIntoView({ behavior: 'smooth' });
-  }
 
+    // Add media query for larger screens
+    const mediaQuery = window.matchMedia('(min-width: 768px)');
+    const handleMediaQueryChange = (e) => {
+        if (e.matches) {
+            // On larger screens, display buttons horizontally
+            buttonContainer.style.flexDirection = 'row';
+            buttonContainer.style.gap = '5px';
+            copyButton.style.width = 'auto';
+            closeButton.style.width = 'auto';
+            whatsappButton.style.width = 'auto';
+        } else {
+            // On smaller screens, display buttons vertically
+            buttonContainer.style.flexDirection = 'column';
+            buttonContainer.style.gap = '10px';
+            copyButton.style.width = '100%';
+            closeButton.style.width = '100%';
+            whatsappButton.style.width = '100%';
+        }
+    };
+
+    // Initial check
+    handleMediaQueryChange(mediaQuery);
+
+    // Add listener for media query changes
+    mediaQuery.addEventListener('change', handleMediaQueryChange);
+}
 
   // Add this function to your existing JavaScript code
 function copyToClipboard(text) {
