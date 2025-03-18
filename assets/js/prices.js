@@ -47,7 +47,7 @@ const slots = [
    { start: "2025-06-19", end: "2025-06-22", nights: 3, price: 230, description: "Dal 19 al 22 giugno 230€ (3 notti)" },
    { start: "2025-06-22", end: "2025-06-29", nights: 7, price: 550, description: "Dal 22 al 29 giugno 550€ (7 notti)" },
    { start: "2025-06-22", end: "2025-06-26", nights: 4, price: 320, description: "Dal 22 al 26 giugno 320€ (4 notti)" },
-   { start: "2025-06-26", end: "2025-06-29", nights: 3, price: 230, description: "Dal 26 al 29 giugno 230€ (3 notti)" },
+   { start: "2025-06-26", end: "2025-06-29", nights: 3, price: 260, description: "Dal 26 al 29 giugno 230€ (3 notti)" },
    { start: "2025-06-29", end: "2025-07-06", nights: 7, price: 570, description: "Dal 29 giugno al 6 luglio 570€ (7 notti)" },
    { start: "2025-06-29", end: "2025-07-03", nights: 4, price: 320, description: "Dal 29 giugno al 3 luglio 320€ (4 notti)" },
    { start: "2025-07-03", end: "2025-07-06", nights: 3, price: 280, description: "Dal 3 al 6 luglio 280€ (3 notti)" },
