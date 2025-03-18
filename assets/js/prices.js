@@ -273,14 +273,7 @@ function calculateTotalPrice() {
     let childPrice = basePrice * 0.5; // 50% off base price for children
     totalPrice += childPrice * children612;
 
-    // Calculate club card cost
-    let clubCardCost = 0;
-    if (!removeClubCard) {
-        let peoplePayingClubCard = adults + children612;
-        clubCardCost = 6 * peoplePayingClubCard * selectedSlot.nights;
-    }
-    totalPrice += clubCardCost;
-
+    
     // Apply loyalty discount
     if (loyaltyCustomer) {
         totalPrice *= 0.9; // 10% discount on total price
@@ -293,6 +286,14 @@ function calculateTotalPrice() {
     if (percentageDiscount > 0) {
         totalPrice *= (1 - percentageDiscount / 100);
     }
+    // Calculate club card cost
+    let clubCardCost = 0;
+
+    if (!removeClubCard) {
+        let peoplePayingClubCard = adults + children612;
+        clubCardCost = 6 * peoplePayingClubCard * selectedSlot.nights;
+    }
+    totalPrice += clubCardCost;
 
     // Add extras
     let extrasCost = 0;
