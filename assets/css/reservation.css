@@ -234,39 +234,49 @@
     border: 1px solid #ddd;
     border-radius: 3px;
 }
+
 /* reservation.css */
 #discountContainer {
     display: flex;
+    flex-direction: column; /* Stack label container and slider vertically */
+    gap: 10px;              /* Space between rows */
+    margin: 0;              /* Remove extra margin if any */
+}
+
+/* New container for the label and percentage value */
+#labelContainer {
+    display: flex;
+    justify-content: space-between; /* Label left, percentage right */
     align-items: center;
-    gap: 10px;     /* spacing between label and slider */
-    margin: 0;     /* remove extra margin if any */
-  }
-  
-  #discountContainer label {
-    margin-bottom: 0; 
-    font-weight: 500;  /* a bit bolder for a professional look */
+}
+
+/* Style for the label */
+#labelContainer label {
+    margin: 0;
+    font-weight: 500;  /* A bit bolder for a professional look */
     color: #333;
-  }
-  
-  #discountValue {
-    margin-left: 4px;
+}
+
+/* Style for the percentage value */
+#discountValue {
     font-weight: 600;
-    color: #FFA500; /* matches the slider thumb color */
-  }
-  
-  #percentageDiscount {
+    color: #FFA500; /* Matches the slider thumb color */
+}
+
+/* Slider styling */
+#percentageDiscount {
     -webkit-appearance: none;
-    width: 100%;  /* let it fill the container */
+    width: 100%;  /* Let it fill the container */
     height: 8px;
     border-radius: 4px;
     background: #e0e0e0;
     outline: none;
     margin: 0;
     transition: background 0.3s ease;
-  }
-  
-  /* Slider thumb styling (Chrome, Safari, Edge) */
-  #percentageDiscount::-webkit-slider-thumb {
+}
+
+/* Slider thumb styling (Chrome, Safari, Edge) */
+#percentageDiscount::-webkit-slider-thumb {
     -webkit-appearance: none;
     width: 18px;
     height: 18px;
@@ -275,10 +285,10 @@
     border: 2px solid #fff;
     cursor: pointer;
     box-shadow: 0 2px 4px rgba(0,0,0,0.3);
-  }
-  
-  /* Firefox */
-  #percentageDiscount::-moz-range-thumb {
+}
+
+/* Slider thumb styling (Firefox) */
+#percentageDiscount::-moz-range-thumb {
     width: 18px;
     height: 18px;
     border-radius: 50%;
@@ -286,5 +296,6 @@
     border: 2px solid #fff;
     cursor: pointer;
     box-shadow: 0 2px 4px rgba(0,0,0,0.3);
-  }
+}
+
   
