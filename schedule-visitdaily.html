@@ -17,6 +17,7 @@
   <link rel="stylesheet" href="assets/css/animate.css">
   <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css" />
   <link rel="stylesheet" href="assets/css/reservation.css">
+  
 </head>
 
 <body>
@@ -135,30 +136,13 @@
               </div>
             </div>
           </div>
-          <!-- Discount button -->
+          <!-- Discount slider (replacing the "Applica Sconti" button and discount panel) -->
           <div class="row">
             <div class="col-md-12">
               <div class="form-group">
-                <button type="button" id="discountBtn" class="btn btn-secondary" 
-                        style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
-                  Applica Sconti
-                </button>
-              </div>
-            </div>
-          </div>
-          <!-- Discount panel -->
-          <div id="discountPanel" style="display: none;">
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label for="customDiscount">Sconto Personalizzato (€)</label>
-                  <input type="number" id="customDiscount" min="0" value="0" step="0.01">
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label for="percentageDiscount">Sconto Percentuale (%)</label>
-                  <input type="number" id="percentageDiscount" min="0" max="100" value="0" step="0.1">
+                <div id="discountContainer">
+                  <label for="percentageDiscount">Discount: <span id="discountValue">0%</span></label>
+                  <input type="range" id="percentageDiscount" min="0" max="100" step="1" value="0">
                 </div>
               </div>
             </div>
@@ -220,5 +204,15 @@
   <script src="assets/js/custom.js"></script>
   <!-- Your daily prices logic file -->
   <script src="assets/js/dailyprices.js"></script>
+  
+  <script>
+    // Update the displayed discount percentage as the slider moves
+    const slider = document.getElementById('percentageDiscount');
+    const discountValue = document.getElementById('discountValue');
+    
+    slider.addEventListener('input', function() {
+      discountValue.textContent = slider.value + '%';
+    });
+  </script>
 </body>
 </html>
