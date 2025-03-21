@@ -61,12 +61,35 @@ const dailyPrices = {
   '2025-10-03': 85, '2025-10-04': 85
 };  
 
+document.addEventListener('DOMContentLoaded', function() {
+  const disabledDiscountBtn = document.getElementById('disabledDiscountBtn');
+  const disabledFields = document.getElementById('disabledFields');
+  
+  // Initially hide the panel
+  disabledFields.style.display = 'none';
+  
+  // On button click, toggle the panel's visibility
+  disabledDiscountBtn.addEventListener('click', function() {
+    if (disabledFields.style.display === 'none' || disabledFields.style.display === '') {
+      disabledFields.style.display = 'block';
+    } else {
+      disabledFields.style.display = 'none';
+    }
+  });
+});
+
 
 function calculateTotalPrice() {
   const startDate = new Date(document.getElementById('startDate').value);
   const endDate = new Date(document.getElementById('endDate').value);
   const adults = parseInt(document.getElementById('adults').value) || 0;
   const children05 = parseInt(document.getElementById('children05').value) || 0;
+    
+  // NEW: Disabled counts
+  let disabledAdults = parseInt(document.getElementById('disabledAdults')?.value) || 0;
+  let disabledChildren612 = parseInt(document.getElementById('disabledChildren612')?.value) || 0;
+
+
   const children612 = parseInt(document.getElementById('children612').value) || 0;
   const petService = document.getElementById('petService').checked;
   const cribService = document.getElementById('cribService').checked;
@@ -77,59 +100,110 @@ function calculateTotalPrice() {
   const percentageDiscount = parseFloat(document.getElementById('percentageDiscount').value) || 0;
   // (Optional) Remove custom discount if no longer needed
   // const customDiscount = parseFloat(document.getElementById('customDiscount').value) || 0;
-  
   let totalPrice = 0;
-  let nights = 0;
-  
-  // Calculate base price from dailyPrices
-  for (let d = new Date(startDate); d < endDate; d.setDate(d.getDate() + 1)) {
+let nights = 0;
+
+// Calculate base price from dailyPrices
+for (let d = new Date(startDate); d < endDate; d.setDate(d.getDate() + 1)) {
     const dateString = d.toISOString().split('T')[0];
     if (dailyPrices.hasOwnProperty(dateString)) {
-      totalPrice += dailyPrices[dateString];
-      nights++;
+        totalPrice += dailyPrices[dateString];
+        nights++;
     }
-  }
-  
-  // Calculate price for adults
-  if (adults <= 2) {
-    totalPrice *= adults;
-  } else {
-    totalPrice *= 2; // Full price for first two adults
-    let discountedAdults = adults - 2;
-    totalPrice += (totalPrice * 0.8 * discountedAdults); // 20% off for additional adults
-  }
-  
-  // Calculate price for children 6-12 (50% off)
-  totalPrice += (totalPrice * 0.5 * children612);
-  
-  // Calculate club card cost if not removed
-  let clubCardCost = 0;
-  if (!removeClubCard) {
-    let peoplePayingClubCard = adults + children612;
-    clubCardCost = 6 * peoplePayingClubCard * nights;
-  }
-  totalPrice += clubCardCost;
-  
-  // Apply loyalty discount (10% off)
-  if (loyaltyCustomer) {
+}
+
+// Store original base price per night for calculations
+const baseNightlyPrice = totalPrice / nights;
+
+// Split non-disabled and disabled adults
+const nonDisabledAdults = adults - disabledAdults;
+
+// Reset totalPrice to properly calculate adult costs
+totalPrice = 0;
+
+/*************************************************
+ * 1) ADULTS Calculation
+ * - First 2 non-disabled adults pay full price.
+ * - Additional non-disabled adults pay 20% off.
+ * - Disabled adults pay 20% off, then an additional 10% off.
+ *************************************************/
+
+// First two non-disabled adults pay full price
+if (nonDisabledAdults > 0) {
+    const fullPayingAdults = Math.min(nonDisabledAdults, 2);
+    totalPrice += fullPayingAdults * baseNightlyPrice * nights;
+
+    // If there are extra non-disabled adults, they get 20% off
+    if (nonDisabledAdults > 2) {
+        const extraAdults = nonDisabledAdults - 2;
+        totalPrice += extraAdults * baseNightlyPrice * 0.8 * nights; // 20% discount
+    }
+}
+
+// Disabled adults get 20% off, then an extra 10% off
+if (disabledAdults > 0) {
+    totalPrice += disabledAdults * baseNightlyPrice * 0.8 * 0.9 * nights;
+}
+
+/*************************************************
+ * 2) CHILDREN (6-12) Calculation
+ * - Normal children pay 50% of the base price.
+ * - Disabled children get an extra 10% off on top of the 50%.
+ *************************************************/
+const normalChildren = children612 - disabledChildren612;
+const childBase = baseNightlyPrice * 0.5; // 50% discount for normal children
+let normalChildrenCost = normalChildren * childBase * nights;
+let disabledChildrenCost = 0;
+
+// Disabled children get an additional 10% discount
+if (disabledChildren612 > 0) {
+    disabledChildrenCost = disabledChildren612 * childBase * 0.9 * nights;
+}
+
+// Add child costs
+totalPrice += normalChildrenCost + disabledChildrenCost;
+
+
+
+/*************************************************
+ * 4) Loyalty Discount (10%)
+ *************************************************/
+if (loyaltyCustomer) {
     totalPrice *= 0.9;
-  }
-  
-  // (Optional) Apply custom discount if needed
-  // totalPrice = Math.max(0, totalPrice - customDiscount);
-  
-  // Apply percentage discount from slider
-  if (percentageDiscount > 0) {
+}
+
+/*************************************************
+ * 5) Percentage Discount from Slider
+ *************************************************/
+if (percentageDiscount > 0) {
     totalPrice *= (1 - percentageDiscount / 100);
-  }
-  
-  // Add extras cost
-  let extrasCost = 0;
-  if (poolView) extrasCost += 10 * nights;
-  if (petService) extrasCost += 30;
-  if (cribService) extrasCost += 10 * nights;
-  
-  totalPrice += extrasCost;
+}
+
+/*************************************************
+ * 6) Extra Services Cost (if selected)
+ *************************************************/
+
+/*************************************************
+ * 3) Club Card Cost
+ * - Only non-disabled adults + normal children pay for the club card.
+ * - Disabled adults and disabled children don’t pay for the club card.
+ *************************************************/
+let clubCardCost = 0;
+if (!removeClubCard) {
+    const payingClub = nonDisabledAdults + normalChildren;
+    clubCardCost = 6 * payingClub * nights;
+}
+totalPrice += clubCardCost;
+
+let extrasCost = 0;
+if (poolView) extrasCost += 10 * nights;
+if (petService) extrasCost += 30;
+if (cribService) extrasCost += 10 * nights;
+
+// Add extras cost
+totalPrice += extrasCost;
+
+
   
   document.getElementById('totalPrice').textContent = `Prezzo totale: €${totalPrice.toFixed(2)}`;
 }
