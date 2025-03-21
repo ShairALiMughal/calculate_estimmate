@@ -151,7 +151,18 @@ function generateBookingMessage() {
   const totalPrice = parseFloat(totalPriceElement.textContent.split('€')[1]);
   const deposit = totalPrice * 0.2;
   const remainingPayment = totalPrice - deposit;
-  
+  document.addEventListener('DOMContentLoaded', function() {
+    const discountBtn = document.getElementById('discountBtn');
+    if (discountBtn) {
+      discountBtn.addEventListener('click', function() {
+        const discountPanel = document.getElementById('discountPanel');
+        if (!discountPanel) return;
+        // Toggle the panel's visibility
+        discountPanel.style.display = (discountPanel.style.display === 'block') ? 'none' : 'block';
+      });
+    }
+  });
+   
   const formatDate = (date) => {
     return `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getFullYear()}`;
   };

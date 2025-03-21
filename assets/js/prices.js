@@ -115,7 +115,42 @@ function loadSlots() {
 }
 
 saveSlots();
+/*************************************************
+ * prices.js (with Disabled Persons Logic)
+ *************************************************/
 
+// Assume 'slots' is defined somewhere above (your big array)
+slots.sort((a, b) => new Date(a.start) - new Date(b.start));
+
+function saveSlots() {
+  localStorage.setItem('hotelSlots', JSON.stringify(slots));
+}
+
+function loadSlots() {
+  const savedSlots = localStorage.getItem('hotelSlots');
+  return savedSlots ? JSON.parse(savedSlots) : slots;
+}
+
+saveSlots();
+// Toggle Disabled Fields Panel
+document.addEventListener('DOMContentLoaded', function() {
+  const disabledDiscountBtn = document.getElementById('disabledDiscountBtn');
+  const disabledFields = document.getElementById('disabledFields');
+  
+  // Initially hide the panel
+  disabledFields.style.display = 'none';
+  
+  // On button click, toggle the panel's visibility
+  disabledDiscountBtn.addEventListener('click', function() {
+    if (disabledFields.style.display === 'none' || disabledFields.style.display === '') {
+      disabledFields.style.display = 'block';
+    } else {
+      disabledFields.style.display = 'none';
+    }
+  });
+});
+
+// Main DOMContentLoaded block for custom select, slider, and form events
 document.addEventListener('DOMContentLoaded', function() {
   // --- Setup Custom Select ---
   const customSlotSelect = document.getElementById('customSlotSelect');
@@ -141,7 +176,7 @@ document.addEventListener('DOMContentLoaded', function() {
       option.setAttribute('data-value', JSON.stringify(slot));
       option.textContent = slot.description;
   
-      // Set background color based on number of nights
+      // Color based on nights
       if (slot.nights === 2) {
         option.style.backgroundColor = '#90EE90';
       } else if (slot.nights === 3) {
@@ -155,7 +190,7 @@ document.addEventListener('DOMContentLoaded', function() {
       optionsContainer.appendChild(option);
     });
   
-    // Option selection
+    // Select option
     optionsContainer.addEventListener('click', function(e) {
       if (e.target.classList.contains('custom-option')) {
         triggerSpan.textContent = e.target.textContent;
@@ -173,7 +208,7 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
   
-    // Close custom select on outside click
+    // Close custom select when clicking outside
     document.addEventListener('click', function(e) {
       if (!customSelect.contains(e.target)) {
         customSelect.classList.remove('open');
@@ -190,7 +225,7 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     });
   
-    // Additional update after option click (using a short delay)
+    // Additional update after option click
     const options = customSelect.querySelectorAll('.custom-option');
     options.forEach(option => {
       option.addEventListener('click', function() {
@@ -199,8 +234,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
   
-  // --- Setup Discount Slider ---
-  // (Assuming your HTML now uses a slider with ID "percentageDiscount" and a label with ID "discountValue")
+  // Discount Slider
   const percentageDiscountSlider = document.getElementById('percentageDiscount');
   const discountValueLabel = document.getElementById('discountValue');
   if (percentageDiscountSlider && discountValueLabel) {
@@ -210,7 +244,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
   
-  // --- Setup Form Input Listeners ---
+  // Form Input Listeners
   const form = document.getElementById('scheduleForm');
   if (form) {
     form.querySelectorAll('input, select').forEach(input => {
@@ -223,19 +257,33 @@ document.addEventListener('DOMContentLoaded', function() {
   calculateTotalPrice();
 });
 
+/*************************************************
+ * Calculate Price with Disabled Logic
+ *************************************************/
 function calculateTotalPrice() {
+  // Get selected slot
   const customSelect = document.querySelector('.custom-select');
   const selectedSlotData = customSelect ? customSelect.getAttribute('data-value') : null;
   const selectedSlot = selectedSlotData ? JSON.parse(selectedSlotData) : {};
   
+  // If no slot chosen
   if (!selectedSlot.price) {
     document.getElementById('totalPrice').textContent = 'Prezzo totale: €0.00';
     return;
   }
   
+  // Gather inputs
   const adults = parseInt(document.getElementById('adults').value) || 0;
   const children05 = parseInt(document.getElementById('children05').value) || 0;
   const children612 = parseInt(document.getElementById('children612').value) || 0;
+  
+  // NEW: Disabled counts
+  let disabledAdults = parseInt(document.getElementById('disabledAdults')?.value) || 0;
+  let disabledChildren612 = parseInt(document.getElementById('disabledChildren612')?.value) || 0;
+  // Ensure we don't exceed the actual counts
+  if (disabledAdults > adults) disabledAdults = adults;
+  if (disabledChildren612 > children612) disabledChildren612 = children612;
+  
   const petService = document.getElementById('petService').checked;
   const cribService = document.getElementById('cribService').checked;
   const poolView = document.getElementById('poolView').checked;
@@ -243,57 +291,116 @@ function calculateTotalPrice() {
   const removeClubCard = document.getElementById('removeClubCard').checked;
   const percentageDiscount = parseFloat(document.getElementById('percentageDiscount').value) || 0;
   
-  let basePrice = selectedSlot.price;
-  let totalPrice = 0;
-  
-  // Calculate price for adults
-  if (adults <= 2) {
-    totalPrice += basePrice * adults;
-  } else {
-    totalPrice += basePrice * 2;
-    const discountedAdults = adults - 2;
-    const discountedPrice = basePrice * 0.8;
-    totalPrice += discountedPrice * discountedAdults;
-  }
-  
-  // Price for children (6-12 get 50% off)
-  const childPrice = basePrice * 0.5;
-  totalPrice += childPrice * children612;
-  
-  // Apply loyalty discount (10%)
-  if (loyaltyCustomer) {
+
+
+const basePrice = selectedSlot.price; // Base price for the selected slot
+let totalPrice = 0;
+
+/*************************************************
+ * 1) ADULTS Calculation
+ * - First 2 non-disabled adults pay full price.
+ * - Additional non-disabled adults pay 20% off.
+ * - Disabled adults pay 20% off, then an additional 10% off.
+ *************************************************/
+
+// Split the group
+const nonDisabledAdults = adults - disabledAdults;
+let adultCost = 0;
+let disabledCost = 0;
+
+// First two non-disabled adults pay full price
+if (nonDisabledAdults > 0) {
+    const fullPayingAdults = Math.min(nonDisabledAdults, 2); // Max 2 at full price
+    adultCost += fullPayingAdults * basePrice;
+
+    // If there are more non-disabled adults, they get 20% off
+    if (nonDisabledAdults > 2) {
+        const extraAdults = nonDisabledAdults - 2;
+        adultCost += extraAdults * basePrice * 0.8; // 20% discount
+    }
+}
+
+// Disabled adults calculation: 20% off, then 10% off
+if (disabledAdults > 0) {
+    disabledCost = disabledAdults * basePrice * 0.8 * 0.9; // 20% off, then 10% off
+}
+
+// Add to total
+totalPrice += adultCost + disabledCost;
+
+/*************************************************
+ * 2) CHILDREN (6-12) Calculation
+ * - Each child pays 50% of the base price.
+ *************************************************/
+const normalChildren = children612 - disabledChildren612;
+const childBase = basePrice * 0.5; // 50% discount for each child
+let normalChildrenCost = normalChildren * childBase;
+let disabledChildrenCost = 0;
+
+// Disabled children get an additional 10% discount on top of 50%
+if (disabledChildren612 > 0) {
+    disabledChildrenCost = disabledChildren612 * childBase * 0.9;
+}
+
+// Add to total
+totalPrice += (normalChildrenCost + disabledChildrenCost);
+
+
+/*************************************************
+ * 4) Loyalty Discount (10%)
+ *************************************************/
+if (loyaltyCustomer) {
     totalPrice *= 0.9;
-  }
-  
-  // Apply percentage discount from slider
-  if (percentageDiscount > 0) {
+}
+
+/*************************************************
+ * 5) Percentage Discount from Slider
+ *************************************************/
+if (percentageDiscount > 0) {
     totalPrice *= (1 - percentageDiscount / 100);
-  }
-  
-  // Club card cost if not removed
-  let clubCardCost = 0;
-  if (!removeClubCard) {
-    const peoplePayingClubCard = adults + children612;
-    clubCardCost = 6 * peoplePayingClubCard * selectedSlot.nights;
-  }
-  totalPrice += clubCardCost;
-  
-  // Add extras
-  let extrasCost = 0;
-  if (poolView) extrasCost += 10 * selectedSlot.nights;
-  if (petService) extrasCost += 30;
-  if (cribService) extrasCost += 10 * selectedSlot.nights;
-  
-  totalPrice += extrasCost;
+}
+
+/*************************************************
+ * 6) Extra Services Cost (if selected)
+ *************************************************/
+/*************************************************
+ * 3) Club Card Cost
+ * - Only non-disabled adults + normal children pay for the club card.
+ * - Disabled adults and disabled children don’t pay for the club card.
+ *************************************************/
+let clubCardCost = 0;
+if (!removeClubCard) {
+    const payingClub = nonDisabledAdults + normalChildren;
+    clubCardCost = 6 * payingClub * selectedSlot.nights;
+}
+totalPrice += clubCardCost;
+
+let extrasCost = 0;
+
+if (poolView) extrasCost += 10 * selectedSlot.nights;
+if (petService) extrasCost += 30;
+if (cribService) extrasCost += 10 * selectedSlot.nights;
+totalPrice += extrasCost;
+
+
+
   
   document.getElementById('totalPrice').textContent = `Prezzo totale: €${totalPrice.toFixed(2)}`;
   
+  // Debug logs
   console.log('Base Price:', basePrice);
+  console.log('Non-disabled Adults Cost:', adultCost);
+  console.log('Disabled Adults Cost:', disabledCost);
+  console.log('Normal Children (6-12) Cost:', normalChildrenCost);
+  console.log('Disabled Children (6-12) Cost:', disabledChildrenCost);
   console.log('Club Card Cost:', clubCardCost);
   console.log('Extras Cost:', extrasCost);
   console.log('Total:', totalPrice);
 }
 
+/*************************************************
+ * generateBookingMessage
+ *************************************************/
 function generateBookingMessage() {
   const customSelect = document.querySelector('.custom-select');
   const selectedSlotData = customSelect ? customSelect.getAttribute('data-value') : null;
@@ -338,7 +445,7 @@ function generateBookingMessage() {
     message += `Sconto percentuale applicato: ${percentageDiscount}%\n`;
   }
   
-  const clubCardCost = removeClubCard ? 0 : 6 * (adults + children612) * selectedSlot.nights;
+  const clubCardCost = removeClubCard ? 0 : 6 * (adults - (parseInt(document.getElementById('disabledAdults')?.value)||0) + (children612 - (parseInt(document.getElementById('disabledChildren612')?.value)||0)) ) * selectedSlot.nights;
   if (!removeClubCard) {
     message += `COSTO TESSERE CLUB: €${clubCardCost.toFixed(2)} (già incluso nel prezzo)\n\n`;
   } else {
@@ -376,6 +483,9 @@ function generateBookingMessage() {
   return message;
 }
 
+/*************************************************
+ * displayBookingMessage
+ *************************************************/
 function displayBookingMessage(message) {
   const existingMessageDiv = document.getElementById('bookingMessageDiv');
   if (existingMessageDiv) {
@@ -466,11 +576,13 @@ function displayBookingMessage(message) {
       whatsappButton.style.width = '100%';
     }
   };
-  
   handleMediaQueryChange(mediaQuery);
   mediaQuery.addEventListener('change', handleMediaQueryChange);
 }
 
+/*************************************************
+ * copyToClipboard
+ *************************************************/
 function copyToClipboard(text) {
   if (navigator.clipboard && navigator.clipboard.writeText) {
     return navigator.clipboard.writeText(text);
@@ -482,7 +594,6 @@ function copyToClipboard(text) {
       document.body.appendChild(textArea);
       textArea.focus();
       textArea.select();
-  
       try {
         const successful = document.execCommand('copy');
         document.body.removeChild(textArea);
@@ -499,6 +610,9 @@ function copyToClipboard(text) {
   }
 }
 
+/*************************************************
+ * openWhatsApp
+ *************************************************/
 function openWhatsApp() {
   const userAgent = navigator.userAgent || navigator.vendor || window.opera;
   let whatsappUrl;
@@ -520,6 +634,9 @@ function openWhatsApp() {
   }
 }
 
+/*************************************************
+ * resetForm
+ *************************************************/
 function resetForm() {
   const customSelect = document.querySelector('.custom-select');
   if (customSelect) {
@@ -542,6 +659,10 @@ function resetForm() {
     discountValueLabel.textContent = '0%';
   }
   
+  // Reset disabled fields
+  document.getElementById('disabledAdults').value = '0';
+  document.getElementById('disabledChildren612').value = '0';
+  
   // Reset checkboxes
   document.getElementById('petService').checked = false;
   document.getElementById('cribService').checked = false;
@@ -549,7 +670,7 @@ function resetForm() {
   document.getElementById('loyaltyCustomer').checked = false;
   document.getElementById('removeClubCard').checked = false;
   
-  // Hide discount panel if it exists (if still in the HTML)
+  // Hide discount panel if exists
   const discountPanel = document.getElementById('discountPanel');
   if (discountPanel) {
     discountPanel.style.display = 'none';
@@ -564,6 +685,7 @@ function resetForm() {
   }
 }
 
+// On form submission => generate & display message
 document.getElementById('scheduleForm').addEventListener('submit', function(e) {
   e.preventDefault();
   const bookingMessage = generateBookingMessage();
@@ -572,7 +694,14 @@ document.getElementById('scheduleForm').addEventListener('submit', function(e) {
   }
 });
 
-// Export functions if using modules
+// Export if needed (for Node.js environments)
 if (typeof module !== 'undefined' && module.exports) {
-  module.exports = { slots, saveSlots, loadSlots, calculateTotalPrice, generateBookingMessage, displayBookingMessage };
+  module.exports = {
+    slots,
+    saveSlots,
+    loadSlots,
+    calculateTotalPrice,
+    generateBookingMessage,
+    displayBookingMessage
+  };
 }
