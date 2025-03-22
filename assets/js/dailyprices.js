@@ -123,85 +123,102 @@ totalPrice = 0;
 
 /*************************************************
  * 1) ADULTS Calculation
- * - First 2 non-disabled adults pay full price.
- * - Additional non-disabled adults pay 20% off.
- * - Disabled adults pay 20% off, then an additional 10% off.
+ * - First non-disabled adult pays full price.
+ * - Extra non-disabled adults pay 20% off.
+ * - Disabled adults get 10% off, and if adults > 1, also 20% off first.
  *************************************************/
 
-// First two non-disabled adults pay full price
-if (nonDisabledAdults > 0) {
-    const fullPayingAdults = Math.min(nonDisabledAdults, 2);
-    totalPrice += fullPayingAdults * baseNightlyPrice * nights;
+let fullAdults = Math.min(nonDisabledAdults, 1); // First adult full price
+let extraAdults = Math.max(nonDisabledAdults - 1, 0); // Extra get 20% off
 
-    // If there are extra non-disabled adults, they get 20% off
-    if (nonDisabledAdults > 2) {
-        const extraAdults = nonDisabledAdults - 2;
-        totalPrice += extraAdults * baseNightlyPrice * 0.8 * nights; // 20% discount
-    }
+const fullAdultsCost = fullAdults * baseNightlyPrice * nights;
+const extraAdultsCost = extraAdults * baseNightlyPrice * 0.8 * nights;
+
+let disabledAdultsCost = 0;
+const basePrice = baseNightlyPrice * nights;
+
+if (adults > 1) {
+  const doubleDiscount = 1;
+  const onlyTenPercent = disabledAdults - 1;
+
+  if (doubleDiscount > 0) {
+    disabledAdultsCost += doubleDiscount * basePrice * 0.8 * 0.9; // 20% + 10% off
+  }
+
+  if (onlyTenPercent > 0) {
+    disabledAdultsCost += onlyTenPercent * basePrice * 0.9; // 10% off only
+  }
+
+} else {
+  disabledAdultsCost = disabledAdults * basePrice * 0.9;
 }
 
-// Disabled adults get 20% off, then an extra 10% off
-if (disabledAdults > 0) {
-    totalPrice += disabledAdults * baseNightlyPrice * 0.8 * 0.9 * nights;
-}
+
+const adultCost = fullAdultsCost + extraAdultsCost;
+const disabledCost = disabledAdultsCost;
+
+totalPrice += adultCost + disabledCost;
 
 /*************************************************
  * 2) CHILDREN (6-12) Calculation
- * - Normal children pay 50% of the base price.
- * - Disabled children get an extra 10% off on top of the 50%.
  *************************************************/
 const normalChildren = children612 - disabledChildren612;
-const childBase = baseNightlyPrice * 0.5; // 50% discount for normal children
-let normalChildrenCost = normalChildren * childBase * nights;
+const childBase = baseNightlyPrice * 0.5;
+
+const normalChildrenCost = normalChildren * childBase * nights;
 let disabledChildrenCost = 0;
 
-// Disabled children get an additional 10% discount
 if (disabledChildren612 > 0) {
-    disabledChildrenCost = disabledChildren612 * childBase * 0.9 * nights;
+  disabledChildrenCost = disabledChildren612 * childBase * 0.9 * nights;
 }
 
-// Add child costs
 totalPrice += normalChildrenCost + disabledChildrenCost;
 
-
+/*************************************************
+ * 3) Club Card Cost
+ *************************************************/
+let clubCardCost = 0;
+if (!removeClubCard) {
+  const payingClub = nonDisabledAdults + normalChildren;
+  clubCardCost = 6 * payingClub * nights;
+}
+totalPrice += clubCardCost;
 
 /*************************************************
  * 4) Loyalty Discount (10%)
  *************************************************/
 if (loyaltyCustomer) {
-    totalPrice *= 0.9;
+  totalPrice *= 0.9;
 }
 
 /*************************************************
  * 5) Percentage Discount from Slider
  *************************************************/
 if (percentageDiscount > 0) {
-    totalPrice *= (1 - percentageDiscount / 100);
+  totalPrice *= (1 - percentageDiscount / 100);
 }
 
 /*************************************************
- * 6) Extra Services Cost (if selected)
+ * 6) Extra Services Cost
  *************************************************/
-
-/*************************************************
- * 3) Club Card Cost
- * - Only non-disabled adults + normal children pay for the club card.
- * - Disabled adults and disabled children don’t pay for the club card.
- *************************************************/
-let clubCardCost = 0;
-if (!removeClubCard) {
-    const payingClub = nonDisabledAdults + normalChildren;
-    clubCardCost = 6 * payingClub * nights;
-}
-totalPrice += clubCardCost;
-
 let extrasCost = 0;
 if (poolView) extrasCost += 10 * nights;
 if (petService) extrasCost += 30;
 if (cribService) extrasCost += 10 * nights;
 
-// Add extras cost
 totalPrice += extrasCost;
+
+/*************************************************
+ * Debug logs — breakdown of costs
+ *************************************************/
+console.log('Base Price per Night:', baseNightlyPrice.toFixed(2));
+console.log('Non-disabled Adults Cost:', adultCost.toFixed(2));
+console.log('Disabled Adults Cost:', disabledCost.toFixed(2));
+console.log('Normal Children (6-12) Cost:', normalChildrenCost.toFixed(2));
+console.log('Disabled Children (6-12) Cost:', disabledChildrenCost.toFixed(2));
+console.log('Club Card Cost:', clubCardCost.toFixed(2));
+console.log('Extras Cost:', extrasCost.toFixed(2));
+console.log('Total:', totalPrice.toFixed(2));
 
 
   
