@@ -84,146 +84,120 @@ function calculateTotalPrice() {
   const endDate = new Date(document.getElementById('endDate').value);
   const adults = parseInt(document.getElementById('adults').value) || 0;
   const children05 = parseInt(document.getElementById('children05').value) || 0;
-    
-  // NEW: Disabled counts
-  let disabledAdults = parseInt(document.getElementById('disabledAdults')?.value) || 0;
-  let disabledChildren612 = parseInt(document.getElementById('disabledChildren612')?.value) || 0;
-
-
+  const disabledAdults = parseInt(document.getElementById('disabledAdults')?.value) || 0;
+  const disabledChildren612 = parseInt(document.getElementById('disabledChildren612')?.value) || 0;
   const children612 = parseInt(document.getElementById('children612').value) || 0;
   const petService = document.getElementById('petService').checked;
   const cribService = document.getElementById('cribService').checked;
   const poolView = document.getElementById('poolView').checked;
   const loyaltyCustomer = document.getElementById('loyaltyCustomer').checked;
   const removeClubCard = document.getElementById('removeClubCard').checked;
-  // Use the discount slider value
   const percentageDiscount = parseFloat(document.getElementById('percentageDiscount').value) || 0;
-  // (Optional) Remove custom discount if no longer needed
-  // const customDiscount = parseFloat(document.getElementById('customDiscount').value) || 0;
-  let totalPrice = 0;
-let nights = 0;
 
-// Calculate base price from dailyPrices
-for (let d = new Date(startDate); d < endDate; d.setDate(d.getDate() + 1)) {
+  let totalPrice = 0;
+  let nights = 0;
+
+  // Calculate base price from dailyPrices
+  for (let d = new Date(startDate); d < endDate; d.setDate(d.getDate() + 1)) {
     const dateString = d.toISOString().split('T')[0];
     if (dailyPrices.hasOwnProperty(dateString)) {
-        totalPrice += dailyPrices[dateString];
-        nights++;
+      totalPrice += dailyPrices[dateString];
+      nights++;
     }
-}
+  }
 
-// Store original base price per night for calculations
-const baseNightlyPrice = totalPrice / nights;
+  const baseNightlyPrice = totalPrice / nights;
+  const basePrice = baseNightlyPrice * nights;
 
-// Split non-disabled and disabled adults
-const nonDisabledAdults = adults - disabledAdults;
+  // Reset price for proper calculation
+  totalPrice = 0;
 
-// Reset totalPrice to properly calculate adult costs
-totalPrice = 0;
+  /*************************************************
+   * 1) ADULTS
+   *************************************************/
+  const nonDisabledAdults = adults - disabledAdults;
 
-/*************************************************
- * 1) ADULTS Calculation
- * - First non-disabled adult pays full price.
- * - Extra non-disabled adults pay 20% off.
- * - Disabled adults get 10% off, and if adults > 1, also 20% off first.
- *************************************************/
+  // First 2 non-disabled adults at full price, rest at 20% off
+  const fullAdults = Math.min(nonDisabledAdults, 2);
+  const extraAdults = Math.max(nonDisabledAdults - 2, 0);
+  const fullAdultsCost = fullAdults * basePrice;
+  const extraAdultsCost = extraAdults * basePrice * 0.8;
 
-let fullAdults = Math.min(nonDisabledAdults, 1); // First adult full price
-let extraAdults = Math.max(nonDisabledAdults - 1, 0); // Extra get 20% off
-
-const fullAdultsCost = fullAdults * baseNightlyPrice * nights;
-const extraAdultsCost = extraAdults * baseNightlyPrice * 0.8 * nights;
-
-let disabledAdultsCost = 0;
-const basePrice = baseNightlyPrice * nights;
-
-if (adults > 1) {
-  const doubleDiscount = 1;
-  const onlyTenPercent = disabledAdults - 1;
+  // Disabled adults: some may get 20% + 10%, others just 10%
+  let disabledAdultsCost = 0;
+  const doubleDiscount = Math.min(disabledAdults, Math.max(0, adults - 2));
+  const singleDiscount = disabledAdults - doubleDiscount;
 
   if (doubleDiscount > 0) {
-    disabledAdultsCost += doubleDiscount * basePrice * 0.8 * 0.9; // 20% + 10% off
+    disabledAdultsCost += doubleDiscount * basePrice * 0.8 * 0.9;
+  }
+  if (singleDiscount > 0) {
+    disabledAdultsCost += singleDiscount * basePrice * 0.9;
   }
 
-  if (onlyTenPercent > 0) {
-    disabledAdultsCost += onlyTenPercent * basePrice * 0.9; // 10% off only
+  const adultCost = fullAdultsCost + extraAdultsCost;
+  const disabledCost = disabledAdultsCost;
+  totalPrice += adultCost + disabledCost;
+
+  /*************************************************
+   * 2) CHILDREN (6-12)
+   *************************************************/
+  const normalChildren = children612 - disabledChildren612;
+  const childBase = basePrice * 0.5;
+  const normalChildrenCost = normalChildren * childBase;
+  const disabledChildrenCost = disabledChildren612 * childBase * 0.9;
+
+  totalPrice += normalChildrenCost + disabledChildrenCost;
+
+  /*************************************************
+   * 3) CLUB CARD
+   *************************************************/
+  let clubCardCost = 0;
+  if (!removeClubCard) {
+    const payingClub = nonDisabledAdults + normalChildren;
+    clubCardCost = 6 * payingClub * nights;
+    totalPrice += clubCardCost;
   }
 
-} else {
-  disabledAdultsCost = disabledAdults * basePrice * 0.9;
-}
+  /*************************************************
+   * 4) LOYALTY DISCOUNT
+   *************************************************/
+  if (loyaltyCustomer) {
+    totalPrice *= 0.9;
+  }
 
+  /*************************************************
+   * 5) PERCENTAGE DISCOUNT
+   *************************************************/
+  if (percentageDiscount > 0) {
+    totalPrice *= (1 - percentageDiscount / 100);
+  }
 
-const adultCost = fullAdultsCost + extraAdultsCost;
-const disabledCost = disabledAdultsCost;
+  /*************************************************
+   * 6) EXTRAS
+   *************************************************/
+  let extrasCost = 0;
+  if (poolView) extrasCost += 10 * nights;
+  if (petService) extrasCost += 30;
+  if (cribService) extrasCost += 10 * nights;
+  totalPrice += extrasCost;
 
-totalPrice += adultCost + disabledCost;
+  /*************************************************
+   * DEBUG LOGS
+   *************************************************/
+  console.log('Base Price per Night:', baseNightlyPrice.toFixed(2));
+  console.log('Non-disabled Adults Cost:', adultCost.toFixed(2));
+  console.log('Disabled Adults Cost:', disabledCost.toFixed(2));
+  console.log('Normal Children (6-12) Cost:', normalChildrenCost.toFixed(2));
+  console.log('Disabled Children (6-12) Cost:', disabledChildrenCost.toFixed(2));
+  console.log('Club Card Payers:', `${nonDisabledAdults} adults + ${normalChildren} children = ${nonDisabledAdults + normalChildren}`);
+  console.log('Club Card Cost:', clubCardCost.toFixed(2));
+  console.log('Extras Cost:', extrasCost.toFixed(2));
+  console.log('Total:', totalPrice.toFixed(2));
 
-/*************************************************
- * 2) CHILDREN (6-12) Calculation
- *************************************************/
-const normalChildren = children612 - disabledChildren612;
-const childBase = baseNightlyPrice * 0.5;
-
-const normalChildrenCost = normalChildren * childBase * nights;
-let disabledChildrenCost = 0;
-
-if (disabledChildren612 > 0) {
-  disabledChildrenCost = disabledChildren612 * childBase * 0.9 * nights;
-}
-
-totalPrice += normalChildrenCost + disabledChildrenCost;
-
-/*************************************************
- * 3) Club Card Cost
- *************************************************/
-let clubCardCost = 0;
-if (!removeClubCard) {
-  const payingClub = nonDisabledAdults + normalChildren;
-  clubCardCost = 6 * payingClub * nights;
-}
-totalPrice += clubCardCost;
-
-/*************************************************
- * 4) Loyalty Discount (10%)
- *************************************************/
-if (loyaltyCustomer) {
-  totalPrice *= 0.9;
-}
-
-/*************************************************
- * 5) Percentage Discount from Slider
- *************************************************/
-if (percentageDiscount > 0) {
-  totalPrice *= (1 - percentageDiscount / 100);
-}
-
-/*************************************************
- * 6) Extra Services Cost
- *************************************************/
-let extrasCost = 0;
-if (poolView) extrasCost += 10 * nights;
-if (petService) extrasCost += 30;
-if (cribService) extrasCost += 10 * nights;
-
-totalPrice += extrasCost;
-
-/*************************************************
- * Debug logs — breakdown of costs
- *************************************************/
-console.log('Base Price per Night:', baseNightlyPrice.toFixed(2));
-console.log('Non-disabled Adults Cost:', adultCost.toFixed(2));
-console.log('Disabled Adults Cost:', disabledCost.toFixed(2));
-console.log('Normal Children (6-12) Cost:', normalChildrenCost.toFixed(2));
-console.log('Disabled Children (6-12) Cost:', disabledChildrenCost.toFixed(2));
-console.log('Club Card Cost:', clubCardCost.toFixed(2));
-console.log('Extras Cost:', extrasCost.toFixed(2));
-console.log('Total:', totalPrice.toFixed(2));
-
-
-  
   document.getElementById('totalPrice').textContent = `Prezzo totale: €${totalPrice.toFixed(2)}`;
 }
+
 
 function generateBookingMessage() {
   const startDate = new Date(document.getElementById('startDate').value);
