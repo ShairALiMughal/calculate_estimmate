@@ -149,15 +149,6 @@ function calculateTotalPrice() {
 
   totalPrice += normalChildrenCost + disabledChildrenCost;
 
-  /*************************************************
-   * 3) CLUB CARD
-   *************************************************/
-  let clubCardCost = 0;
-  if (!removeClubCard) {
-    const payingClub = nonDisabledAdults + normalChildren;
-    clubCardCost = 6 * payingClub * nights;
-    totalPrice += clubCardCost;
-  }
 
   /*************************************************
    * 4) LOYALTY DISCOUNT
@@ -173,6 +164,15 @@ function calculateTotalPrice() {
     totalPrice *= (1 - percentageDiscount / 100);
   }
 
+  /*************************************************
+   * 3) CLUB CARD
+   *************************************************/
+  let clubCardCost = 0;
+  if (!removeClubCard) {
+    const payingClub = nonDisabledAdults + normalChildren;
+    clubCardCost = 6 * payingClub * nights;
+    totalPrice += clubCardCost;
+  }
   /*************************************************
    * 6) EXTRAS
    *************************************************/
@@ -451,8 +451,38 @@ function openWhatsApp() {
     alert('Messaggio copiato negli appunti. Incolla nella chat di WhatsApp.');
   }
 }
-
 function resetForm() {
+  // Reset date inputs
+  document.getElementById('startDate').value = '';
+  document.getElementById('endDate').value = '';
+
+  // Reset number inputs
+  document.getElementById('adults').value = '1';
+  document.getElementById('children05').value = '0';
+  document.getElementById('children612').value = '0';
+  document.getElementById('disabledAdults').value = '0';
+  document.getElementById('disabledChildren612').value = '0';
+
+  // Reset discount slider
+  document.getElementById('percentageDiscount').value = '0';
+  const discountValueLabel = document.getElementById('discountValue');
+  if (discountValueLabel) {
+    discountValueLabel.textContent = '0%';
+  }
+
+  // Reset checkboxes
+  document.getElementById('petService').checked = false;
+  document.getElementById('cribService').checked = false;
+  document.getElementById('poolView').checked = false;
+  document.getElementById('loyaltyCustomer').checked = false;
+  document.getElementById('removeClubCard').checked = false;
+
+  // Reset custom discount if it exists
+  const customDiscountField = document.getElementById('customDiscount');
+  if (customDiscountField) {
+    customDiscountField.value = '0';
+  }
+
   // Reset custom select (if applicable)
   const customSelect = document.querySelector('.custom-select');
   if (customSelect) {
@@ -460,31 +490,19 @@ function resetForm() {
     triggerSpan.textContent = 'Seleziona un periodo';
     customSelect.removeAttribute('data-value');
   }
-  // Reset number inputs
-  document.getElementById('adults').value = '1';
-  document.getElementById('children05').value = '0';
-  document.getElementById('children612').value = '0';
-  // Reset discount slider
-  document.getElementById('percentageDiscount').value = '0';
-  const discountValueLabel = document.getElementById('discountValue');
-  if (discountValueLabel) {
-    discountValueLabel.textContent = '0%';
+
+  // Hide disabled fields panel
+  const disabledFields = document.getElementById('disabledFields');
+  if (disabledFields) {
+    disabledFields.style.display = 'none';
   }
-  // Reset checkboxes
-  document.getElementById('petService').checked = false;
-  document.getElementById('cribService').checked = false;
-  document.getElementById('poolView').checked = false;
-  document.getElementById('loyaltyCustomer').checked = false;
-  document.getElementById('removeClubCard').checked = false;
-  // If a custom discount field exists and is no longer used, you can reset it as well
-  const customDiscountField = document.getElementById('customDiscount');
-  if (customDiscountField) {
-    customDiscountField.value = '0';
-  }
+
   // Reset total price display
   document.getElementById('totalPrice').textContent = 'Prezzo totale: €0.00';
+
+  // Recalculate total just in case
   calculateTotalPrice();
-  
+
   // Hide booking message if it exists
   const bookingMessageDiv = document.getElementById('bookingMessageDiv');
   if (bookingMessageDiv) {
