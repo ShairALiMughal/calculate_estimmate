@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 });
-
+let payingclients=0;
 
 function calculateTotalPrice() {
   const startDate = new Date(document.getElementById('startDate').value);
@@ -93,7 +93,7 @@ function calculateTotalPrice() {
   const loyaltyCustomer = document.getElementById('loyaltyCustomer').checked;
   const removeClubCard = document.getElementById('removeClubCard').checked;
   const percentageDiscount = parseFloat(document.getElementById('percentageDiscount').value) || 0;
-
+  payingclients = adults + children612;
   let totalPrice = 0;
   let nights = 0;
 
@@ -231,10 +231,30 @@ function generateBookingMessage() {
   const formatDate = (date) => {
     return `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getFullYear()}`;
   };
+  let roomtypeselction="";
+  if(payingclients == 1){
+    roomtypeselction = "Singola";
+  }
+  if(payingclients==2)
+  {
+    roomtypeselction = "matrimoniale";
+  }
+  if(payingclients == 3){
+    roomtypeselction = "tripla";
+  }
+  if(payingclients==4)
+  {
+    roomtypeselction = "quadrupla";
+  }
+  if(payingclients>4)
+    {
+      roomtypeselction = "quintupla";
+    }
   
   let message = `PREVENTIVO PER IL GRAND HOTEL SELINUNTE.\n\n`;
   message += `🗓️ PERIODO DEL SOGGIORNO:\n`;
   message += `Dal ${formatDate(startDate)} al ${formatDate(endDate)}\n`;
+  message += `Tipologia di camera: ${roomtypeselction}\n`;
   message += `Numero di notti: ${Math.round((endDate - startDate) / (1000 * 60 * 60 * 24))}\n\n`;
   
   message += `🗓️ECCO LA NOSTRA MIGLIORE OFFERTA\n`;
