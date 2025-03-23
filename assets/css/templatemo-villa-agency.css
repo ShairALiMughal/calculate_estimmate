@@ -465,7 +465,7 @@ Header Style
 
 .header-area .main-nav .nav li:last-child a {
   background-color: #1e1e1e;
-  color: #fff;
+  color: #1e1e1e;
   font-size: 14px;
   font-weight: 400;
   text-transform: none;
@@ -1704,13 +1704,13 @@ body {
 
 @media (max-width: 767px) {
   .header-area .main-nav .logo h1 {
-    line-height: 80px !important;
+    line-height: auto !important;
   }
   .best-deal .tabs-content .nav-link {
     font-size: 14px;
     padding: 0px 15px;
-    height: 44px;
-    line-height: 44px;
+    height: auto;
+    line-height: auto;
   }
   .best-deal .tabs-content ul.nav-tabs li {
     margin: 0px 5px;
@@ -1722,9 +1722,7 @@ body {
   .properties ul.properties-filter li {
     margin: 5px;
   }
-  .header-area .main-nav .nav li:last-child {
-    display: none;
-  }
+  
 }
 
 @media (max-width: 992px) {
