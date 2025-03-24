@@ -100,21 +100,21 @@ const slots = [
   { start: "2025-09-28", end: "2025-10-02", nights: 4, price: 320, description: "Dal 28 settembre al 2 ottobre 320€ (4 notti)" },
   { start: "2025-10-02", end: "2025-10-05", nights: 3, price: 235, description: "Dal 2 al 5 ottobre 235€ (3 notti)" }
 ,
-    { start: "2025-04-19", end: "2025-04-21", nights: 2, price: 159, description: "Dal 19 al 21 aprile 159€ (2 notti)" },
-    { start: "2025-04-21", end: "2025-04-25", nights: 4, price: 169, description: "Dal 21 al 25 aprile 169€ (4 notti)" },
-    { start: "2025-04-25", end: "2025-04-27", nights: 2, price: 159, description: "Dal 25 al 27 aprile 159€ (2 notti)" },
-    { start: "2025-04-27", end: "2025-05-01", nights: 4, price: 249, description: "Dal 27 aprile al 01 Maggio 249€ (4 notti)" },
-    { start: "2025-05-01", end: "2025-05-02", nights: 1, price: 99, description: "Dal 01/5 al 02/5 99€ (1 notte)" },
-    { start: "2025-05-01", end: "2025-05-04", nights: 3, price: 249, description: "Dal 01/05 al 04/05 249€ (3 notti)" },
-    { start: "2025-05-04", end: "2025-05-08", nights: 4, price: 249, description: "Dal 04/5 al 08/05 249€ (4 notti)" },
-    { start: "2025-05-09", end: "2025-05-11", nights: 2, price: 179, description: "Dal 09/05 al 11/05 179€ (2 notti)" },
-    { start: "2025-05-11", end: "2025-05-15", nights: 4, price: 249, description: "Dal 11/5 al 15/5 249€ (4 notti)" },
-    { start: "2025-05-16", end: "2025-05-18", nights: 2, price: 179, description: "Dal 16/5 al 18/5 179€ (2 notti)" },
-    { start: "2025-05-18", end: "2025-05-22", nights: 4, price: 249, description: "Dal 18/5 al 22/5 249€ (4 notti)" },
-    { start: "2025-05-23", end: "2025-05-25", nights: 2, price: 179, description: "Dal 23/5 al 25/5 179€ (2 notti)" },
-    { start: "2025-05-25", end: "2025-05-29", nights: 4, price: 249, description: "Dal 25/5 al 29/5 249€ (4 notti)" },
-    { start: "2025-05-31", end: "2025-06-02", nights: 2, price: 199, description: "Dal 31/5 al 02/6 199€ (2 notti)" },
-    { start: "2025-09-12", end: "2025-09-14", nights: 2, price: 300, description: "Dal 12 al 14 settembre (evento giornalisti) 300€ (2 notti)" }
+    { start: "2025-04-19", end: "2025-04-21", nights: 2, price: 159, description: "over60 Dal 19 al 21 aprile 159€ (2 notti)" },
+    { start: "2025-04-21", end: "2025-04-25", nights: 4, price: 169, description: "over60 Dal 21 al 25 aprile 169€ (4 notti)" },
+    { start: "2025-04-25", end: "2025-04-27", nights: 2, price: 159, description: "over60 Dal 25 al 27 aprile 159€ (2 notti)" },
+    { start: "2025-04-27", end: "2025-05-01", nights: 4, price: 249, description: "over60 Dal 27 aprile al 01 Maggio 249€ (4 notti)" },
+    { start: "2025-05-01", end: "2025-05-02", nights: 1, price: 99, description: "over60 Dal 01/5 al 02/5 99€ (1 notte)" },
+    { start: "2025-05-01", end: "2025-05-04", nights: 3, price: 249, description: "over60 Dal 01/05 al 04/05 249€ (3 notti)" },
+    { start: "2025-05-04", end: "2025-05-08", nights: 4, price: 249, description: "over60 Dal 04/5 al 08/05 249€ (4 notti)" },
+    { start: "2025-05-09", end: "2025-05-11", nights: 2, price: 179, description: "over60 Dal 09/05 al 11/05 179€ (2 notti)" },
+    { start: "2025-05-11", end: "2025-05-15", nights: 4, price: 249, description: "over60 Dal 11/5 al 15/5 249€ (4 notti)" },
+    { start: "2025-05-16", end: "2025-05-18", nights: 2, price: 179, description: "over60 Dal 16/5 al 18/5 179€ (2 notti)" },
+    { start: "2025-05-18", end: "2025-05-22", nights: 4, price: 249, description: "over60 Dal 18/5 al 22/5 249€ (4 notti)" },
+    { start: "2025-05-23", end: "2025-05-25", nights: 2, price: 179, description: "over60 Dal 23/5 al 25/5 179€ (2 notti)" },
+    { start: "2025-05-25", end: "2025-05-29", nights: 4, price: 249, description: "over60 Dal 25/5 al 29/5 249€ (4 notti)" },
+    { start: "2025-05-31", end: "2025-06-02", nights: 2, price: 199, description: "over60 Dal 31/5 al 02/6 199€ (2 notti)" },
+    { start: "2025-09-12", end: "2025-09-14", nights: 2, price: 300, description: "over60 Dal 12 al 14 settembre (evento giornalisti) 300€ (2 notti)" }
 
   
 ];
