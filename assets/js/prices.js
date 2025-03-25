@@ -149,22 +149,83 @@ function loadSlots() {
 }
 
 saveSlots();
-// Toggle Disabled Fields Panel
+// Toggle Disabled Fields Panel for single room (if applicable)
 document.addEventListener('DOMContentLoaded', function() {
   const disabledDiscountBtn = document.getElementById('disabledDiscountBtn');
   const disabledFields = document.getElementById('disabledFields');
   
   // Initially hide the panel
-  disabledFields.style.display = 'none';
+  if(disabledFields) {
+    disabledFields.style.display = 'none';
+  }
   
   // On button click, toggle the panel's visibility
-  disabledDiscountBtn.addEventListener('click', function() {
-    if (disabledFields.style.display === 'none' || disabledFields.style.display === '') {
-      disabledFields.style.display = 'block';
-    } else {
-      disabledFields.style.display = 'none';
+  if(disabledDiscountBtn && disabledFields) {
+    disabledDiscountBtn.addEventListener('click', function() {
+      if (disabledFields.style.display === 'none' || disabledFields.style.display === '') {
+        disabledFields.style.display = 'block';
+      } else {
+        disabledFields.style.display = 'none';
+      }
+    });
+  }
+});
+
+// Add event listener to clone room fields when clicking "Aggiungi un'altra camera"
+document.getElementById('addRoomBtn').addEventListener('click', function() {
+  const roomsContainer = document.getElementById('roomsContainer');
+  const roomTemplate = roomsContainer.querySelector('.room');
+  const newRoom = roomTemplate.cloneNode(true);
+  
+  // Reset all inputs in the cloned room
+  newRoom.querySelectorAll('input').forEach(input => {
+    if (input.type === 'number') {
+      // For adults, default is 1; for others, default to 0.
+      input.value = (input.name === 'adults[]') ? "1" : "0";
+    } else if (input.type === 'checkbox') {
+      input.checked = false;
+    } else if (input.type === 'range') {
+      input.value = "0";
     }
   });
+  
+  // Reset discount label in the new room
+  const discountLabel = newRoom.querySelector('.discountValue');
+  if (discountLabel) {
+    discountLabel.textContent = '0%';
+  }
+  
+  // Hide the disabled fields panel in the new room
+  newRoom.querySelectorAll('.disabledFields').forEach(el => el.style.display = 'none');
+  
+  // Update room index if needed
+  const roomCount = roomsContainer.children.length + 1;
+  newRoom.setAttribute('data-room-index', roomCount);
+  
+  roomsContainer.appendChild(newRoom);
+  
+  // Reattach any room-specific listeners (e.g. for toggling disabled fields)
+  const btn = newRoom.querySelector('.disabledDiscountBtn');
+  const panel = newRoom.querySelector('.disabledFields');
+  if (btn && panel) {
+    btn.addEventListener('click', function() {
+      if (panel.style.display === 'none' || panel.style.display === '') {
+        panel.style.display = 'block';
+      } else {
+        panel.style.display = 'none';
+      }
+    });
+  }
+  
+  // Attach slider update for the new room
+  const newSlider = newRoom.querySelector('input[name="percentageDiscount[]"]');
+  const newLabel = newRoom.querySelector('.discountValue');
+  if (newSlider && newLabel) {
+    newSlider.addEventListener('input', function() {
+      newLabel.textContent = newSlider.value + '%';
+      calculateTotalPrice();
+    });
+  }
 });
 
 // Main DOMContentLoaded block for custom select, slider, and form events
@@ -251,7 +312,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
   
-  // Discount Slider
+  // Attach discount slider for single room (fallback if no multi-room slider exists)
   const percentageDiscountSlider = document.getElementById('percentageDiscount');
   const discountValueLabel = document.getElementById('discountValue');
   if (percentageDiscountSlider && discountValueLabel) {
@@ -261,7 +322,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
   
-  // Form Input Listeners
+  // Listen for changes on all form inputs to recalculate the price
   const form = document.getElementById('scheduleForm');
   if (form) {
     form.querySelectorAll('input, select').forEach(input => {
@@ -273,12 +334,17 @@ document.addEventListener('DOMContentLoaded', function() {
   // Initial calculation
   calculateTotalPrice();
 });
-let payingclients=0;
+
+let payingclients = 0;
+
 /*************************************************
- * Calculate Price with Disabled Logic
+ * Calculate Price with Disabled Logic & Multi-Room Support
+ *************************************************/
+/*************************************************
+ * Calculate Price with Disabled Logic & Multi-Room Support
  *************************************************/
 function calculateTotalPrice() {
-  // Get selected slot
+  // Get selected slot (common for all rooms)
   const customSelect = document.querySelector('.custom-select');
   const selectedSlotData = customSelect ? customSelect.getAttribute('data-value') : null;
   const selectedSlot = selectedSlotData ? JSON.parse(selectedSlotData) : {};
@@ -289,138 +355,222 @@ function calculateTotalPrice() {
     return;
   }
   
-  // Gather inputs
-  const adults = parseInt(document.getElementById('adults').value) || 0;
-  const children05 = parseInt(document.getElementById('children05').value) || 0;
-  const children612 = parseInt(document.getElementById('children612').value) || 0;
-  payingclients = adults + children612;
-  // NEW: Disabled counts
-  let disabledAdults = parseInt(document.getElementById('disabledAdults')?.value) || 0;
-  let disabledChildren612 = parseInt(document.getElementById('disabledChildren612')?.value) || 0;
-  // Ensure we don't exceed the actual counts
-  if (disabledAdults > adults) disabledAdults = adults;
-  if (disabledChildren612 > children612) disabledChildren612 = children612;
+  // Define a common base price for logging
+  const commonBasePrice = selectedSlot.price;
   
-  const petService = document.getElementById('petService').checked;
-  const cribService = document.getElementById('cribService').checked;
-  const poolView = document.getElementById('poolView').checked;
-  const loyaltyCustomer = document.getElementById('loyaltyCustomer').checked;
-  const removeClubCard = document.getElementById('removeClubCard').checked;
-  const percentageDiscount = parseFloat(document.getElementById('percentageDiscount').value) || 0;
-  
-
-  const basePrice = selectedSlot.price; // Base price for the selected slot
   let totalPrice = 0;
+  // Declare final variables for logging (to be set from either branch)
+  let finalAdultCost = 0, finalDisabledCost = 0, finalNormalChildrenCost = 0, finalDisabledChildrenCost = 0, finalClubCardCost = 0, finalExtrasCost = 0;
+  let totalPayingClients = 0;
   
-  /*************************************************
-   * 1) ADULTS Calculation
-   * - First 2 non-disabled adults pay full price.
-   * - Additional non-disabled adults pay 20% off.
-   * - Disabled adults:
-   *     - Some may get 20% + 10% off
-   *     - Others may get only 10% off
-   *************************************************/
-  
-  // Split the group
-  const nonDisabledAdults = adults - disabledAdults;
-  let adultCost = 0;
-  let disabledCost = 0;
-  
-  // First two non-disabled adults pay full price
-  if (nonDisabledAdults > 0) {
-    const fullPayingAdults = Math.min(nonDisabledAdults, 2); // Max 2 at full price
-    adultCost += fullPayingAdults * basePrice;
-  
-    // If there are more non-disabled adults, they get 20% off
-    if (nonDisabledAdults > 2) {
-      const extraAdults = nonDisabledAdults - 2;
-      adultCost += extraAdults * basePrice * 0.8; // 20% discount
+  // Check for multi-room elements
+  const roomElements = document.querySelectorAll('.room');
+  if (roomElements.length > 0) {
+    // Aggregated variables for multi-room mode
+    let aggregateAdultCost = 0, aggregateDisabledCost = 0, aggregateNormalChildrenCost = 0, aggregateDisabledChildrenCost = 0, aggregateClubCardCost = 0, aggregateExtrasCost = 0;
+    
+    roomElements.forEach(room => {
+      // Retrieve inputs from current room using name attributes
+      const adults = parseInt(room.querySelector('[name="adults[]"]').value) || 0;
+      const children05 = parseInt(room.querySelector('[name="children05[]"]').value) || 0;
+      const children612 = parseInt(room.querySelector('[name="children612[]"]').value) || 0;
+      totalPayingClients += (adults + children612);
+      
+      let dAdults = parseInt(room.querySelector('[name="disabledAdults[]"]').value) || 0;
+      let dChildren612 = parseInt(room.querySelector('[name="disabledChildren612[]"]').value) || 0;
+      if (dAdults > adults) dAdults = adults;
+      if (dChildren612 > children612) dChildren612 = children612;
+      
+      const petService = room.querySelector('[name="petService[]"]').checked;
+      const cribService = room.querySelector('[name="cribService[]"]').checked;
+      const poolView = room.querySelector('[name="poolView[]"]').checked;
+      const loyaltyCustomer = room.querySelector('[name="loyaltyCustomer[]"]').checked;
+      const removeClubCard = room.querySelector('[name="removeClubCard[]"]').checked;
+      const percentageDiscount = parseFloat(room.querySelector('[name="percentageDiscount[]"]').value) || 0;
+      
+      const basePrice = selectedSlot.price;
+      let roomPrice = 0;
+      
+      /*************************************************
+       * 1) ADULTS Calculation
+       *************************************************/
+      const nonDisabledAdults = adults - dAdults;
+      let adultCost = 0;
+      let disabledCost = 0;
+      if (nonDisabledAdults > 0) {
+        const fullPayingAdults = Math.min(nonDisabledAdults, 2);
+        adultCost += fullPayingAdults * basePrice;
+        if (nonDisabledAdults > 2) {
+          const extraAdults = nonDisabledAdults - 2;
+          adultCost += extraAdults * basePrice * 0.8;
+        }
+      }
+      if (dAdults > 0) {
+        const doubleDiscount = Math.min(dAdults, Math.max(0, adults - 2));
+        const singleDiscount = dAdults - doubleDiscount;
+        if (doubleDiscount > 0) {
+          disabledCost += doubleDiscount * basePrice * 0.8 * 0.9;
+        }
+        if (singleDiscount > 0) {
+          disabledCost += singleDiscount * basePrice * 0.9;
+        }
+      }
+      roomPrice += adultCost + disabledCost;
+      
+      /*************************************************
+       * 2) CHILDREN (6-12) Calculation
+       *************************************************/
+      const normalChildren = children612 - dChildren612;
+      const childBase = basePrice * 0.5;
+      let normalChildrenCost = normalChildren * childBase;
+      let disabledChildrenCost = 0;
+      if (dChildren612 > 0) {
+        disabledChildrenCost = dChildren612 * childBase * 0.9;
+      }
+      roomPrice += (normalChildrenCost + disabledChildrenCost);
+      
+      /*************************************************
+       * 4) Loyalty Discount (10%)
+       *************************************************/
+      if (loyaltyCustomer) {
+        roomPrice *= 0.9;
+      }
+      
+      /*************************************************
+       * 5) Percentage Discount from Slider
+       *************************************************/
+      if (percentageDiscount > 0) {
+        roomPrice *= (1 - percentageDiscount / 100);
+      }
+      
+      /*************************************************
+       * 3) Club Card Cost Calculation
+       * - Only non-disabled adults + normal children pay for the club card.
+       *************************************************/
+      let clubCardCost = 0;
+      if (!removeClubCard) {
+        const payingClub = nonDisabledAdults + normalChildren;
+        clubCardCost = 6 * payingClub * selectedSlot.nights;
+      }
+      roomPrice += clubCardCost;
+      
+      /*************************************************
+       * 6) Extra Services Cost
+       *************************************************/
+      let extrasCost = 0;
+      if (poolView) extrasCost += 10 * selectedSlot.nights;
+      if (petService) extrasCost += 30;
+      if (cribService) extrasCost += 10 * selectedSlot.nights;
+      roomPrice += extrasCost;
+      
+      totalPrice += roomPrice;
+      
+      // Add this room's costs to aggregates
+      aggregateAdultCost += adultCost;
+      aggregateDisabledCost += disabledCost;
+      aggregateNormalChildrenCost += normalChildrenCost;
+      aggregateDisabledChildrenCost += disabledChildrenCost;
+      aggregateClubCardCost += clubCardCost;
+      aggregateExtrasCost += extrasCost;
+    });
+    payingclients = totalPayingClients;
+    
+    // Set final variables from aggregates
+    finalAdultCost = aggregateAdultCost;
+    finalDisabledCost = aggregateDisabledCost;
+    finalNormalChildrenCost = aggregateNormalChildrenCost;
+    finalDisabledChildrenCost = aggregateDisabledChildrenCost;
+    finalClubCardCost = aggregateClubCardCost;
+    finalExtrasCost = aggregateExtrasCost;
+  } else {
+    // Fallback to original single-room calculation if no multi-room container exists
+    const adults = parseInt(document.getElementById('adults')?.value) || 0;
+    const children05 = parseInt(document.getElementById('children05')?.value) || 0;
+    const children612 = parseInt(document.getElementById('children612')?.value) || 0;
+    payingclients = adults + children612;
+    let dAdults = parseInt(document.getElementById('disabledAdults')?.value) || 0;
+    let dChildren612 = parseInt(document.getElementById('disabledChildren612')?.value) || 0;
+    if (dAdults > adults) dAdults = adults;
+    if (dChildren612 > children612) dChildren612 = children612;
+    
+    const petService = document.getElementById('petService')?.checked || false;
+    const cribService = document.getElementById('cribService')?.checked || false;
+    const poolView = document.getElementById('poolView')?.checked || false;
+    const loyaltyCustomer = document.getElementById('loyaltyCustomer')?.checked || false;
+    const removeClubCard = document.getElementById('removeClubCard')?.checked || false;
+    const percentageDiscount = parseFloat(document.getElementById('percentageDiscount')?.value || "0");
+    
+    const basePrice = selectedSlot.price;
+    let roomPrice = 0;
+    const nonDisabledAdults = adults - dAdults;
+    let adultCost = 0;
+    let disabledCost = 0;
+    if (nonDisabledAdults > 0) {
+      const fullPayingAdults = Math.min(nonDisabledAdults, 2);
+      adultCost += fullPayingAdults * basePrice;
+      if (nonDisabledAdults > 2) {
+        const extraAdults = nonDisabledAdults - 2;
+        adultCost += extraAdults * basePrice * 0.8;
+      }
     }
-  }
-  
-  // Generalized Disabled Adults Calculation
-  if (disabledAdults > 0) {
-    // max number of disabled adults who could be considered "extra" (i.e. would get double discount)
-    const doubleDiscount = Math.min(disabledAdults, Math.max(0, adults - 2));
-    const singleDiscount = disabledAdults - doubleDiscount;
-  
-    if (doubleDiscount > 0) {
-      disabledCost += doubleDiscount * basePrice * 0.8 * 0.9; // 20% + 10% off
+    if (dAdults > 0) {
+      const doubleDiscount = Math.min(dAdults, Math.max(0, adults - 2));
+      const singleDiscount = dAdults - doubleDiscount;
+      if (doubleDiscount > 0) {
+        disabledCost += doubleDiscount * basePrice * 0.8 * 0.9;
+      }
+      if (singleDiscount > 0) {
+        disabledCost += singleDiscount * basePrice * 0.9;
+      }
     }
-    if (singleDiscount > 0) {
-      disabledCost += singleDiscount * basePrice * 0.9; // Only 10% off
+    roomPrice += adultCost + disabledCost;
+    const normalChildren = children612 - dChildren612;
+    const childBase = basePrice * 0.5;
+    let normalChildrenCost = normalChildren * childBase;
+    let disabledChildrenCost = 0;
+    if (dChildren612 > 0) {
+      disabledChildrenCost = dChildren612 * childBase * 0.9;
     }
+    roomPrice += (normalChildrenCost + disabledChildrenCost);
+    if (loyaltyCustomer) {
+      roomPrice *= 0.9;
+    }
+    if (percentageDiscount > 0) {
+      roomPrice *= (1 - percentageDiscount / 100);
+    }
+    let clubCardCost = 0;
+    if (!removeClubCard) {
+      const payingClub = nonDisabledAdults + normalChildren;
+      clubCardCost = 6 * payingClub * selectedSlot.nights;
+    }
+    roomPrice += clubCardCost;
+    let extrasCost = 0;
+    if (poolView) extrasCost += 10 * selectedSlot.nights;
+    if (petService) extrasCost += 30;
+    if (cribService) extrasCost += 10 * selectedSlot.nights;
+    roomPrice += extrasCost;
+    totalPrice += roomPrice;
+    
+    finalAdultCost = adultCost;
+    finalDisabledCost = disabledCost;
+    finalNormalChildrenCost = normalChildrenCost;
+    finalDisabledChildrenCost = disabledChildrenCost;
+    finalClubCardCost = clubCardCost;
+    finalExtrasCost = extrasCost;
   }
   
-  // Add to total
-  totalPrice += adultCost + disabledCost;
-  
-  /*************************************************
-   * 2) CHILDREN (6-12) Calculation
-   * - Each child pays 50% of the base price.
-   *************************************************/
-  const normalChildren = children612 - disabledChildren612;
-  const childBase = basePrice * 0.5; // 50% discount for each child
-  let normalChildrenCost = normalChildren * childBase;
-  let disabledChildrenCost = 0;
-  
-  // Disabled children get an additional 10% discount on top of 50%
-  if (disabledChildren612 > 0) {
-    disabledChildrenCost = disabledChildren612 * childBase * 0.9;
-  }
-  
-  // Add to total
-  totalPrice += (normalChildrenCost + disabledChildrenCost);
-  
-  /*************************************************
-   * 4) Loyalty Discount (10%)
-   *************************************************/
-  if (loyaltyCustomer) {
-    totalPrice *= 0.9;
-  }
-  
-  /*************************************************
-   * 5) Percentage Discount from Slider
-   *************************************************/
-  if (percentageDiscount > 0) {
-    totalPrice *= (1 - percentageDiscount / 100);
-  }
-  
-  /*************************************************
-   * 6) Extra Services Cost (if selected)
-   *************************************************/
-  /*************************************************
-   * 3) Club Card Cost
-   * - Only non-disabled adults + normal children pay for the club card.
-   * - Disabled adults and disabled children don’t pay for the club card.
-   *************************************************/
-  let clubCardCost = 0;
-  if (!removeClubCard) {
-    const payingClub = nonDisabledAdults + normalChildren;
-    clubCardCost = 6 * payingClub * selectedSlot.nights;
-  }
-  totalPrice += clubCardCost;
-  
-  let extrasCost = 0;
-  
-  if (poolView) extrasCost += 10 * selectedSlot.nights;
-  if (petService) extrasCost += 30;
-  if (cribService) extrasCost += 10 * selectedSlot.nights;
-  totalPrice += extrasCost;
-  
-  // Display total
   document.getElementById('totalPrice').textContent = `Prezzo totale: €${totalPrice.toFixed(2)}`;
   
-  // Debug logs
-  console.log('Base Price:', basePrice);
-  console.log('Non-disabled Adults Cost:', adultCost);
-  console.log('Disabled Adults Cost:', disabledCost);
-  console.log('Normal Children (6-12) Cost:', normalChildrenCost);
-  console.log('Disabled Children (6-12) Cost:', disabledChildrenCost);
-  console.log('Club Card Cost:', clubCardCost);
-  console.log('Extras Cost:', extrasCost);
+  console.log('Base Price:', commonBasePrice);
+  console.log('Non-disabled Adults Cost:', finalAdultCost);
+  console.log('Disabled Adults Cost:', finalDisabledCost);
+  console.log('Normal Children (6-12) Cost:', finalNormalChildrenCost);
+  console.log('Disabled Children (6-12) Cost:', finalDisabledChildrenCost);
+  console.log('Club Card Cost:', finalClubCardCost);
+  console.log('Extras Cost:', finalExtrasCost);
   console.log('Total:', totalPrice);
-}  
+}
+
 /*************************************************
  * generateBookingMessage
  *************************************************/
@@ -433,47 +583,40 @@ function generateBookingMessage() {
     return null;
   }
   
-  const adults = parseInt(document.getElementById('adults')?.value) || 0;
-  const children05 = parseInt(document.getElementById('children05')?.value) || 0;
-  const children612 = parseInt(document.getElementById('children612')?.value) || 0;
+  // Use optional chaining and defaults to prevent null reference errors
+  const adults = parseInt(document.getElementById('adults')?.value || "0");
+  const children05 = parseInt(document.getElementById('children05')?.value || "0");
+  const children612 = parseInt(document.getElementById('children612')?.value || "0");
   const petService = document.getElementById('petService')?.checked || false;
   const cribService = document.getElementById('cribService')?.checked || false;
   const poolView = document.getElementById('poolView')?.checked || false;
   const loyaltyCustomer = document.getElementById('loyaltyCustomer')?.checked || false;
   const removeClubCard = document.getElementById('removeClubCard')?.checked || false;
-  const percentageDiscount = parseFloat(document.getElementById('percentageDiscount').value) || 0;
+  const percentageDiscount = parseFloat(document.getElementById('percentageDiscount')?.value || "0");
   
   const totalPriceElement = document.getElementById('totalPrice');
   const totalPrice = totalPriceElement ? parseFloat(totalPriceElement.textContent.split('€')[1]) : 0;
   const deposit = totalPrice * 0.2;
   const remainingPayment = totalPrice - deposit;
   
-  
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     return `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth()+1).toString().padStart(2, '0')}/${date.getFullYear()}`;
   };
-  let roomtypeselction="";
-  if(payingclients == 1){
-    roomtypeselction = "Singola";
-  }
-  if(payingclients==2)
-  {
-    roomtypeselction = "matrimoniale";
-  }
-  if(payingclients == 3){
-    roomtypeselction = "tripla";
-  }
-  if(payingclients==4)
-  {
-    roomtypeselction = "quadrupla";
-  }
-  if(payingclients>4)
-    {
-      roomtypeselction = "quintupla";
-    }
   
-
+  let roomtypeselction = "";
+  if (payingclients == 1) {
+    roomtypeselction = "Singola";
+  } else if (payingclients == 2) {
+    roomtypeselction = "matrimoniale";
+  } else if (payingclients == 3) {
+    roomtypeselction = "tripla";
+  } else if (payingclients == 4) {
+    roomtypeselction = "quadrupla";
+  } else if (payingclients > 4) {
+    roomtypeselction = "quintupla";
+  }
+  
   let message = `PREVENTIVO PER IL GRAND HOTEL SELINUNTE.\n\n`;
   message += `🗓️ PERIODO DEL SOGGIORNO:\n`;
   message += `Dal ${formatDate(selectedSlot.start)} al ${formatDate(selectedSlot.end)}\n`;
@@ -490,7 +633,7 @@ function generateBookingMessage() {
     message += `Sconto percentuale applicato: ${percentageDiscount}%\n`;
   }
   
-  const clubCardCost = removeClubCard ? 0 : 6 * (adults - (parseInt(document.getElementById('disabledAdults')?.value)||0) + (children612 - (parseInt(document.getElementById('disabledChildren612')?.value)||0)) ) * selectedSlot.nights;
+  const clubCardCost = removeClubCard ? 0 : 6 * (adults - (parseInt(document.getElementById('disabledAdults')?.value) || 0) + (children612 - (parseInt(document.getElementById('disabledChildren612')?.value) || 0))) * selectedSlot.nights;
   if (!removeClubCard) {
     message += `COSTO TESSERE CLUB: €${clubCardCost.toFixed(2)} (già incluso nel prezzo)\n\n`;
   } else {
@@ -690,11 +833,12 @@ function resetForm() {
     customSelect.removeAttribute('data-value');
   }
   
-  document.getElementById('adults').value = '1';
-  document.getElementById('children05').value = '0';
-  document.getElementById('children612').value = '0';
+  // Reset single-room fallback inputs (if present)
+  if(document.getElementById('adults')) { document.getElementById('adults').value = '1'; }
+  if(document.getElementById('children05')) { document.getElementById('children05').value = '0'; }
+  if(document.getElementById('children612')) { document.getElementById('children612').value = '0'; }
   
-  // Reset discount slider
+  // Reset discount slider (fallback)
   const percentageDiscountSlider = document.getElementById('percentageDiscount');
   if (percentageDiscountSlider) {
     percentageDiscountSlider.value = '0';
@@ -704,16 +848,16 @@ function resetForm() {
     discountValueLabel.textContent = '0%';
   }
   
-  // Reset disabled fields
-  document.getElementById('disabledAdults').value = '0';
-  document.getElementById('disabledChildren612').value = '0';
+  // Reset disabled fields (fallback)
+  if(document.getElementById('disabledAdults')) { document.getElementById('disabledAdults').value = '0'; }
+  if(document.getElementById('disabledChildren612')) { document.getElementById('disabledChildren612').value = '0'; }
   
-  // Reset checkboxes
-  document.getElementById('petService').checked = false;
-  document.getElementById('cribService').checked = false;
-  document.getElementById('poolView').checked = false;
-  document.getElementById('loyaltyCustomer').checked = false;
-  document.getElementById('removeClubCard').checked = false;
+  // Reset checkboxes (fallback)
+  if(document.getElementById('petService')) { document.getElementById('petService').checked = false; }
+  if(document.getElementById('cribService')) { document.getElementById('cribService').checked = false; }
+  if(document.getElementById('poolView')) { document.getElementById('poolView').checked = false; }
+  if(document.getElementById('loyaltyCustomer')) { document.getElementById('loyaltyCustomer').checked = false; }
+  if(document.getElementById('removeClubCard')) { document.getElementById('removeClubCard').checked = false; }
   
   // Hide discount panel if exists
   const discountPanel = document.getElementById('discountPanel');
@@ -742,7 +886,6 @@ document.getElementById('scheduleForm').addEventListener('submit', function(e) {
 // Export if needed (for Node.js environments)
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = {
-    slots,
     saveSlots,
     loadSlots,
     calculateTotalPrice,

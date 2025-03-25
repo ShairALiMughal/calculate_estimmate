@@ -101,121 +101,94 @@
           <div class="form-group">
             <label for="customSlotSelect">Seleziona il periodo:</label>
             <div id="customSlotSelect" class="custom-select-wrapper">
-              <!-- The custom dropdown will be inserted here by JavaScript -->
+              <!-- Custom dropdown will be inserted by JavaScript -->
             </div>
           </div>
-
-          <!-- People Inputs -->
-          <div class="row">
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="adults">Adulti</label>
-                <input type="number" id="adults" min="1" value="1" required>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="children05">Bambini (0-5)</label>
-                <input type="number" id="children05" min="0" value="0">
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="children612">Bambini (6-12)</label>
-                <input type="number" id="children612" min="0" value="0">
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-group" id="discountContainer">
-                <label for="percentageDiscount">Discount: <span id="discountValue">0%</span></label>
-                <input type="range" id="percentageDiscount" min="0" max="100" step="1" value="0">
-              </div>
-            </div>
-          </div>
-
-          <!-- Checkboxes for various services/discounts -->
-          <div class="checkbox-group">
-            <label>
-              <input type="checkbox" id="petService"> Servizio animali (€30 per l'intero soggiorno)
-            </label>
-          </div>
-          <div class="checkbox-group">
-            <label>
-              <input type="checkbox" id="cribService"> Servizio culla (€10 per notte)
-            </label>
-          </div>
-          <div class="checkbox-group">
-            <label>
-              <input type="checkbox" id="poolView"> Vista piscina (€10 per notte)
-            </label>
-          </div>
-          <div class="checkbox-group">
-            <label>
-              <input type="checkbox" id="loyaltyCustomer"> Cliente fedele (sconto del 10% solo sulla tariffa)
-            </label>
-          </div>
-          <div class="checkbox-group">
-            <label>
-              <input type="checkbox" id="removeClubCard"> Rimuovi costo tessera club
-            </label>
-          </div>
-
-          <!-- Toggle button to reveal discount panel -->
-            
-
-            <!-- NEW: Button to show/hide disabled fields -->
-            <div class="row">
-              <div class="col-md-12">
-                <button type="button" id="disabledDiscountBtn" class="btn btn-info" style="width: 100%;">
-                  Applica Sconto Disabili
-                </button>
-              </div>
-            </div>
-
-            <!-- NEW: Fields for disabled adults & children -->
-            <div id="disabledFields" style="display: none; margin-top: 15px;">
+          <!-- Rooms Container -->
+          <div id="roomsContainer">
+            <!-- Room 1 -->
+            <div class="room" data-room-index="1">
               <div class="row">
                 <div class="col-md-6">
                   <div class="form-group">
-                    <label for="disabledAdults">Adulti disabili</label>
-                    <input type="number" id="disabledAdults" min="0" value="0">
+                    <label>Adulti</label>
+                    <input type="number" name="adults[]" min="1" value="1" required>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
-                    <label for="disabledChildren612">Bambini disabili (6-12)</label>
-                    <input type="number" id="disabledChildren612" min="0" value="0">
+                    <label>Bambini (0-5)</label>
+                    <input type="number" name="children05[]" min="0" value="0">
                   </div>
                 </div>
               </div>
-              <p style="font-size: 0.9em; color: #555;">
-                <em>* Ogni adulto o bambino disabile ottiene il 10% di sconto aggiuntivo sulla propria quota e non paga la tessera club.</em>
-              </p>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Bambini (6-12)</label>
+                    <input type="number" name="children612[]" min="0" value="0">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group" id="discountContainer">
+                    <label>Discount: <span class="discountValue">0%</span></label>
+                    <input type="range" name="percentageDiscount[]" min="0" max="100" step="1" value="0">
+                  </div>
+                </div>
+              </div>
+              <!-- Checkboxes for extra services -->
+              <div class="checkbox-group">
+                <label><input type="checkbox" name="petService[]"> Servizio animali (€30 per l'intero soggiorno)</label>
+                <label><input type="checkbox" name="cribService[]"> Servizio culla (€10 per notte)</label>
+                <label><input type="checkbox" name="poolView[]"> Vista piscina (€10 per notte)</label>
+                <label><input type="checkbox" name="loyaltyCustomer[]"> Cliente fedele (sconto del 10% solo sulla tariffa)</label>
+                <label><input type="checkbox" name="removeClubCard[]"> Rimuovi costo tessera club</label>
+              </div>
+              <!-- Button to toggle disabled fields -->
+              <div class="row">
+                <div class="col-md-12">
+                  <button type="button" class="btn btn-info disabledDiscountBtn" style="width: 100%;">Applica Sconto Disabili</button>
+                </div>
+              </div>
+              <!-- Disabled fields panel -->
+              <div class="disabledFields" style="display: none; margin-top: 15px;">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>Adulti disabili</label>
+                      <input type="number" name="disabledAdults[]" min="0" value="0">
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>Bambini disabili (6-12)</label>
+                      <input type="number" name="disabledChildren612[]" min="0" value="0">
+                    </div>
+                  </div>
+                </div>
+                <p style="font-size: 0.9em; color: #555;">
+                  <em>* Ogni adulto o bambino disabile ottiene il 10% di sconto aggiuntivo sulla propria quota e non paga la tessera club.</em>
+                </p>
+              </div>
             </div>
-          
-                    <!-- Add More Room button -->
-        <div class="row">
-          <div class="col-md-12">
-            <button type="button" id="addRoomBtn" class="btn btn-warning" style="margin-top: 15px; font-size: 1.1em;">Aggiungi un'altra camera</button>
           </div>
-        </div>
+          <!-- Add More Room button -->
+          <div class="row">
+            <div class="col-md-12">
+              <button type="button" id="addRoomBtn" class="btn btn-warning" style="margin-top: 15px; font-size: 1.1em;">Aggiungi un'altra camera</button>
+            </div>
+          </div>
           <!-- Total Price -->
           <div id="totalPrice" style="margin-top: 15px; font-weight: 600; font-size: 1.1em;">
             Prezzo totale: €0.00
           </div>
-
           <!-- Submit button -->
-          <button type="submit" class="orange-button" style="margin-top: 15px;">
-            Prenota ora
-          </button>
-        </div>
+          <button type="submit" class="orange-button" style="margin-top: 15px;">Prenota ora</button>
         </form>
       </div>
     </div>
   </div>
-
+  <!-- Footer -->
   <footer>
     <div class="container">
       <div class="col-lg-8">
@@ -235,8 +208,5 @@
   <script src="assets/js/owl-carousel.js"></script>
   <script src="assets/js/counter.js"></script>
   <script src="assets/js/custom.js"></script>
-
-  <!-- Link to the updated prices.js -->
+  <!-- Link to prices.js which contains the price calculation logic -->
   <script src="assets/js/prices.js"></script>
-</body>
-</html>
