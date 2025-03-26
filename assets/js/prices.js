@@ -101,7 +101,7 @@ const slots = [
   { start: "2025-10-02", end: "2025-10-05", nights: 3, price: 235, description: "Dal 2 al 5 ottobre 235€ (3 notti)" }
 ,
     { start: "2025-04-19", end: "2025-04-21", nights: 2, price: 159, description: "over60 Dal 19 al 21 aprile 159€ (2 notti)" },
-    { start: "2025-04-21", end: "2025-04-25", nights: 4, price: 169, description: "over60 Dal 21 al 25 aprile 169€ (4 notti)" },
+    { start: "2025-04-21", end: "2025-04-25", nights: 4, price: 249, description: "over60 Dal 21 al 25 aprile 249€ (4 notti)" },
     { start: "2025-04-25", end: "2025-04-27", nights: 2, price: 159, description: "over60 Dal 25 al 27 aprile 159€ (2 notti)" },
     { start: "2025-04-27", end: "2025-05-01", nights: 4, price: 249, description: "over60 Dal 27 aprile al 01 Maggio 249€ (4 notti)" },
     { start: "2025-05-01", end: "2025-05-02", nights: 1, price: 99, description: "over60 Dal 01/5 al 02/5 99€ (1 notte)" },
