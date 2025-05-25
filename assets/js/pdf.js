@@ -550,6 +550,19 @@ function generateBookingMessage() {
   return message;
 }
 
+
+function getRoomType(adults, children612) {
+  const payingGuests = adults + children612;
+  
+  if (payingGuests <= 0) return 'Non specificata';
+  if (payingGuests === 1) return 'Singola';
+  if (payingGuests === 2) return 'Matrimoniale/Doppia';
+  if (payingGuests === 3) return 'Tripla';
+  if (payingGuests === 4) return 'Quadrupla';
+  if (payingGuests >= 5) return 'Quintupla'; // For 6+ guests
+  return;
+}
+
 /*************************************************
  * generatePDF - Professional Receipt Version
  *************************************************/
@@ -561,7 +574,6 @@ function generatePDF() {
   const fullname = document.getElementById('fullname').value || 'Non specificato';
   const phone = document.getElementById('phone').value || 'Non specificato';
   const allergies = document.getElementById('allergies').value || 'Nessuna';
-  const roomType = document.getElementById('roomType').value || 'Non specificato';
   const percentageDiscount = parseFloat(document.getElementById('percentageDiscount').value) || 0;
   
   const customSelect = document.querySelector('.custom-select');
@@ -608,7 +620,7 @@ function generatePDF() {
     const fullPayingAdults = Math.min(nonDisabledAdults, 2);
     adultCost += fullPayingAdults * basePrice;
     calculationDetails.push({
-      description: `Adulti (primi 2): ${fullPayingAdults} × €${basePrice.toFixed(2)}`,
+      description: `Adulti: ${fullPayingAdults} × €${basePrice.toFixed(2)}`,
       amount: fullPayingAdults * basePrice
     });
   
@@ -743,38 +755,79 @@ function generatePDF() {
     return `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth()+1).toString().padStart(2, '0')}/${date.getFullYear()}`;
   };
 
-    // Header
-  doc.setFontSize(18);
-  doc.setTextColor(40);
-  doc.setFont(undefined, 'bold');
-  doc.text('GRAND HOTEL SELINUNTE', 105, 20, { align: 'center' });
-  doc.setFontSize(11);
-  doc.setFont(undefined, 'normal');
-  doc.text('Contrada, Via Trenta Salme, 91022 Marinella TP, Italy', 105, 26, { align: 'center' });
-  
-  // Divider line after header
-  doc.setDrawColor(200);
-  doc.line(20, 32, 190, 32);
-  doc.line(20, 33, 190, 33);
-  
-  // Client information (left column)
-  doc.setFontSize(12);
-  doc.setFont(undefined, 'bold');
-  doc.text('Informazioni Cliente:', 20, 42);
-  doc.setFont(undefined, 'normal');
-  doc.text(`Nome: ${fullname}`, 20, 48);
-  doc.text(`Telefono: ${phone}`, 20, 54);
-  doc.text(`Allergie: ${allergies}`, 20, 66);
-  
-  // Price calculation section - Original detailed view
-    // Price calculation section - Original detailed view
-  let yPos = 82;
-  
-  doc.setFont(undefined, 'bold');
-  doc.text('Dettaglio Prezzi:', 20, yPos);
-  yPos += 8;
-  doc.setFont(undefined, 'normal');
-  
+// Header
+doc.setFontSize(18);
+doc.setTextColor(40);
+doc.setFont(undefined, 'bold');
+doc.text('GRAND HOTEL SELINUNTE', 105, 20, { align: 'center' });
+doc.setFontSize(11);
+doc.setFont(undefined, 'normal');
+doc.text('Contrada, Via Trenta Salme, 91022 Marinella TP, Italy', 105, 26, { align: 'center' });
+
+// Divider line after header
+doc.setDrawColor(200);
+doc.line(20, 32, 190, 32);
+doc.line(20, 33, 190, 33);
+
+// Client information (left column)
+doc.setFontSize(12);
+doc.setFont(undefined, 'bold');
+doc.text('Informazioni Cliente:', 20, 42);
+doc.setFont(undefined, 'normal');
+
+let infoYPos = 48;
+
+// Client personal info
+doc.text(`Nome: ${fullname}`, 20, infoYPos);
+infoYPos += 8;
+doc.text(`Telefono: ${phone}`, 20, infoYPos);
+infoYPos += 8;
+
+// Handle long allergy text with proper wrapping and spacing
+const allergiesText = `Allergie: ${allergies}`;
+const maxWidth = 100; // Width that leaves space for right column
+const allergiesLines = doc.splitTextToSize(allergiesText, maxWidth);
+
+// Calculate needed height (7pt per line with 1pt extra spacing)
+const lineHeight = 7;
+const allergiesHeight = (lineHeight + 1) * allergiesLines.length;
+
+// Draw allergy text with proper line spacing
+doc.text(allergiesLines, 20, infoYPos, { lineHeightFactor: 1.15 });
+infoYPos += allergiesHeight;
+
+// Adjust spacing based on content
+if (allergiesLines.length > 1) {
+    infoYPos += 4; // Extra space only if we had line wrapping
+}
+
+// Format dates as DD/MM/YYYY
+const formattedCheckIn = formatDate(selectedSlot.start);
+const formattedCheckOut = formatDate(selectedSlot.end);
+infoYPos = 42;
+// Right column - Move booking details here
+doc.setFont(undefined, 'bold');
+doc.text('Dettagli Soggiorno:', 140, infoYPos);
+infoYPos += 8;
+doc.setFont(undefined, 'normal');
+
+doc.text(`${formattedCheckIn} - ${formattedCheckOut}`, 140, infoYPos);
+infoYPos += 8;
+doc.text(`Notti: ${selectedSlot.nights}`, 140, infoYPos);
+infoYPos += 8;
+doc.text(`Camera: ${getRoomType(adults, children612)}`, 140, infoYPos);
+// Divider line before price details
+doc.setDrawColor(200);
+doc.line(20, infoYPos + 10, 190, infoYPos + 10);
+
+// Price calculation section starts below client info
+let yPos = infoYPos + 20;
+
+doc.setFont(undefined, 'bold');
+doc.text('Dettaglio Prezzi:', 20, yPos);
+yPos += 8;
+doc.setFont(undefined, 'normal');
+
   // Display only base price calculations (without extras)
   calculationDetails.forEach(item => {
     // Skip extras in the main calculation details
@@ -882,13 +935,13 @@ function generatePDF() {
   doc.text(`• Disabilità: ${disabledAdults + disabledChildren612 > 0 ? 'Sì' : 'No'}`, 20, yPos);
   yPos += 7;
   doc.text(`• Fedeltà: ${loyaltyCustomer ? 'Sì' : 'No'}`, 20, yPos);
-  
-  // Footer
-  doc.setFontSize(10);
-  doc.setTextColor(100);
+  yPos += 7;
+  doc.setFont(undefined, 'bold');
+  yPos += 4
+  doc.text(`NOTA:`, 20, yPos);
   doc.setFont(undefined, 'normal');
-  doc.text('Grazie per aver scelto Grand Hotel Selinunte!', 105, 280, { align: 'center' });
-  doc.text('Per confermare la prenotazione, inviare un acconto del 20%', 105, 286, { align: 'center' });  
+  doc.text(`______________________________________________________`, 32, yPos);
+ 
   
   // Save the PDF
   doc.save(`Prenotazione_${fullname.replace(' ', '_')}.pdf`);
