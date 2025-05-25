@@ -560,7 +560,6 @@ function generatePDF() {
   // Get form values
   const fullname = document.getElementById('fullname').value || 'Non specificato';
   const phone = document.getElementById('phone').value || 'Non specificato';
-  const email = document.getElementById('email').value || 'Non specificato';
   const allergies = document.getElementById('allergies').value || 'Nessuna';
   const roomType = document.getElementById('roomType').value || 'Non specificato';
   const percentageDiscount = parseFloat(document.getElementById('percentageDiscount').value) || 0;
@@ -744,7 +743,7 @@ function generatePDF() {
     return `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth()+1).toString().padStart(2, '0')}/${date.getFullYear()}`;
   };
 
-  // Header
+    // Header
   doc.setFontSize(18);
   doc.setTextColor(40);
   doc.setFont(undefined, 'bold');
@@ -765,22 +764,10 @@ function generatePDF() {
   doc.setFont(undefined, 'normal');
   doc.text(`Nome: ${fullname}`, 20, 48);
   doc.text(`Telefono: ${phone}`, 20, 54);
-  doc.text(`Email: ${email}`, 20, 60);
   doc.text(`Allergie: ${allergies}`, 20, 66);
   
-  // Booking details (right column)
-  doc.setFont(undefined, 'bold');
-  doc.text('Dettagli Prenotazione:', 140, 42);
-  doc.setFont(undefined, 'normal');
-  doc.text(`Dal ${formatDate(selectedSlot.start)} al ${formatDate(selectedSlot.end)}`, 140, 48);
-  doc.text(`Notti: ${nights}`, 140, 54);
-  doc.text(`Tipologia: ${roomType}`, 140, 60);
-  
-  // Divider line before price details
-  doc.setDrawColor(200);
-  doc.line(20, 72, 190, 72);
-  
-  // Price calculation section
+  // Price calculation section - Original detailed view
+    // Price calculation section - Original detailed view
   let yPos = 82;
   
   doc.setFont(undefined, 'bold');
@@ -788,32 +775,72 @@ function generatePDF() {
   yPos += 8;
   doc.setFont(undefined, 'normal');
   
-  // Display all calculation details
+  // Display only base price calculations (without extras)
   calculationDetails.forEach(item => {
-    doc.text(item.description, 20, yPos);
-    doc.text(`€${item.amount.toFixed(2)}`, 180, yPos, { align: 'right' });
-    yPos += 7;
+    // Skip extras in the main calculation details
+    if (!item.description.includes('Tessere club') && 
+        !item.description.includes('Vista piscina') && 
+        !item.description.includes('Servizio animali') && 
+        !item.description.includes('Culla')) {
+      doc.text(item.description, 20, yPos);
+      doc.text(`€${item.amount.toFixed(2)}`, 180, yPos, { align: 'right' });
+      yPos += 7;
+    }
   });
   
-  // Subtotal before discounts
-  const subtotalBeforeDiscounts = adultCost + disabledCost + normalChildrenCost + disabledChildrenCost + clubCardCost + extrasCost;
+  // Calculate base subtotal (before any discounts and extras)
+  const subtotalBeforeDiscounts = adultCost + disabledCost + normalChildrenCost + disabledChildrenCost;
   doc.setFont(undefined, 'bold');
-  doc.text('Subtotale:', 20, yPos);
+  doc.text('Subtotale prima sconti:', 20, yPos);
   doc.text(`€${subtotalBeforeDiscounts.toFixed(2)}`, 180, yPos, { align: 'right' });
+  yPos += 10;
+  
+  // Discounts section
+  if (loyaltyDiscount > 0 || percentageDiscountAmount > 0) {
+    doc.setFont(undefined, 'bold');
+    doc.text('Sconti applicati:', 20, yPos);
+    yPos += 7;
+    doc.setFont(undefined, 'normal');
+    
+    if (loyaltyDiscount > 0) {
+      doc.text(`• Sconto fedeltà (10%):`, 20, yPos);
+      doc.text(`-€${loyaltyDiscount.toFixed(2)}`, 180, yPos, { align: 'right' });
+      yPos += 7;
+    }
+    
+    if (percentageDiscountAmount > 0) {
+      doc.text(`• Sconto aggiuntivo (${percentageDiscount}%):`, 20, yPos);
+      doc.text(`-€${percentageDiscountAmount.toFixed(2)}`, 180, yPos, { align: 'right' });
+      yPos += 7;
+    }
+    
+    // Price after discounts (before extras)
+    const priceAfterDiscounts = subtotalBeforeDiscounts - loyaltyDiscount - percentageDiscountAmount;
+    doc.setFont(undefined, 'bold');
+    doc.text(`Totale dopo sconti:`, 20, yPos);
+    doc.text(`€${priceAfterDiscounts.toFixed(2)}`, 180, yPos, { align: 'right' });
+    yPos += 10;
+  }
+  
+  // Extras section - Now contains all service extras
+  doc.setFont(undefined, 'bold');
+  doc.text('Servizi aggiuntivi:', 20, yPos);
   yPos += 7;
+  doc.setFont(undefined, 'normal');
   
-  // Discounts
-  if (loyaltyDiscount > 0) {
-    doc.text(`Sconto fedeltà (10%):`, 20, yPos);
-    doc.text(`-€${loyaltyDiscount.toFixed(2)}`, 180, yPos, { align: 'right' });
-    yPos += 7;
-  }
-  
-  if (percentageDiscountAmount > 0) {
-    doc.text(`Sconto aggiuntivo (${percentageDiscount}%):`, 20, yPos);
-    doc.text(`-€${percentageDiscountAmount.toFixed(2)}`, 180, yPos, { align: 'right' });
-    yPos += 7;
-  }
+  // Add all extras that were previously in calculationDetails
+  calculationDetails.forEach(item => {
+    if (item.description.includes('Tessere club') || 
+        item.description.includes('Vista piscina') || 
+        item.description.includes('Servizio animali') || 
+        item.description.includes('Culla')) {
+      // Format the description to be more itemized
+      const formattedDesc = item.description.replace(':', '');
+      doc.text(`• ${formattedDesc}`, 20, yPos);
+      doc.text(`€${item.amount.toFixed(2)}`, 180, yPos, { align: 'right' });
+      yPos += 7;
+    }
+  });
   
   // Divider before total
   doc.setDrawColor(200);
@@ -825,6 +852,7 @@ function generatePDF() {
   doc.setFont(undefined, 'bold');
   doc.text('Prezzo Totale:', 20, yPos);
   doc.text(`€${totalPrice.toFixed(2)}`, 180, yPos, { align: 'right' });
+  
   
   // Guest information section
   yPos += 15;
@@ -842,9 +870,9 @@ function generatePDF() {
   doc.text(`• Bambini 0-5: ${children05}`, 20, yPos);
   yPos += 12;
   
-  // Services summary
+  // Services summary (checkboxes)
   doc.setFont(undefined, 'bold');
-  doc.text('Servizi:', 20, yPos);
+  doc.text('Servizi inclusi:', 20, yPos);
   yPos += 8;
   doc.setFont(undefined, 'normal');
   doc.text(`• Culla: ${cribService ? 'Sì' : 'No'}`, 20, yPos);
@@ -860,8 +888,7 @@ function generatePDF() {
   doc.setTextColor(100);
   doc.setFont(undefined, 'normal');
   doc.text('Grazie per aver scelto Grand Hotel Selinunte!', 105, 280, { align: 'center' });
-  doc.text('Per confermare la prenotazione, inviare un acconto del 20%', 105, 286, { align: 'center' });
-  doc.text('IBAN: IT00X0000000000000000000000', 105, 292, { align: 'center' });
+  doc.text('Per confermare la prenotazione, inviare un acconto del 20%', 105, 286, { align: 'center' });  
   
   // Save the PDF
   doc.save(`Prenotazione_${fullname.replace(' ', '_')}.pdf`);
