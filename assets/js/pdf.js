@@ -937,7 +937,7 @@ doc.setFont(undefined, 'normal');
   doc.text(`• Fedeltà: ${loyaltyCustomer ? 'Sì' : 'No'}`, 20, yPos);
   yPos += 7;
   doc.setFont(undefined, 'bold');
-  yPos += 4
+  yPos += 2
   doc.text(`NOTA:`, 20, yPos);
   doc.setFont(undefined, 'normal');
   doc.text(`______________________________________________________`, 32, yPos);
