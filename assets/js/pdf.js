@@ -619,7 +619,7 @@ function generatePDF() {
       const discountedPrice = basePrice * 0.8;
       adultCost += extraAdults * discountedPrice;
       calculationDetails.push({
-        description: `Adulti aggiuntivi: ${extraAdults} × €${discountedPrice.toFixed(2)}    (20% sconto)`,
+        description: `Adulti aggiuntivi : ${extraAdults} × €${discountedPrice.toFixed(2)}`,
         amount: extraAdults * discountedPrice
       });
     }
@@ -634,7 +634,7 @@ function generatePDF() {
       const doubleDiscountedPrice = basePrice * 0.8 * 0.9;
       disabledCost += doubleDiscount * doubleDiscountedPrice;
       calculationDetails.push({
-        description: `Adulti disabili (sconto doppio): ${doubleDiscount} × €${doubleDiscountedPrice.toFixed(2)}    (20%+10% sconto)`,
+        description: `Adulti disabili : ${doubleDiscount} × €${doubleDiscountedPrice.toFixed(2)}`,
         amount: doubleDiscount * doubleDiscountedPrice
       });
     }
@@ -642,7 +642,7 @@ function generatePDF() {
       const singleDiscountedPrice = basePrice * 0.9;
       disabledCost += singleDiscount * singleDiscountedPrice;
       calculationDetails.push({
-        description: `Adulti disabili (sconto singolo): ${singleDiscount} × €${singleDiscountedPrice.toFixed(2)}    (10% sconto)`,
+        description: `Adulti disabili : ${singleDiscount} × €${singleDiscountedPrice.toFixed(2)}`,
         amount: singleDiscount * singleDiscountedPrice
       });
     }
@@ -660,7 +660,7 @@ function generatePDF() {
   
   if (normalChildren > 0) {
     calculationDetails.push({
-      description: `Bambini 6-12: ${normalChildren} × €${childBase.toFixed(2)}    (50% sconto)`,
+      description: `Bambini 6-12 : ${normalChildren} × €${childBase.toFixed(2)}`,
       amount: normalChildrenCost
     });
   }
@@ -668,7 +668,7 @@ function generatePDF() {
   if (disabledChildren612 > 0) {
     disabledChildrenCost = disabledChildren612 * childBase * 0.9;
     calculationDetails.push({
-      description: `Bambini disabili 6-12: ${disabledChildren612} × €${(childBase * 0.9).toFixed(2)}    (50%+10% sconto)`,
+      description: `Bambini disabili 6-12 : ${disabledChildren612} × €${(childBase * 0.9).toFixed(2)}`,
       amount: disabledChildrenCost
     });
   }
