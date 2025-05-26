@@ -573,7 +573,6 @@ function generatePDF() {
   // Get form values
   const fullname = document.getElementById('fullname').value || 'Non specificato';
   const phone = document.getElementById('phone').value || 'Non specificato';
-  const allergies = document.getElementById('allergies').value || 'Nessuna';
   const percentageDiscount = parseFloat(document.getElementById('percentageDiscount').value) || 0;
   
   const customSelect = document.querySelector('.custom-select');
@@ -755,89 +754,119 @@ function generatePDF() {
     return `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth()+1).toString().padStart(2, '0')}/${date.getFullYear()}`;
   };
 
-// Header
-doc.setFontSize(18);
-doc.setTextColor(40);
-doc.setFont(undefined, 'bold');
-doc.text('GRAND HOTEL SELINUNTE', 105, 20, { align: 'center' });
-doc.setFontSize(11);
-doc.setFont(undefined, 'normal');
-doc.text('Contrada, Via Trenta Salme, 91022 Marinella TP, Italy', 105, 26, { align: 'center' });
+  
 
-// Divider line after header
-doc.setDrawColor(200);
-doc.line(20, 32, 190, 32);
-doc.line(20, 33, 190, 33);
+  // Start PDF Layout with smaller fonts
+  let yPos = 15;
+  
+  // Header - Reduced font size
+  doc.setFontSize(14);
+  doc.setTextColor(40);
+  doc.setFont(undefined, 'bold');
+  doc.text('GRAND HOTEL SELINUNTE', 105, yPos, { align: 'center' });
+  yPos += 5;
+  
+  doc.setFontSize(9);
+  doc.setFont(undefined, 'normal');
+  doc.text('Contrada, Via Trenta Salme, 91022 Marinella TP, Italy', 105, yPos, { align: 'center' });
+  yPos += 8;
 
-// Client information (left column)
-doc.setFontSize(12);
-doc.setFont(undefined, 'bold');
-doc.text('Informazioni Cliente:', 20, 42);
-doc.setFont(undefined, 'normal');
+  // Divider line after header
+  doc.setDrawColor(200);
+  doc.line(20, yPos, 190, yPos);
+  yPos += 8;
 
-let infoYPos = 48;
+  // Two-column layout for client info and booking details
+  const leftColX = 20;
+  const rightColX = 110;
+  let leftColY = yPos;
+  let rightColY = yPos;
 
-// Client personal info
-doc.text(`Nome: ${fullname}`, 20, infoYPos);
-infoYPos += 8;
-doc.text(`Telefono: ${phone}`, 20, infoYPos);
-infoYPos += 8;
+  // Client information (left column)
+  doc.setFontSize(10);
+  doc.setFont(undefined, 'bold');
+  doc.text('Informazioni Cliente:', leftColX, leftColY);
+  leftColY += 5;
+  doc.setFont(undefined, 'normal');
+  doc.setFontSize(9);
 
-// Handle long allergy text with proper wrapping and spacing
-const allergiesText = `Allergie: ${allergies}`;
-const maxWidth = 100; // Width that leaves space for right column
-const allergiesLines = doc.splitTextToSize(allergiesText, maxWidth);
+  doc.text(`Nome: ${fullname}`, leftColX, leftColY);
+  leftColY += 4;
+  doc.text(`Telefono: ${phone}`, leftColX, leftColY);
+  leftColY += 4;
+  doc.text(`Camera: ${getRoomType(adults, children612)}`, leftColX, leftColY);
+  leftColY += 8;
 
-// Calculate needed height (7pt per line with 1pt extra spacing)
-const lineHeight = 7;
-const allergiesHeight = (lineHeight + 1) * allergiesLines.length;
+  // Guest summary in left column
+  doc.setFontSize(10);
+  doc.setFont(undefined, 'bold');
+  doc.text('Riepilogo Ospiti:', leftColX, leftColY);
+  leftColY += 5;
+  doc.setFont(undefined, 'normal');
+  doc.setFontSize(9);
+  doc.text(`• Totali: ${adults + children612 + children05}`, leftColX, leftColY);
+  leftColY += 4;
+  doc.text(`• Adulti: ${adults}`, leftColX, leftColY);
+  leftColY += 4;
+  doc.text(`• Bambini 6-12: ${children612}`, leftColX, leftColY);
+  leftColY += 4;
+  doc.text(`• Bambini 0-5: ${children05}`, leftColX, leftColY);
 
-// Draw allergy text with proper line spacing
-doc.text(allergiesLines, 20, infoYPos, { lineHeightFactor: 1.15 });
-infoYPos += allergiesHeight;
+  // Booking details (right column)
+  doc.setFontSize(10);
+  doc.setFont(undefined, 'bold');
+  doc.text('Dettagli Soggiorno:', rightColX, rightColY);
+  rightColY += 5;
+  doc.setFont(undefined, 'normal');
+  doc.setFontSize(9);
 
-// Adjust spacing based on content
-if (allergiesLines.length > 1) {
-    infoYPos += 4; // Extra space only if we had line wrapping
-}
+  const formattedCheckIn = formatDate(selectedSlot.start);
+  const formattedCheckOut = formatDate(selectedSlot.end);
+  doc.text(`${formattedCheckIn} - ${formattedCheckOut}`, rightColX, rightColY);
+  rightColY += 4;
+  doc.text(`Notti: ${selectedSlot.nights}`, rightColX, rightColY);
+  rightColY += 8;
 
-// Format dates as DD/MM/YYYY
-const formattedCheckIn = formatDate(selectedSlot.start);
-const formattedCheckOut = formatDate(selectedSlot.end);
-infoYPos = 42;
-// Right column - Move booking details here
-doc.setFont(undefined, 'bold');
-doc.text('Dettagli Soggiorno:', 140, infoYPos);
-infoYPos += 8;
-doc.setFont(undefined, 'normal');
+  // Services summary in right column
+  doc.setFontSize(10);
+  doc.setFont(undefined, 'bold');
+  doc.text('Servizi:', rightColX, rightColY);
+  rightColY += 5;
+  doc.setFont(undefined, 'normal');
+  doc.setFontSize(9);
+  doc.text(`• Culla: ${cribService ? 'Sì' : 'No'}`, rightColX, rightColY);
+  rightColY += 4;
+  doc.text(`• Animali: ${petService ? 'Sì' : 'No'}`, rightColX, rightColY);
+  rightColY += 4;
+  doc.text(`• Disabilità: ${disabledAdults + disabledChildren612 > 0 ? 'Sì' : 'No'}`, rightColX, rightColY);
+  rightColY += 4;
+  doc.text(`• Fedeltà: ${loyaltyCustomer ? 'Sì' : 'No'}`, rightColX, rightColY);
 
-doc.text(`${formattedCheckIn} - ${formattedCheckOut}`, 140, infoYPos);
-infoYPos += 8;
-doc.text(`Notti: ${selectedSlot.nights}`, 140, infoYPos);
-infoYPos += 8;
-doc.text(`Camera: ${getRoomType(adults, children612)}`, 140, infoYPos);
-// Divider line before price details
-doc.setDrawColor(200);
-doc.line(20, infoYPos + 10, 190, infoYPos + 10);
+  // Continue from the lower of the two columns
+  yPos = Math.max(leftColY, rightColY) + 10;
 
-// Price calculation section starts below client info
-let yPos = infoYPos + 20;
+  // Divider line before price details
+  doc.setDrawColor(200);
+  doc.line(20, yPos, 190, yPos);
+  yPos += 6;
 
-doc.setFont(undefined, 'bold');
-doc.text('Dettaglio Prezzi:', 20, yPos);
-yPos += 8;
-doc.setFont(undefined, 'normal');
+  // Price calculation section
+  doc.setFontSize(10);
+  doc.setFont(undefined, 'bold');
+  doc.text('Dettaglio Prezzi:', 20, yPos);
+  yPos += 5;
+  doc.setFont(undefined, 'normal');
+  doc.setFontSize(9);
 
   // Display only base price calculations (without extras)
   calculationDetails.forEach(item => {
-    // Skip extras in the main calculation details
     if (!item.description.includes('Tessere club') && 
         !item.description.includes('Vista piscina') && 
         !item.description.includes('Servizio animali') && 
         !item.description.includes('Culla')) {
       doc.text(item.description, 20, yPos);
       doc.text(`€${item.amount.toFixed(2)}`, 180, yPos, { align: 'right' });
-      yPos += 7;
+      yPos += 4;
     }
   });
   
@@ -846,25 +875,25 @@ doc.setFont(undefined, 'normal');
   doc.setFont(undefined, 'bold');
   doc.text('Subtotale prima sconti:', 20, yPos);
   doc.text(`€${subtotalBeforeDiscounts.toFixed(2)}`, 180, yPos, { align: 'right' });
-  yPos += 10;
+  yPos += 6;
   
   // Discounts section
   if (loyaltyDiscount > 0 || percentageDiscountAmount > 0) {
     doc.setFont(undefined, 'bold');
     doc.text('Sconti applicati:', 20, yPos);
-    yPos += 7;
+    yPos += 5;
     doc.setFont(undefined, 'normal');
     
     if (loyaltyDiscount > 0) {
       doc.text(`• Sconto fedeltà (10%):`, 20, yPos);
       doc.text(`-€${loyaltyDiscount.toFixed(2)}`, 180, yPos, { align: 'right' });
-      yPos += 7;
+      yPos += 4;
     }
     
     if (percentageDiscountAmount > 0) {
       doc.text(`• Sconto aggiuntivo (${percentageDiscount}%):`, 20, yPos);
       doc.text(`-€${percentageDiscountAmount.toFixed(2)}`, 180, yPos, { align: 'right' });
-      yPos += 7;
+      yPos += 4;
     }
     
     // Price after discounts (before extras)
@@ -872,76 +901,61 @@ doc.setFont(undefined, 'normal');
     doc.setFont(undefined, 'bold');
     doc.text(`Totale dopo sconti:`, 20, yPos);
     doc.text(`€${priceAfterDiscounts.toFixed(2)}`, 180, yPos, { align: 'right' });
-    yPos += 10;
+    yPos += 6;
   }
   
-  // Extras section - Now contains all service extras
+  // Extras section
   doc.setFont(undefined, 'bold');
   doc.text('Servizi aggiuntivi:', 20, yPos);
-  yPos += 7;
+  yPos += 5;
   doc.setFont(undefined, 'normal');
   
-  // Add all extras that were previously in calculationDetails
   calculationDetails.forEach(item => {
     if (item.description.includes('Tessere club') || 
         item.description.includes('Vista piscina') || 
         item.description.includes('Servizio animali') || 
         item.description.includes('Culla')) {
-      // Format the description to be more itemized
       const formattedDesc = item.description.replace(':', '');
       doc.text(`• ${formattedDesc}`, 20, yPos);
       doc.text(`€${item.amount.toFixed(2)}`, 180, yPos, { align: 'right' });
-      yPos += 7;
+      yPos += 4;
     }
   });
   
   // Divider before total
   doc.setDrawColor(200);
-  doc.line(20, yPos + 3, 190, yPos + 3);
-  yPos += 10;
+  doc.line(20, yPos + 2, 190, yPos + 2);
+  yPos += 6;
   
   // Total
-  doc.setFontSize(14);
+  doc.setFontSize(11);
   doc.setFont(undefined, 'bold');
   doc.text('Prezzo Totale:', 20, yPos);
   doc.text(`€${totalPrice.toFixed(2)}`, 180, yPos, { align: 'right' });
-  
-  
-  // Guest information section
   yPos += 15;
-  doc.setFontSize(12);
-  doc.setFont(undefined, 'bold');
-  doc.text('Riepilogo Ospiti:', 20, yPos);
-  yPos += 8;
-  doc.setFont(undefined, 'normal');
-  doc.text(`• Totali: ${adults + children612 + children05}`, 20, yPos);
-  yPos += 7;
-  doc.text(`• Adulti: ${adults}`, 20, yPos);
-  yPos += 7;
-  doc.text(`• Bambini 6-12: ${children612}`, 20, yPos);
-  yPos += 7;
-  doc.text(`• Bambini 0-5: ${children05}`, 20, yPos);
-  yPos += 12;
   
-  // Services summary (checkboxes)
+  // Note section - positioned well above signature
+  doc.setFontSize(10);
   doc.setFont(undefined, 'bold');
-  doc.text('Servizi inclusi:', 20, yPos);
-  yPos += 8;
+  doc.text('Nota:', 20, yPos);
+  yPos += 5;
   doc.setFont(undefined, 'normal');
-  doc.text(`• Culla: ${cribService ? 'Sì' : 'No'}`, 20, yPos);
-  yPos += 7;
-  doc.text(`• Animali: ${petService ? 'Sì' : 'No'}`, 20, yPos);
-  yPos += 7;
-  doc.text(`• Disabilità: ${disabledAdults + disabledChildren612 > 0 ? 'Sì' : 'No'}`, 20, yPos);
-  yPos += 7;
-  doc.text(`• Fedeltà: ${loyaltyCustomer ? 'Sì' : 'No'}`, 20, yPos);
-  yPos += 7;
-  doc.setFont(undefined, 'bold');
-  yPos += 2
-  doc.text(`NOTA:`, 20, yPos);
-  doc.setFont(undefined, 'normal');
-  doc.text(`______________________________________________________`, 32, yPos);
- 
+  doc.setFontSize(9);
+  
+  // Create lines for notes
+  for (let i = 0; i < 4; i++) {
+    doc.text('_____________________________________________________________________', 20, yPos);
+    yPos += 6;
+  }
+  
+  // Signature section - positioned in bottom right
+  const pageHeight = doc.internal.pageSize.height;
+  const signatureY = pageHeight - 20;
+  
+  doc.setFontSize(9);
+  doc.setTextColor(0, 0, 255); 
+  doc.text('_________________________', 150, signatureY - 5);
+  doc.text('Firma Cliente', 162, signatureY, { align: 'center' });
   
   // Save the PDF
   doc.save(`Prenotazione_${fullname.replace(' ', '_')}.pdf`);
