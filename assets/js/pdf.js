@@ -578,7 +578,9 @@ function generatePDF() {
   const customSelect = document.querySelector('.custom-select');
   const selectedSlotData = customSelect ? customSelect.getAttribute('data-value') : null;
   const selectedSlot = selectedSlotData ? JSON.parse(selectedSlotData) : {};
-  
+  const notes = document.getElementById('notes').value || '';
+  const signature = document.getElementById('signature').value || '';
+
   if (!selectedSlot.price) {
     alert("Per favore, seleziona un periodo prima di generare il PDF.");
     return;
@@ -935,28 +937,55 @@ function generatePDF() {
   yPos += 15;
   
   // Note section - positioned well above signature
-  doc.setFontSize(10);
-  doc.setFont(undefined, 'bold');
-  doc.text('Nota:', 20, yPos);
-  yPos += 5;
-  doc.setFont(undefined, 'normal');
-  doc.setFontSize(9);
-  
-  // Create lines for notes
-  for (let i = 0; i < 4; i++) {
-    doc.text('_____________________________________________________________________', 20, yPos);
-    yPos += 6;
+doc.setFontSize(10);
+doc.setFont(undefined, 'bold');
+doc.text('Nota:', 20, yPos);
+yPos += 5;
+doc.setFont(undefined, 'normal');
+doc.setFontSize(9);
+
+// Split notes into multiple lines if needed
+const maxLineLength = 80;
+const noteLines = [];
+let currentLine = '';
+
+notes.split(' ').forEach(word => {
+  if ((currentLine + word).length > maxLineLength) {
+    noteLines.push(currentLine);
+    currentLine = word + ' ';
+  } else {
+    currentLine += word + ' ';
   }
-  
-  // Signature section - positioned in bottom right
-  const pageHeight = doc.internal.pageSize.height;
-  const signatureY = pageHeight - 20;
-  
-  doc.setFontSize(9);
-  doc.setTextColor(0, 0, 255); 
-  doc.text('_________________________', 150, signatureY - 5);
-  doc.text('Firma Cliente', 162, signatureY, { align: 'center' });
-  
+});
+if (currentLine) noteLines.push(currentLine.trim());
+
+// Add each line of notes
+noteLines.forEach(line => {
+  doc.text(line, 20, yPos);
+  yPos += 6;
+});
+
+// If no notes, add a single line
+if (noteLines.length === 0) {
+  doc.text('_____________________________________________________________________', 20, yPos);
+  yPos += 6;
+}
+
+const pageHeight = doc.internal.pageSize.height;
+const signatureY = pageHeight - 20;
+doc.setFont('helvetica', 'italic');
+doc.setFontSize(9);
+doc.setTextColor(0, 0, 255);
+
+// Signature text above the line
+doc.text(signature || 'Firma', 172, signatureY - 7, { align: 'center' });
+
+doc.setFont(undefined, 'normal');
+// Line below the signature
+doc.text('_________________________', 150, signatureY - 5);
+
+// Constant "Firma" text below the line
+doc.text('Firma', 162, signatureY, { align: 'center' });  
   // Save the PDF
   doc.save(`Prenotazione_${fullname.replace(' ', '_')}.pdf`);
 }
