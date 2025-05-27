@@ -46,44 +46,47 @@ const slots = [
 { start: "2025-05-31", end: "2025-06-02", nights: 2, price: 180, description: "Dal 31 maggio al 2 giugno 180€ (2 notti)" },
   
 
-   // JUNE
-   { start: "2025-06-01", end: "2025-06-08", nights: 7, price: 425, description: "Dal 1 al 8 giugno 425€ (7 notti)" },
-   { start: "2025-06-01", end: "2025-06-05", nights: 4, price: 240, description: "Dal 1 al 5 giugno 240€ (4 notti)" },
-   { start: "2025-06-03", end: "2025-06-06", nights: 3, price: 180, description: "Dal 3 al 6 giugno 180€ (3 notti)" },
-   { start: "2025-06-05", end: "2025-06-08", nights: 3, price: 185, description: "Dal 5 al 8 giugno 185€ (3 notti)" },
-   { start: "2025-06-06", end: "2025-06-08", nights: 2, price: 149, description: "Dal 6 al 8 giugno 149€ (2 notti)" },
- 
-   { start: "2025-06-08", end: "2025-06-15", nights: 7, price: 435, description: "Dal 8 al 15 giugno 435€ (7 notti)" },
-   { start: "2025-06-08", end: "2025-06-12", nights: 4, price: 240, description: "Dal 8 al 12 giugno 240€ (4 notti)" },
-   { start: "2025-06-12", end: "2025-06-15", nights: 3, price: 210, description: "Dal 12 al 15 giugno 210€ (3 notti)" },
- 
-   { start: "2025-06-15", end: "2025-06-22", nights: 7, price: 470, description: "Dal 15 al 22 giugno 470€ (7 notti)" },
-   { start: "2025-06-15", end: "2025-06-19", nights: 4, price: 260, description: "Dal 15 al 19 giugno 260€ (4 notti)" },
-   { start: "2025-06-19", end: "2025-06-22", nights: 3, price: 210, description: "Dal 19 al 22 giugno 210€ (3 notti)" },
- 
-   { start: "2025-06-22", end: "2025-06-29", nights: 7, price: 470, description: "Dal 22 al 29 giugno 470€ (7 notti)" },
-   { start: "2025-06-22", end: "2025-06-26", nights: 4, price: 260, description: "Dal 22 al 26 giugno 260€ (4 notti)" },
-   { start: "2025-06-26", end: "2025-06-29", nights: 3, price: 210, description: "Dal 26 al 29 giugno 210€ (3 notti)" },
- 
-   { start: "2025-06-29", end: "2025-07-06", nights: 7, price: 510, description: "Dal 29 giugno al 6 luglio 510€ (7 notti)" },
-   { start: "2025-06-29", end: "2025-07-03", nights: 4, price: 280, description: "Dal 29 giugno al 3 luglio 280€ (4 notti)" },
-   { start: "2025-07-03", end: "2025-07-06", nights: 3, price: 230, description: "Dal 3 al 6 luglio 230€ (3 notti)" },
- 
+// JUNE
+{ start: "2025-06-01", end: "2025-06-08", nights: 7, price: 425, description: "Dal 1 al 8 giugno 425€ (7 notti)" },
+{ start: "2025-06-01", end: "2025-06-05", nights: 4, price: 240, description: "Dal 1 al 5 giugno 240€ (4 notti)" },
+{ start: "2025-06-03", end: "2025-06-06", nights: 3, price: 180, description: "Dal 3 al 6 giugno 180€ (3 notti)" },
+{ start: "2025-06-05", end: "2025-06-08", nights: 3, price: 185, description: "Dal 5 al 8 giugno 185€ (3 notti)" },
+{ start: "2025-06-06", end: "2025-06-08", nights: 2, price: 140, description: "Dal 6 al 8 giugno 140€ (2 notti)" },
+{ start: "2025-06-08", end: "2025-06-10", nights: 2, price: 130, description: "Dal 8 al 10 giugno 130€ (2 notti)" },
+
+{ start: "2025-06-08", end: "2025-06-15", nights: 7, price: 435, description: "Dal 8 al 15 giugno 435€ (7 notti)" },
+{ start: "2025-06-10", end: "2025-06-12", nights: 2, price: 130, description: "Dal 10 al 12 giugno 130€ (2 notti)" },
+
+{ start: "2025-06-08", end: "2025-06-12", nights: 4, price: 240, description: "Dal 8 al 12 giugno 240€ (4 notti)" },
+{ start: "2025-06-12", end: "2025-06-15", nights: 3, price: 210, description: "Dal 12 al 15 giugno 210€ (3 notti)" },
+
+{ start: "2025-06-15", end: "2025-06-22", nights: 7, price: 470, description: "Dal 15 al 22 giugno 470€ (7 notti)" },
+{ start: "2025-06-15", end: "2025-06-19", nights: 4, price: 220, description: "Dal 15 al 19 giugno 220€ (4 notti)" },
+{ start: "2025-06-19", end: "2025-06-22", nights: 3, price: 210, description: "Dal 19 al 22 giugno 210€ (3 notti)" },
+
+{ start: "2025-06-22", end: "2025-06-29", nights: 7, price: 470, description: "Dal 22 al 29 giugno 470€ (7 notti)" },
+{ start: "2025-06-22", end: "2025-06-26", nights: 4, price: 260, description: "Dal 22 al 26 giugno 260€ (4 notti)" },
+{ start: "2025-06-26", end: "2025-06-29", nights: 3, price: 210, description: "Dal 26 al 29 giugno 210€ (3 notti)" },
+
+{ start: "2025-06-29", end: "2025-07-06", nights: 7, price: 510, description: "Dal 29 giugno al 6 luglio 510€ (7 notti)" },
+{ start: "2025-06-29", end: "2025-07-03", nights: 4, price: 280, description: "Dal 29 giugno al 3 luglio 280€ (4 notti)" },
+{ start: "2025-07-03", end: "2025-07-06", nights: 3, price: 230, description: "Dal 3 al 6 luglio 230€ (3 notti)" },
+
    
   // JULY
-  { start: "2025-07-06", end: "2025-07-13", nights: 7, price: 510, description: "Dal 6 al 13 luglio 510€ (7 notti)" },
-  { start: "2025-07-06", end: "2025-07-10", nights: 4, price: 280, description: "Dal 6 al 10 luglio 280€ (4 notti)" },
-  { start: "2025-07-10", end: "2025-07-13", nights: 3, price: 230, description: "Dal 10 al 13 luglio 230€ (3 notti)" },
-  { start: "2025-07-13", end: "2025-07-20", nights: 7, price: 535, description: "Dal 13 al 20 luglio 535€ (7 notti)" },
-  { start: "2025-07-13", end: "2025-07-17", nights: 4, price: 280, description: "Dal 13 al 17 luglio 280€ (4 notti)" },
-  { start: "2025-07-17", end: "2025-07-20", nights: 3, price: 255, description: "Dal 17 al 20 luglio 255€ (3 notti)" },
-  { start: "2025-07-20", end: "2025-07-27", nights: 7, price: 590, description: "Dal 20 al 27 luglio 590€ (7 notti)" },
-  { start: "2025-07-20", end: "2025-07-24", nights: 4, price: 320, description: "Dal 20 al 24 luglio 320€ (4 notti)" },
-  { start: "2025-07-24", end: "2025-07-27", nights: 3, price: 270, description: "Dal 24 al 27 luglio 270€ (3 notti)" },
-  { start: "2025-07-27", end: "2025-07-31", nights: 4, price: 340, description: "Dal 27 al 31 luglio 340€ (4 notti)" },
-  { start: "2025-07-27", end: "2025-08-03", nights: 7, price: 640, description: "Dal 27 luglio al 3 agosto 640€ (7 notti)" },
-  { start: "2025-07-31", end: "2025-08-03", nights: 3, price: 300, description: "Dal 31 luglio al 3 agosto 300€ (3 notti)" },
-  
+{ start: "2025-07-06", end: "2025-07-13", nights: 7, price: 510, description: "Dal 6 al 13 luglio 510€ (7 notti)" },
+{ start: "2025-07-06", end: "2025-07-10", nights: 4, price: 280, description: "Dal 6 al 10 luglio 280€ (4 notti)" },
+{ start: "2025-07-10", end: "2025-07-13", nights: 3, price: 230, description: "Dal 10 al 13 luglio 230€ (3 notti)" },
+{ start: "2025-07-13", end: "2025-07-20", nights: 7, price: 535, description: "Dal 13 al 20 luglio 535€ (7 notti)" },
+{ start: "2025-07-13", end: "2025-07-17", nights: 4, price: 280, description: "Dal 13 al 17 luglio 280€ (4 notti)" },
+{ start: "2025-07-17", end: "2025-07-20", nights: 3, price: 255, description: "Dal 17 al 20 luglio 255€ (3 notti)" },
+{ start: "2025-07-20", end: "2025-07-27", nights: 7, price: 590, description: "Dal 20 al 27 luglio 590€ (7 notti)" },
+{ start: "2025-07-20", end: "2025-07-24", nights: 4, price: 320, description: "Dal 20 al 24 luglio 320€ (4 notti)" },
+{ start: "2025-07-24", end: "2025-07-27", nights: 3, price: 270, description: "Dal 24 al 27 luglio 270€ (3 notti)" },
+{ start: "2025-07-27", end: "2025-07-31", nights: 4, price: 340, description: "Dal 27 al 31 luglio 340€ (4 notti)" },
+{ start: "2025-07-27", end: "2025-08-03", nights: 7, price: 640, description: "Dal 27 luglio al 3 agosto 640€ (7 notti)" },
+{ start: "2025-07-31", end: "2025-08-03", nights: 3, price: 300, description: "Dal 31 luglio al 3 agosto 300€ (3 notti)" },
+
 
   // AUGUST
 { start: "2025-08-03", end: "2025-08-10", nights: 7, price: 690, description: "Dal 3 al 10 agosto 690€ (7 notti)" },
@@ -99,19 +102,19 @@ const slots = [
 { start: "2025-08-24", end: "2025-08-28", nights: 4, price: 440, description: "Dal 24 al 28 agosto 440€ (4 notti)" },
 { start: "2025-08-28", end: "2025-08-31", nights: 3, price: 330, description: "Dal 28 al 31 agosto 330€ (3 notti)" },
 
-  // SEPTEMBER
-  { start: "2025-08-31", end: "2025-09-07", nights: 7, price: 590, description: "Dal 31 agosto al 7 settembre 590€ (7 notti)" },
-  { start: "2025-08-31", end: "2025-09-04", nights: 4, price: 320, description: "Dal 31 agosto al 4 settembre 320€ (4 notti)" },
-  { start: "2025-09-04", end: "2025-09-07", nights: 3, price: 270, description: "Dal 4 al 7 settembre 270€ (3 notti)" },
-  { start: "2025-09-07", end: "2025-09-14", nights: 7, price: 520, description: "Dal 7 al 14 settembre 520€ (7 notti)" },
-  { start: "2025-09-07", end: "2025-09-11", nights: 4, price: 300, description: "Dal 7 al 11 settembre 300€ (4 notti)" },
-  { start: "2025-09-11", end: "2025-09-14", nights: 3, price: 220, description: "Dal 11 al 14 settembre 220€ (3 notti)" },
-  { start: "2025-09-14", end: "2025-09-21", nights: 7, price: 470, description: "Dal 14 al 21 settembre 470€ (7 notti)" },
-  { start: "2025-09-14", end: "2025-09-18", nights: 4, price: 280, description: "Dal 14 al 18 settembre 280€ (4 notti)" },
-  { start: "2025-09-18", end: "2025-09-21", nights: 3, price: 190, description: "Dal 18 al 21 settembre 190€ (3 notti)" },
-  { start: "2025-09-21", end: "2025-09-28", nights: 7, price: 430, description: "Dal 21 al 28 settembre 430€ (7 notti)" },
-  { start: "2025-09-21", end: "2025-09-25", nights: 4, price: 240, description: "Dal 21 al 25 settembre 240€ (4 notti)" },
-  { start: "2025-09-25", end: "2025-09-28", nights: 3, price: 190, description: "Dal 25 al 28 settembre 190€ (3 notti)" },
+// SEPTEMBER
+{ start: "2025-08-31", end: "2025-09-07", nights: 7, price: 590, description: "Dal 31 agosto al 7 settembre 590€ (7 notti)" },
+{ start: "2025-08-31", end: "2025-09-04", nights: 4, price: 320, description: "Dal 31 agosto al 4 settembre 320€ (4 notti)" },
+{ start: "2025-09-04", end: "2025-09-07", nights: 3, price: 270, description: "Dal 4 al 7 settembre 270€ (3 notti)" },
+{ start: "2025-09-07", end: "2025-09-14", nights: 7, price: 520, description: "Dal 7 al 14 settembre 520€ (7 notti)" },
+{ start: "2025-09-07", end: "2025-09-11", nights: 4, price: 300, description: "Dal 7 al 11 settembre 300€ (4 notti)" },
+{ start: "2025-09-11", end: "2025-09-14", nights: 3, price: 220, description: "Dal 11 al 14 settembre 220€ (3 notti)" },
+{ start: "2025-09-14", end: "2025-09-21", nights: 7, price: 470, description: "Dal 14 al 21 settembre 470€ (7 notti)" },
+{ start: "2025-09-14", end: "2025-09-18", nights: 4, price: 280, description: "Dal 14 al 18 settembre 280€ (4 notti)" },
+{ start: "2025-09-18", end: "2025-09-21", nights: 3, price: 190, description: "Dal 18 al 21 settembre 190€ (3 notti)" },
+{ start: "2025-09-21", end: "2025-09-28", nights: 7, price: 430, description: "Dal 21 al 28 settembre 430€ (7 notti)" },
+{ start: "2025-09-21", end: "2025-09-25", nights: 4, price: 240, description: "Dal 21 al 25 settembre 240€ (4 notti)" },
+{ start: "2025-09-25", end: "2025-09-28", nights: 3, price: 190, description: "Dal 25 al 28 settembre 190€ (3 notti)" },
   
   /*
   // OCTOBER
