@@ -278,13 +278,14 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // Discount Slider
   const percentageDiscountSlider = document.getElementById('percentageDiscount');
-  const discountValueLabel = document.getElementById('discountValue');
-  if (percentageDiscountSlider && discountValueLabel) {
-    percentageDiscountSlider.addEventListener('input', function() {
-      discountValueLabel.textContent = percentageDiscountSlider.value + '%';
-      calculateTotalPrice();
-    });
-  }
+const discountValueLabel = document.getElementById('discountValue');
+const discountAmountLabel = document.getElementById('discountAmount');
+if (percentageDiscountSlider && discountValueLabel && discountAmountLabel) {
+  percentageDiscountSlider.addEventListener('input', function() {
+    discountValueLabel.textContent = percentageDiscountSlider.value + '%';
+    calculateTotalPrice(); // This will now update both percentage and amount
+  });
+}
   
   // Form Input Listeners
   const form = document.getElementById('scheduleForm');
@@ -332,7 +333,7 @@ function calculateTotalPrice() {
   const loyaltyCustomer = document.getElementById('loyaltyCustomer').checked;
   const removeClubCard = document.getElementById('removeClubCard').checked;
   const percentageDiscount = parseFloat(document.getElementById('percentageDiscount').value) || 0;
-  
+  const discountAmountLabel = document.getElementById('discountAmount') || 0;
 
   const basePrice = selectedSlot.price; // Base price for the selected slot
   let totalPrice = 0;
@@ -407,9 +408,19 @@ function calculateTotalPrice() {
   /*************************************************
    * 5) Percentage Discount from Slider
    *************************************************/
+  let percentageDiscountAmount = 0;
   if (percentageDiscount > 0) {
+
+    const priceBeforePercentageDiscount = totalPrice;
+    percentageDiscountAmount = priceBeforePercentageDiscount * (percentageDiscount / 100);
     totalPrice *= (1 - percentageDiscount / 100);
+    discountAmountLabel.textContent = `-€${percentageDiscountAmount.toFixed(2)}`;
+
   }
+  else {
+  discountAmountLabel.textContent = '-€0.00';
+}
+
   
   /*************************************************
    * 6) Extra Services Cost (if selected)
@@ -1172,6 +1183,10 @@ function resetForm() {
   const percentageDiscountSlider = document.getElementById('percentageDiscount');
   if (percentageDiscountSlider) {
     percentageDiscountSlider.value = '0';
+  }
+  const discountAmountLabel = document.getElementById('discountAmount');
+  if (discountAmountLabel) {
+    discountAmountLabel.textContent = '-€0.00';
   }
   const discountValueLabel = document.getElementById('discountValue');
   if (discountValueLabel) {
