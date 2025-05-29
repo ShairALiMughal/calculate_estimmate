@@ -513,7 +513,7 @@ function generateBookingMessage() {
   message += `Cordiali saluti\n\n`;
   message += `Andrea - Ufficio Booking\n\n`;
   
-  message += `*Tassa di soggiorno (€1,00 per persona e al giorno per un massimo di 7 giorni – bambini fino a 12 anni non compiuti esenti), se dovuta, secondo regolamento comunale consultabile in reception, da pagare in loco.`;
+  message += `Tassa di soggiorno (€1,00 per persona e al giorno per un massimo di 7 giorni – bambini fino a 12 anni non compiuti esenti), se dovuta, secondo regolamento comunale consultabile in reception, da pagare in loco.`;
 
   return message;
 }
