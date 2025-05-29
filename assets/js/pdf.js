@@ -472,95 +472,49 @@ function generateBookingMessage() {
   const adults = parseInt(document.getElementById('adults')?.value) || 0;
   const children05 = parseInt(document.getElementById('children05')?.value) || 0;
   const children612 = parseInt(document.getElementById('children612')?.value) || 0;
-  const petService = document.getElementById('petService')?.checked || false;
-  const cribService = document.getElementById('cribService')?.checked || false;
-  const poolView = document.getElementById('poolView')?.checked || false;
-  const loyaltyCustomer = document.getElementById('loyaltyCustomer')?.checked || false;
-  const removeClubCard = document.getElementById('removeClubCard')?.checked || false;
-  const percentageDiscount = parseFloat(document.getElementById('percentageDiscount').value) || 0;
+  const fullname = document.getElementById('fullname').value || 'Cliente';
   
   const totalPriceElement = document.getElementById('totalPrice');
   const totalPrice = totalPriceElement ? parseFloat(totalPriceElement.textContent.split('€')[1]) : 0;
   const deposit = totalPrice * 0.2;
-  const remainingPayment = totalPrice - deposit;
-  
   
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     return `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth()+1).toString().padStart(2, '0')}/${date.getFullYear()}`;
   };
-  let roomtypeselction="";
-  if(payingclients == 1){
-    roomtypeselction = "Singola";
-  }
-  if(payingclients==2)
-  {
-    roomtypeselction = "matrimoniale";
-  }
-  if(payingclients == 3){
-    roomtypeselction = "tripla";
-  }
-  if(payingclients==4)
-  {
-    roomtypeselction = "quadrupla";
-  }
-  if(payingclients>4)
-    {
-      roomtypeselction = "quintupla";
-    }
-  
 
-  let message = `PREVENTIVO PER IL GRAND HOTEL SELINUNTE.\n\n`;
-  message += `🗓️ PERIODO DEL SOGGIORNO:\n`;
-  message += `Dal ${formatDate(selectedSlot.start)} al ${formatDate(selectedSlot.end)}\n`;
-  message += `Tipologia di camera: ${roomtypeselction}\n`;
-  message += `Numero di notti: ${selectedSlot.nights}\n\n`;
+  // Guest composition
+  let guestComposition = [];
+  if (adults > 0) guestComposition.push(`${adults}ad`);
+  if (children612 > 0) guestComposition.push(`${children612}chd`);
+  if (children05 > 0) guestComposition.push(`${children05}inf`);
+  const guestString = guestComposition.join(' ');
+
+  let message = `Le confermo la sua prenotazione dal\n`;
+  message += `${formatDate(selectedSlot.start)} al ${formatDate(selectedSlot.end)}\n`;
+  message += `a nome ${fullname}\n`;
+  message += `per ${guestString}\n`;
+  message += `al prezzo totale di €${totalPrice.toFixed(2)}\n\n`;
   
-  message += `🗓️ ECCO LA NOSTRA MIGLIORE OFFERTA\n`;
-  message += `IL TOTALE IN PENSIONE COMPLETA CON TESSERE CLUB GIÀ INCLUSE: €${totalPrice.toFixed(2)}\n\n`;
+  message += `ACCONTO DA VERSARE TRAMITE BONIFICO €${deposit.toFixed(2)} (20% del totale)\n\n`;
   
-  message += `TIPOLOGIA CAMERA:\n`;
-  message += `${adults} AD ${children612} CHD ${children05} INF\n`;
+  message += `La conferma della prenotazione avverrà al ricevimento di un minimo acconto del 20% entro 2 giorni lavorativi. Il saldo avverrà in Hotel.\n\n`;
   
-  if (percentageDiscount > 0) {
-    message += `Sconto percentuale applicato: ${percentageDiscount}%\n`;
-  }
+  message += `INTESTAZIONE: Guedoz Srl\n`;
+  message += `BANCA: Unicredit\n`;
+  message += `IBAN: IT12C0200801048000106679127\n\n`;
   
-  const clubCardCost = removeClubCard ? 0 : 6 * (adults - (parseInt(document.getElementById('disabledAdults')?.value)||0) + (children612 - (parseInt(document.getElementById('disabledChildren612')?.value)||0)) ) * selectedSlot.nights;
-  if (!removeClubCard) {
-    message += `COSTO TESSERE CLUB: €${clubCardCost.toFixed(2)} (già incluso nel prezzo)\n\n`;
-  } else {
-    message += `TESSERE CLUB: Non incluse\n\n`;
-  }
+  message += `La preghiamo di indicare nella causale nome, cognome e data del soggiorno.\n\n`;
   
-  message += `OPZIONI EXTRA:\n`;
-  message += `culla ${cribService ? '✅' : '❌'}\n`;
-  message += `supplemento pet service ${petService ? '✅' : '❌'}\n`;
-  message += `vista piscina ${poolView ? '✅' : '❌'}\n`;
-  message += `⚠️ TUTTI I SERVIZI SOPRA SE RICHIESTI SARANNO GIÀ INCLUSI NEL PREZZO.\n\n`;
+  message += `CHECK IN: 15H30\n`;
+  message += `CHECK OUT: 10:00\n\n`;
   
-  message += `🕞CHECK IN 15:30 / 🕙CHECK OUT 10:00\n\n`;
-  message += `✅ PER CONFERMARE QUESTA PRENOTAZIONE CI MANDI IL SUO NOMINATIVO. ⬅️⬅️⬅️\n\n`;
+  message += `Rimaniamo a disposizione per ulteriori informazioni\n`;
+  message += `Cordiali saluti\n\n`;
+  message += `Andrea - Ufficio Booking\n\n`;
   
-  message += `⚠️'NOTA BENE': IL PREZZO INDICATO SOPRA E IL TOTALE COMPLESSIVO IN PENSIONE COMPLETA E CON IL COSTO DELLE TESSERE CLUB GIÀ INSERITE, SENZA ALCUN AGGIUNTIVO (ESCLUSA TASSA DI SOGGIORNO).\n\n`;
-  message += `INFORMAZIONI GENERALI ⬇️\n\n`;
-  message += `I bambini da 0 a 5 anni gratuiti nel letto con i genitori.\n`;
-  message += `Da 6 ai 12 anni sconto del 50% in terzo e quarto letto.\n`;
-  message += `Dai 13 anni in su sconto del 20% in terzo e quarto letto.\n`;
-  message += `Supplemento Camera con vista piscina €10,00 a notte.\n`;
-  message += `Supplemento Culla: €10,00 a notte\n`;
-  message += `Supplemento Cane: €30,00 (in totale)\n`;
-  if (loyaltyCustomer) {
-    message += `Sconto fedeltà del 10% applicato alla tariffa base.\n`;
-  }
-  message += `\n`;
-  
-  message += `La tessera club ha un costo di €6,00 a notte e per persona (gratuita fino ai 5 anni) e include tutti i nostri servizi.\n\n`;
-  message += `Modalità SOFT ALL INCLUSIVE: €5,00 a notte a persona (a partire dai 6 anni) - include analcolici, crema caffe, e caffetteria Bar Piscina.\n\n`;
-  
-  message += `Conferma prenotazione con acconto del 20% (€${deposit.toFixed(2)}) tramite bonifico bancario e saldo in hotel (€${remainingPayment.toFixed(2)}).\n\n`;
-  message += `IMPORTANTE: La prenotazione sarà confermata solo dopo il ricevimento dell'acconto.\n\n`;
-  
+  message += `*Tassa di soggiorno (€1,00 per persona e al giorno per un massimo di 7 giorni – bambini fino a 12 anni non compiuti esenti), se dovuta, secondo regolamento comunale consultabile in reception, da pagare in loco.`;
+
   return message;
 }
 
