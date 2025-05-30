@@ -954,8 +954,17 @@ doc.text('_________________________', 150, signatureY - 5);
 
 // Constant "Firma" text below the line
 doc.text('Firma', 162, signatureY, { align: 'center' });  
-  // Save the PDF
-  doc.save(`Prenotazione_${fullname.replace(' ', '_')}.pdf`);
+
+const now = new Date();
+const formattedDate = `${now.getDate().toString().padStart(2, '0')}/${(now.getMonth()+1).toString().padStart(2, '0')}/${now.getFullYear()}`;
+doc.setFontSize(8);
+doc.setFont(undefined, 'normal');
+doc.setTextColor(100);
+doc.text(`${formattedDate}`, 105, doc.internal.pageSize.height - 10, { align: 'center' });
+
+// Save the PDF
+doc.save(`Prenotazione_${fullname.replace(' ', '_')}.pdf`);
+
 }
 /*************************************************
  * displayBookingMessage
