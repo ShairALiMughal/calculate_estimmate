@@ -682,7 +682,7 @@ function generatePDF() {
     clubCardCost = 7 * payingClub * nights;
     if (clubCardCost > 0) {
       calculationDetails.push({
-        description: `Tessere club: ${payingClub} × €6 × ${nights} notti`,
+        description: `Tessere club: ${payingClub} × €7 × ${nights} notti`,
         amount: clubCardCost
       });
     }
