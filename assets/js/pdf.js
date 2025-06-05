@@ -433,7 +433,7 @@ function calculateTotalPrice() {
   let clubCardCost = 0;
   if (!removeClubCard) {
     const payingClub = nonDisabledAdults + normalChildren;
-    clubCardCost = 6 * payingClub * selectedSlot.nights;
+    clubCardCost = 7 * payingClub * selectedSlot.nights;
   }
   totalPrice += clubCardCost;
   
@@ -679,7 +679,7 @@ function generatePDF() {
   let clubCardCost = 0;
   if (!removeClubCard) {
     const payingClub = nonDisabledAdults + normalChildren;
-    clubCardCost = 6 * payingClub * nights;
+    clubCardCost = 7 * payingClub * nights;
     if (clubCardCost > 0) {
       calculationDetails.push({
         description: `Tessere club: ${payingClub} × €6 × ${nights} notti`,

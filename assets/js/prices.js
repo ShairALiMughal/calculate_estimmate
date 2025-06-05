@@ -430,7 +430,7 @@ function calculateTotalPrice() {
   let clubCardCost = 0;
   if (!removeClubCard) {
     const payingClub = nonDisabledAdults + normalChildren;
-    clubCardCost = 6 * payingClub * selectedSlot.nights;
+    clubCardCost = 7 * payingClub * selectedSlot.nights;
   }
   totalPrice += clubCardCost;
   
@@ -523,7 +523,7 @@ function generateBookingMessage() {
     message += `Sconto percentuale applicato: ${percentageDiscount}%\n`;
   }
   
-  const clubCardCost = removeClubCard ? 0 : 6 * (adults - (parseInt(document.getElementById('disabledAdults')?.value)||0) + (children612 - (parseInt(document.getElementById('disabledChildren612')?.value)||0)) ) * selectedSlot.nights;
+  const clubCardCost = removeClubCard ? 0 : 7 * (adults - (parseInt(document.getElementById('disabledAdults')?.value)||0) + (children612 - (parseInt(document.getElementById('disabledChildren612')?.value)||0)) ) * selectedSlot.nights;
   if (!removeClubCard) {
     message += `COSTO TESSERE CLUB: €${clubCardCost.toFixed(2)} (già incluso nel prezzo)\n\n`;
   } else {

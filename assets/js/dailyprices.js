@@ -273,7 +273,7 @@ function calculateTotalPrice() {
   let clubCardCost = 0;
   if (!removeClubCard) {
     const payingClub = nonDisabledAdults + normalChildren;
-    clubCardCost = 6 * payingClub * nights;
+    clubCardCost = 7 * payingClub * nights;
     totalPrice += clubCardCost;
   }
   /*************************************************
@@ -366,7 +366,7 @@ function generateBookingMessage() {
   message += `${adults} AD ${children612} CHD ${children05} INF\n`;
   
   if (!removeClubCard) {
-    const clubCardCost = 6 * (adults + children612) * Math.round((endDate - startDate) / (1000 * 60 * 60 * 24));
+    const clubCardCost = 7 * (adults + children612) * Math.round((endDate - startDate) / (1000 * 60 * 60 * 24));
     message += `COSTO TESSERE CLUB: €${clubCardCost.toFixed(2)} (già incluso nel prezzo)\n\n`;
   } else {
     message += `TESSERE CLUB: Non incluse\n\n`;
