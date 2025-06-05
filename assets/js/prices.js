@@ -552,7 +552,7 @@ function generateBookingMessage() {
   }
   message += `\n`;
   
-  message += `La tessera club ha un costo di €6,00 a notte e per persona (gratuita fino ai 5 anni) e include tutti i nostri servizi.\n\n`;
+  message += `La tessera club ha un costo di €7,00 a notte e per persona (gratuita fino ai 5 anni) e include tutti i nostri servizi.\n\n`;
   message += `Modalità SOFT ALL INCLUSIVE: €5,00 a notte a persona (a partire dai 6 anni) - include analcolici, crema caffe, e caffetteria Bar Piscina.\n\n`;
   
   message += `Conferma prenotazione con acconto del 20% (€${deposit.toFixed(2)}) tramite bonifico bancario e saldo in hotel (€${remainingPayment.toFixed(2)}).\n\n`;
