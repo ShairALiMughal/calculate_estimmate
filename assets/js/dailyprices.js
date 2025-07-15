@@ -1,5 +1,6 @@
 const dailyPrices = {
   // April 2025
+/*  
   '2025-04-01': 70, '2025-04-02': 70, '2025-04-03': 70, '2025-04-04': 80,
   '2025-04-05': 80, '2025-04-06': 70, '2025-04-07': 70, '2025-04-08': 70,
   '2025-04-09': 70, '2025-04-10': 70, '2025-04-11': 80, '2025-04-12': 80,
@@ -18,69 +19,178 @@ const dailyPrices = {
   '2025-05-21': 70, '2025-05-22': 70, '2025-05-23': 80, '2025-05-24': 80,
   '2025-05-25': 70, '2025-05-26': 70, '2025-05-27': 70, '2025-05-28': 70,
   '2025-05-29': 70, '2025-05-30': 80, '2025-05-31': 80,
+*/
+// June 2025
+'2025-06-01': 60,
+'2025-06-02': 60,
+'2025-06-03': 60,
+'2025-06-04': 60,
+'2025-06-05': 45,
+'2025-06-06': 70,
+'2025-06-07': 70,
+'2025-06-08': 60,
+'2025-06-09': 60,
+'2025-06-10': 60,
+'2025-06-11': 60,
+'2025-06-12': 45,
+'2025-06-13': 75,
+'2025-06-14': 75,
+'2025-06-15': 65,
+'2025-06-16': 65,
+'2025-06-17': 65,
+'2025-06-18': 65,
+'2025-06-19': 50,
+'2025-06-20': 80,
+'2025-06-21': 80,
+'2025-06-22': 65,
+'2025-06-23': 65,
+'2025-06-24': 65,
+'2025-06-25': 65,
+'2025-06-26': 50,
+'2025-06-27': 80,
+'2025-06-28': 80,
+'2025-06-29': 70,
+'2025-06-30': 70,
 
-  // June 2025
-  '2025-06-01': 80, '2025-06-02': 80, '2025-06-03': 70, '2025-06-04': 70,
-  '2025-06-05': 70, '2025-06-06': 80, '2025-06-07': 80, '2025-06-08': 70,
-  '2025-06-09': 70, '2025-06-10': 70, '2025-06-11': 70, '2025-06-12': 70,
-  '2025-06-13': 80, '2025-06-14': 80, '2025-06-15': 80, '2025-06-16': 80,
-  '2025-06-17': 80, '2025-06-18': 80, '2025-06-19': 80, '2025-06-20': 90,
-  '2025-06-21': 90, '2025-06-22': 80, '2025-06-23': 80, '2025-06-24': 80,
-  '2025-06-25': 80, '2025-06-26': 80, '2025-06-27': 90, '2025-06-28': 90,
-  '2025-06-29': 80, '2025-06-30': 80,
 
   // July 2025
-  '2025-07-01': 80, '2025-07-02': 80, '2025-07-03': 80, '2025-07-04': 100,
-  '2025-07-05': 100, '2025-07-06': 90, '2025-07-07': 90, '2025-07-08': 90,
-  '2025-07-09': 90, '2025-07-10': 80, '2025-07-11': 100, '2025-07-12': 100,
-  '2025-07-13': 95, '2025-07-14': 95, '2025-07-15': 95, '2025-07-16': 95,
-  '2025-07-17': 105, '2025-07-18': 105, '2025-07-19': 105, '2025-07-20': 100,
-  '2025-07-21': 100, '2025-07-22': 100, '2025-07-23': 100, '2025-07-24': 110,
-  '2025-07-25': 110, '2025-07-26': 110, '2025-07-27': 100, '2025-07-28': 100,
-  '2025-07-29': 100, '2025-07-30': 100, '2025-07-31': 110,
+// July 2025
+'2025-07-01': 80,
+'2025-07-02': 80,
+'2025-07-03': 60,
+'2025-07-04': 85,
+'2025-07-05': 85,
+'2025-07-06': 70,
+'2025-07-07': 70,
+'2025-07-08': 70,
+'2025-07-09': 70,
+'2025-07-10': 60,
+'2025-07-11': 85,
+'2025-07-12': 85,
+'2025-07-13': 70,
+'2025-07-14': 70,
+'2025-07-15': 70,
+'2025-07-16': 70,
+'2025-07-17': 85,
+'2025-07-18': 85,
+'2025-07-19': 85,
+'2025-07-20': 80,
+'2025-07-21': 80,
+'2025-07-22': 80,
+'2025-07-23': 80,
+'2025-07-24': 90,
+'2025-07-25': 90,
+'2025-07-26': 90,
+'2025-07-27': 85,
+'2025-07-28': 85,
+'2025-07-29': 85,
+'2025-07-30': 85,
+'2025-07-31': 110,
 
-  // August 2025
-  '2025-08-01': 110, '2025-08-02': 110, '2025-08-03': 105, '2025-08-04': 105,
-  '2025-08-05': 105, '2025-08-06': 105, '2025-08-07': 115, '2025-08-08': 115,
-  '2025-08-09': 115, '2025-08-10': 110, '2025-08-11': 110, '2025-08-12': 110,
-  '2025-08-13': 170, '2025-08-14': 170, '2025-08-15': 170, '2025-08-16': 170,
-  '2025-08-17': 130, '2025-08-18': 130, '2025-08-19': 130, '2025-08-20': 130,
-  '2025-08-21': 145, '2025-08-22': 145, '2025-08-23': 145, '2025-08-24': 115,
-  '2025-08-25': 115, '2025-08-26': 115, '2025-08-27': 115, '2025-08-28': 120,
-  '2025-08-29': 120, '2025-08-30': 120, '2025-08-31': 100,
+
+
+// August 2025
+'2025-08-01': 100,
+'2025-08-02': 100,
+'2025-08-03': 90,
+'2025-08-04': 90,
+'2025-08-05': 90,
+'2025-08-06': 90,
+'2025-08-07': 110,
+'2025-08-08': 110,
+'2025-08-09': 110,
+'2025-08-10': 110,
+'2025-08-11': 110,
+'2025-08-12': 110,
+'2025-08-13': 150,
+'2025-08-14': 150,
+'2025-08-15': 150,
+'2025-08-16': 150,
+'2025-08-17': 120,
+'2025-08-18': 120,
+'2025-08-19': 120,
+'2025-08-20': 120,
+'2025-08-21': 130,
+'2025-08-22': 130,
+'2025-08-23': 130,
+'2025-08-24': 110,
+'2025-08-25': 110,
+'2025-08-26': 110,
+'2025-08-27': 110,
+'2025-08-28': 110,
+'2025-08-29': 110,
+'2025-08-30': 110,
+'2025-08-31': 80,
+
 
   // September 2025
-  '2025-09-01': 100, '2025-09-02': 100, '2025-09-03': 100, '2025-09-04': 110,
-  '2025-09-05': 110, '2025-09-06': 110, '2025-09-07': 90, '2025-09-08': 90,
-  '2025-09-09': 90, '2025-09-10': 90, '2025-09-11': 100, '2025-09-12': 100,
-  '2025-09-13': 100, '2025-09-14': 85, '2025-09-15': 85, '2025-09-16': 85,
-  '2025-09-17': 85, '2025-09-18': 70, '2025-09-19': 100, '2025-09-20': 100,
-  '2025-09-21': 80, '2025-09-22': 80, '2025-09-23': 80, '2025-09-24': 80,
-  '2025-09-25': 70, '2025-09-26': 90, '2025-09-27': 90, '2025-09-28': 80,
-  '2025-09-29': 80, '2025-09-30': 80, '2025-10-01': 80, '2025-10-02': 65,
-  '2025-10-03': 85, '2025-10-04': 85
+'2025-09-01': 80,
+'2025-09-02': 80,
+'2025-09-03': 80,
+'2025-09-04': 80,
+'2025-09-05': 90,
+'2025-09-06': 90,
+'2025-09-07': 75,
+'2025-09-08': 75,
+'2025-09-09': 75,
+'2025-09-10': 60,
+'2025-09-11': 60,
+'2025-09-12': 80,
+'2025-09-13': 80,
+'2025-09-14': 70,
+'2025-09-15': 70,
+'2025-09-16': 70,
+'2025-09-17': 70,
+'2025-09-18': 50,
+'2025-09-19': 70,
+'2025-09-20': 70,
+'2025-09-21': 60,
+'2025-09-22': 60,
+'2025-09-23': 60,
+'2025-09-24': 60,
+'2025-09-25': 50,
+'2025-09-26': 60,
+'2025-09-27': 70,
+
 };  
 
+document.addEventListener('DOMContentLoaded', function() {
+  const disabledDiscountBtn = document.getElementById('disabledDiscountBtn');
+  const disabledFields = document.getElementById('disabledFields');
+  
+  // Initially hide the panel
+  disabledFields.style.display = 'none';
+  
+  // On button click, toggle the panel's visibility
+  disabledDiscountBtn.addEventListener('click', function() {
+    if (disabledFields.style.display === 'none' || disabledFields.style.display === '') {
+      disabledFields.style.display = 'block';
+    } else {
+      disabledFields.style.display = 'none';
+    }
+  });
+});
+let payingclients=0;
 
 function calculateTotalPrice() {
   const startDate = new Date(document.getElementById('startDate').value);
   const endDate = new Date(document.getElementById('endDate').value);
   const adults = parseInt(document.getElementById('adults').value) || 0;
   const children05 = parseInt(document.getElementById('children05').value) || 0;
+  const disabledAdults = parseInt(document.getElementById('disabledAdults')?.value) || 0;
+  const disabledChildren612 = parseInt(document.getElementById('disabledChildren612')?.value) || 0;
   const children612 = parseInt(document.getElementById('children612').value) || 0;
   const petService = document.getElementById('petService').checked;
   const cribService = document.getElementById('cribService').checked;
   const poolView = document.getElementById('poolView').checked;
   const loyaltyCustomer = document.getElementById('loyaltyCustomer').checked;
   const removeClubCard = document.getElementById('removeClubCard').checked;
-  // Use the discount slider value
   const percentageDiscount = parseFloat(document.getElementById('percentageDiscount').value) || 0;
-  // (Optional) Remove custom discount if no longer needed
-  // const customDiscount = parseFloat(document.getElementById('customDiscount').value) || 0;
-  
+  const discountAmountLabel = document.getElementById('discountAmount') || 0;
+  payingclients = adults + children612;
   let totalPrice = 0;
   let nights = 0;
-  
+
   // Calculate base price from dailyPrices
   for (let d = new Date(startDate); d < endDate; d.setDate(d.getDate() + 1)) {
     const dateString = d.toISOString().split('T')[0];
@@ -89,50 +199,108 @@ function calculateTotalPrice() {
       nights++;
     }
   }
-  
-  // Calculate price for adults
-  if (adults <= 2) {
-    totalPrice *= adults;
-  } else {
-    totalPrice *= 2; // Full price for first two adults
-    let discountedAdults = adults - 2;
-    totalPrice += (totalPrice * 0.8 * discountedAdults); // 20% off for additional adults
+
+  const baseNightlyPrice = totalPrice / nights;
+  const basePrice = baseNightlyPrice * nights;
+
+  // Reset price for proper calculation
+  totalPrice = 0;
+
+  /*************************************************
+   * 1) ADULTS
+   *************************************************/
+  const nonDisabledAdults = adults - disabledAdults;
+
+  // First 2 non-disabled adults at full price, rest at 20% off
+  const fullAdults = Math.min(nonDisabledAdults, 2);
+  const extraAdults = Math.max(nonDisabledAdults - 2, 0);
+  const fullAdultsCost = fullAdults * basePrice;
+  const extraAdultsCost = extraAdults * basePrice * 0.8;
+
+  // Disabled adults: some may get 20% + 10%, others just 10%
+  let disabledAdultsCost = 0;
+  const doubleDiscount = Math.min(disabledAdults, Math.max(0, adults - 2));
+  const singleDiscount = disabledAdults - doubleDiscount;
+
+  if (doubleDiscount > 0) {
+    disabledAdultsCost += doubleDiscount * basePrice * 0.8 * 0.9;
   }
-  
-  // Calculate price for children 6-12 (50% off)
-  totalPrice += (totalPrice * 0.5 * children612);
-  
-  // Calculate club card cost if not removed
-  let clubCardCost = 0;
-  if (!removeClubCard) {
-    let peoplePayingClubCard = adults + children612;
-    clubCardCost = 6 * peoplePayingClubCard * nights;
+  if (singleDiscount > 0) {
+    disabledAdultsCost += singleDiscount * basePrice * 0.9;
   }
-  totalPrice += clubCardCost;
-  
-  // Apply loyalty discount (10% off)
+
+  const adultCost = fullAdultsCost + extraAdultsCost;
+  const disabledCost = disabledAdultsCost;
+  totalPrice += adultCost + disabledCost;
+
+  /*************************************************
+   * 2) CHILDREN (6-12)
+   *************************************************/
+  const normalChildren = children612 - disabledChildren612;
+  const childBase = basePrice * 0.5;
+  const normalChildrenCost = normalChildren * childBase;
+  const disabledChildrenCost = disabledChildren612 * childBase * 0.9;
+
+  totalPrice += normalChildrenCost + disabledChildrenCost;
+
+
+  /*************************************************
+   * 4) LOYALTY DISCOUNT
+   *************************************************/
   if (loyaltyCustomer) {
     totalPrice *= 0.9;
   }
-  
-  // (Optional) Apply custom discount if needed
-  // totalPrice = Math.max(0, totalPrice - customDiscount);
-  
-  // Apply percentage discount from slider
+
+  /*************************************************
+   * 5) PERCENTAGE DISCOUNT
+   *************************************************/
+    let percentageDiscountAmount = 0;
   if (percentageDiscount > 0) {
+
+    const priceBeforePercentageDiscount = totalPrice;
+    percentageDiscountAmount = priceBeforePercentageDiscount * (percentageDiscount / 100);
     totalPrice *= (1 - percentageDiscount / 100);
+    discountAmountLabel.textContent = `-€${percentageDiscountAmount.toFixed(2)}`;
+
   }
-  
-  // Add extras cost
+  else {
+  discountAmountLabel.textContent = '-€0.00';
+}
+
+  /*************************************************
+   * 3) CLUB CARD
+   *************************************************/
+  let clubCardCost = 0;
+  if (!removeClubCard) {
+    const payingClub = nonDisabledAdults + normalChildren;
+    clubCardCost = 7 * payingClub * nights;
+    totalPrice += clubCardCost;
+  }
+  /*************************************************
+   * 6) EXTRAS
+   *************************************************/
   let extrasCost = 0;
   if (poolView) extrasCost += 10 * nights;
   if (petService) extrasCost += 30;
   if (cribService) extrasCost += 10 * nights;
-  
   totalPrice += extrasCost;
-  
+
+  /*************************************************
+   * DEBUG LOGS
+   *************************************************/
+  console.log('Base Price per Night:', baseNightlyPrice.toFixed(2));
+  console.log('Non-disabled Adults Cost:', adultCost.toFixed(2));
+  console.log('Disabled Adults Cost:', disabledCost.toFixed(2));
+  console.log('Normal Children (6-12) Cost:', normalChildrenCost.toFixed(2));
+  console.log('Disabled Children (6-12) Cost:', disabledChildrenCost.toFixed(2));
+  console.log('Club Card Payers:', `${nonDisabledAdults} adults + ${normalChildren} children = ${nonDisabledAdults + normalChildren}`);
+  console.log('Club Card Cost:', clubCardCost.toFixed(2));
+  console.log('Extras Cost:', extrasCost.toFixed(2));
+  console.log('Total:', totalPrice.toFixed(2));
+
   document.getElementById('totalPrice').textContent = `Prezzo totale: €${totalPrice.toFixed(2)}`;
 }
+
 
 function generateBookingMessage() {
   const startDate = new Date(document.getElementById('startDate').value);
@@ -151,14 +319,45 @@ function generateBookingMessage() {
   const totalPrice = parseFloat(totalPriceElement.textContent.split('€')[1]);
   const deposit = totalPrice * 0.2;
   const remainingPayment = totalPrice - deposit;
-  
+  document.addEventListener('DOMContentLoaded', function() {
+    const discountBtn = document.getElementById('discountBtn');
+    if (discountBtn) {
+      discountBtn.addEventListener('click', function() {
+        const discountPanel = document.getElementById('discountPanel');
+        if (!discountPanel) return;
+        // Toggle the panel's visibility
+        discountPanel.style.display = (discountPanel.style.display === 'block') ? 'none' : 'block';
+      });
+    }
+  });
+   
   const formatDate = (date) => {
     return `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getFullYear()}`;
   };
+  let roomtypeselction="";
+  if(payingclients == 1){
+    roomtypeselction = "Singola";
+  }
+  if(payingclients==2)
+  {
+    roomtypeselction = "matrimoniale";
+  }
+  if(payingclients == 3){
+    roomtypeselction = "tripla";
+  }
+  if(payingclients==4)
+  {
+    roomtypeselction = "quadrupla";
+  }
+  if(payingclients>4)
+    {
+      roomtypeselction = "quintupla";
+    }
   
   let message = `PREVENTIVO PER IL GRAND HOTEL SELINUNTE.\n\n`;
   message += `🗓️ PERIODO DEL SOGGIORNO:\n`;
   message += `Dal ${formatDate(startDate)} al ${formatDate(endDate)}\n`;
+  message += `Tipologia di camera: ${roomtypeselction}\n`;
   message += `Numero di notti: ${Math.round((endDate - startDate) / (1000 * 60 * 60 * 24))}\n\n`;
   
   message += `🗓️ECCO LA NOSTRA MIGLIORE OFFERTA\n`;
@@ -167,7 +366,7 @@ function generateBookingMessage() {
   message += `${adults} AD ${children612} CHD ${children05} INF\n`;
   
   if (!removeClubCard) {
-    const clubCardCost = 6 * (adults + children612) * Math.round((endDate - startDate) / (1000 * 60 * 60 * 24));
+    const clubCardCost = 7 * (adults + children612) * Math.round((endDate - startDate) / (1000 * 60 * 60 * 24));
     message += `COSTO TESSERE CLUB: €${clubCardCost.toFixed(2)} (già incluso nel prezzo)\n\n`;
   } else {
     message += `TESSERE CLUB: Non incluse\n\n`;
@@ -194,7 +393,7 @@ function generateBookingMessage() {
     message += `Sconto fedeltà del 10% applicato alla tariffa base.\n`;
   }
   message += `\n`;
-  message += `La tessera club costa €6,00 a notte a persona (gratuita per i bambini fino a 5 anni) e include tutti i nostri servizi.\n\n`;
+  message += `La tessera club costa €7,00 a notte a persona (gratuita per i bambini fino a 5 anni) e include tutti i nostri servizi.\n\n`;
   
   message += `Modalità SOFT ALL INCLUSIVE: €5,00 a notte a persona (dai 6 anni in su)\n`;
   message += `Include: analcolici, crema caffe, e caffetteria Bar Piscina.\n\n`;
@@ -217,13 +416,14 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // --- Setup Discount Slider ---
   const percentageDiscountSlider = document.getElementById('percentageDiscount');
-  const discountValueLabel = document.getElementById('discountValue');
-  if (percentageDiscountSlider && discountValueLabel) {
-    percentageDiscountSlider.addEventListener('input', function() {
-      discountValueLabel.textContent = percentageDiscountSlider.value + '%';
-      calculateTotalPrice();
-    });
-  }
+const discountValueLabel = document.getElementById('discountValue');
+const discountAmountLabel = document.getElementById('discountAmount');
+if (percentageDiscountSlider && discountValueLabel && discountAmountLabel) {
+  percentageDiscountSlider.addEventListener('input', function() {
+    discountValueLabel.textContent = percentageDiscountSlider.value + '%';
+    calculateTotalPrice(); // This will now update both percentage and amount
+  });
+}
   
   // Initial calculation
   calculateTotalPrice();
@@ -375,8 +575,38 @@ function openWhatsApp() {
     alert('Messaggio copiato negli appunti. Incolla nella chat di WhatsApp.');
   }
 }
-
 function resetForm() {
+  // Reset date inputs
+  document.getElementById('startDate').value = '';
+  document.getElementById('endDate').value = '';
+
+  // Reset number inputs
+  document.getElementById('adults').value = '1';
+  document.getElementById('children05').value = '0';
+  document.getElementById('children612').value = '0';
+  document.getElementById('disabledAdults').value = '0';
+  document.getElementById('disabledChildren612').value = '0';
+
+  // Reset discount slider
+  document.getElementById('percentageDiscount').value = '0';
+  const discountValueLabel = document.getElementById('discountValue');
+  if (discountValueLabel) {
+    discountValueLabel.textContent = '0%';
+  }
+
+  // Reset checkboxes
+  document.getElementById('petService').checked = false;
+  document.getElementById('cribService').checked = false;
+  document.getElementById('poolView').checked = false;
+  document.getElementById('loyaltyCustomer').checked = false;
+  document.getElementById('removeClubCard').checked = false;
+
+  // Reset custom discount if it exists
+  const customDiscountField = document.getElementById('customDiscount');
+  if (customDiscountField) {
+    customDiscountField.value = '0';
+  }
+
   // Reset custom select (if applicable)
   const customSelect = document.querySelector('.custom-select');
   if (customSelect) {
@@ -384,31 +614,19 @@ function resetForm() {
     triggerSpan.textContent = 'Seleziona un periodo';
     customSelect.removeAttribute('data-value');
   }
-  // Reset number inputs
-  document.getElementById('adults').value = '1';
-  document.getElementById('children05').value = '0';
-  document.getElementById('children612').value = '0';
-  // Reset discount slider
-  document.getElementById('percentageDiscount').value = '0';
-  const discountValueLabel = document.getElementById('discountValue');
-  if (discountValueLabel) {
-    discountValueLabel.textContent = '0%';
+
+  // Hide disabled fields panel
+  const disabledFields = document.getElementById('disabledFields');
+  if (disabledFields) {
+    disabledFields.style.display = 'none';
   }
-  // Reset checkboxes
-  document.getElementById('petService').checked = false;
-  document.getElementById('cribService').checked = false;
-  document.getElementById('poolView').checked = false;
-  document.getElementById('loyaltyCustomer').checked = false;
-  document.getElementById('removeClubCard').checked = false;
-  // If a custom discount field exists and is no longer used, you can reset it as well
-  const customDiscountField = document.getElementById('customDiscount');
-  if (customDiscountField) {
-    customDiscountField.value = '0';
-  }
+
   // Reset total price display
   document.getElementById('totalPrice').textContent = 'Prezzo totale: €0.00';
+
+  // Recalculate total just in case
   calculateTotalPrice();
-  
+
   // Hide booking message if it exists
   const bookingMessageDiv = document.getElementById('bookingMessageDiv');
   if (bookingMessageDiv) {

@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DREY2HQR1G"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-DREY2HQR1G');
+</script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <title>Grand Hotel Selinunte - Genera Ricevuta</title>
+  <!-- Bootstrap core CSS -->
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Additional CSS Files -->
+  <link rel="stylesheet" href="assets/css/fontawesome.css">
+  <link rel="stylesheet" href="assets/css/templatemo-villa-agency.css">
+  <link rel="stylesheet" href="assets/css/owl.css">
+  <link rel="stylesheet" href="assets/css/animate.css">
+  <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css" />
+  <link rel="stylesheet" href="assets/css/reservation.css">
+  
+  <style>
+    .booking-section {
+      background: #f8f9fa;
+      padding: 40px 0;
+      min-height: calc(100vh - 200px);
+    }
+    
+    .form-container {
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      padding: 40px;
+      margin: 20px 0;
+    }
+    
+    .section-divider {
+      border-bottom: 2px solid #f35525;
+      margin: 30px 0 25px 0;
+      padding-bottom: 10px;
+    }
+    
+    .section-title {
+      color: #2a2a2a;
+      font-weight: 600;
+      font-size: 1.3em;
+      margin-bottom: 0;
+    }
+    
+    .form-group {
+      margin-bottom: 20px;
+    }
+    
+    .form-group label {
+      font-weight: 500;
+      color: #333;
+      margin-bottom: 8px;
+      display: block;
+    }
+    
+    .form-control, input[type="number"], input[type="text"], input[type="email"], input[type="tel"], select, textarea {
+      border: 2px solid #e9ecef;
+      border-radius: 8px;
+      padding: 12px 15px;
+      font-size: 14px;
+      transition: all 0.3s ease;
+      width: 100%;
+    }
+    
+    .form-control:focus, input:focus, select:focus, textarea:focus {
+      border-color: #f35525;
+      box-shadow: 0 0 0 0.2rem rgba(243, 85, 37, 0.15);
+      outline: none;
+    }
+    
+    .custom-select-wrapper {
+      position: relative;
+    }
+    
+    .checkbox-group {
+      background: #f8f9fa;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      border-left: 4px solid #f35525;
+    }
+    
+    .checkbox-group label {
+      display: flex;
+      align-items: center;
+      font-weight: 400;
+      margin-bottom: 0;
+      cursor: pointer;
+    }
+    
+    .checkbox-group input[type="checkbox"] {
+      width: auto;
+      margin-right: 10px;
+      transform: scale(1.2);
+    }
+    
+    .discount-panel {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 20px;
+      border-radius: 10px;
+      margin: 20px 0;
+    }
+    
+    .discount-panel label {
+      color: white;
+    }
+    
+    .btn-toggle {
+      background: #f35525;
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 8px;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      width: 100%;
+      margin-bottom: 15px;
+    }
+    
+    .btn-toggle:hover {
+      background: #d63916;
+      transform: translateY(-2px);
+    }
+    
+    .disabled-fields {
+      background: #fff3cd;
+      border: 1px solid #ffeaa7;
+      border-radius: 10px;
+      padding: 20px;
+      margin-top: 15px;
+    }
+    
+    .price-summary {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 15px;
+      border-radius: 15px;
+      margin: 25px 0;
+      text-align: center;
+    }
+    
+    .price-summary h3 {
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+    
+    .price-amount {
+      font-size: 2em;
+      font-weight: 700;
+      margin: 10px 0;
+    }
+    
+    .orange-button {
+      background: linear-gradient(135deg, #f35525 0%, #e74c3c 100%);
+      color: white;
+      border: none;
+      padding: 15px 40px;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 16px;
+      transition: all 0.3s ease;
+      width: 100%;
+      margin-top: 20px;
+    }
+    
+    .orange-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px rgba(243, 85, 37, 0.3);
+    }
+    
+    .contact-info {
+      background: #2c3e50;
+      color: white;
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+    
+    .contact-info h4 {
+      margin-bottom: 10px;
+      color: #f35525;
+    }
+    
+    .info-row {
+      display: flex;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    
+    .info-row i {
+      margin-right: 10px;
+      width: 20px;
+    }
+    
+    @media (max-width: 768px) {
+      .form-container {
+        padding: 25px;
+        margin: 10px;
+      }
+      
+      .price-amount {
+        font-size: 1.5em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- ***** Preloader Start ***** -->
+  <div id="js-preloader" class="js-preloader">
+    <div class="preloader-inner">
+      <span class="dot"></span>
+      <div class="dots">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </div>
+  <!-- ***** Preloader End ***** -->
+
+  <div class="sub-header">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-8">
+          <ul class="info">
+            <li><i class="fa fa-envelope"></i> info@GrandHotelSelinunte.com</li>
+            <li><i class="fa fa-map"></i> Contrada, Via Trenta Salme, 91022 Marinella TP, Italy</li>
+          </ul>
+        </div>
+        <div class="col-lg-4 col-md-4">
+          <ul class="social-links">
+            <li><a href="#"><i class="fab fa-facebook"></i></a></li>
+            <li><a href="https://x.com/minthu" target="_blank"><i class="fab fa-twitter"></i></a></li>
+            <li><a href="#"><i class="fab fa-linkedin"></i></a></li>
+            <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ***** Header Area Start ***** -->
+  <header class="header-area header-sticky">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <nav class="main-nav">
+            <!-- ***** Logo Start ***** -->
+            <a href="index.html" class="logo">
+              <img src="assets/images/logo.png" alt="" style="max-height: 70px; width: auto; margin-top: 7%;">
+            </a>
+            <!-- ***** Logo End ***** -->
+            <!-- ***** Menu Start ***** -->
+            <ul class="nav">
+              <li><a href="index.html">Home</a></li>
+              <li><a href="properties.html">Properties</a></li>
+              <li><a href="pdf.html" class="active">Genera ricevuta</a></li>
+              <li><a href="schedule-visitdaily.html">Pianifica la visita su base giornaliera</a></li>
+              <li><a href="schedule-visit.html">Pianifica una visita</a></li>
+            </ul>
+            <a class="menu-trigger">
+              <span>Menu</span>
+            </a>
+            <!-- ***** Menu End ***** -->
+          </nav>
+        </div>
+      </div>
+    </div>
+  </header>
+  <!-- ***** Header Area End ***** -->
+
+ 
+
+  <section class="booking-section">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-10">
+          <div class="form-container">
+            
+            <!-- Hotel Information -->
+           
+
+            <form id="scheduleForm">
+              
+              <!-- 1. RESERVATION DETAILS -->
+              <div class="section-divider">
+                <h3 class="section-title"><i class="fa fa-calendar-check"></i> Dettagli Prenotazione</h3>
+              </div>
+              
+              <div class="form-group">
+                <label for="customSlotSelect"><i class="fa fa-calendar"></i> Seleziona il periodo:</label>
+                <div id="customSlotSelect" class="custom-select-wrapper">
+                  <!-- The custom dropdown will be inserted here by JavaScript -->
+                </div>
+              </div>
+
+             
+
+              <!-- 2. GUEST INFORMATION -->
+              <div class="section-divider">
+                <h3 class="section-title"><i class="fa fa-users"></i> Informazioni Ospiti</h3>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="adults"><i class="fa fa-user"></i> Adulti</label>
+                    <input type="number" id="adults" min="1" value="1" required>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="children05"><i class="fa fa-child"></i> Bambini (0-5 anni)</label>
+                    <input type="number" id="children05" min="0" value="0">
+                  </div>
+                </div>
+              </div>
+              
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="children612"><i class="fa fa-child"></i> Bambini (6-12 anni)</label>
+                    <input type="number" id="children612" min="0" value="0">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                     <label for="percentageDiscount"><i class="fa fa-percent"></i> Sconto Generale</label>
+                          <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                            <span id="discountValue">0%</span>
+                            <span id="discountAmount">-€0.00</span>
+                          </div>
+                    
+                    <input type="range" id="percentageDiscount" min="0" max="100" step="0.5" value="0" style="width: 100%;">
+                  </div>
+                </div>
+              </div>
+
+              <!-- Disabled Guests Section -->
+              <button type="button" id="disabledDiscountBtn" class="btn-toggle">
+                <i class="fa fa-wheelchair"></i> Applica Sconto Disabili
+              </button>
+
+              <div id="disabledFields" class="disabled-fields" style="display: none;">
+                <h5><i class="fa fa-info-circle"></i> Sconto per Ospiti Disabili</h5>
+                <p><em>Ogni ospite disabile riceve il 10% di sconto aggiuntivo e non paga la tessera club.</em></p>
+                
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="disabledAdults">Adulti disabili</label>
+                      <input type="number" id="disabledAdults" min="0" value="0">
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="disabledChildren612">Bambini disabili (6-12)</label>
+                      <input type="number" id="disabledChildren612" min="0" value="0">
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 3. CUSTOMER INFORMATION -->
+              <div class="section-divider">
+                <h3 class="section-title"><i class="fa fa-user-circle"></i> Informazioni Cliente</h3>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="fullname"><i class="fa fa-user"></i> Nome e Cognome</label>
+                    <input type="text" id="fullname" class="form-control" required>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="phone"><i class="fa fa-phone"></i> Telefono</label>
+                    <input type="tel" id="phone" class="form-control" required>
+                  </div>
+                </div>
+              </div>
+
+
+              <!-- 4. ADDITIONAL SERVICES -->
+              <div class="section-divider">
+                <h3 class="section-title"><i class="fa fa-concierge-bell"></i> Servizi Aggiuntivi</h3>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="checkbox-group">
+                    <label>
+                      <input type="checkbox" id="petService">
+                      <i class="fa fa-paw"></i> <span class="spanen">&nbsp;</span>Servizio animali (€30 per soggiorno)
+                    </label>
+                  </div>
+                  
+                  <div class="checkbox-group">
+                    <label>
+                      <input type="checkbox" id="cribService">
+                      <i class="fa fa-baby"></i><span class="spanen">&nbsp;</span> Servizio culla (€10 per notte)
+                    </label>
+                  </div>
+                </div>
+                
+                <div class="col-md-6">
+                  <div class="checkbox-group">
+                    <label>
+                      <input type="checkbox" id="poolView">
+                      <i class="fa fa-swimming-pool"></i><span class="spanen">&nbsp;</span> Vista piscina (€10 per notte)
+                    </label>
+                  </div>
+                  
+                  <div class="checkbox-group">
+                    <label>
+                      <input type="checkbox" id="loyaltyCustomer">
+                      <i class="fa fa-star"></i><span class="spanen">&nbsp;</span> Cliente fedele (sconto 10% sulla tariffa)
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="checkbox-group">
+                <label>
+                  <input type="checkbox" id="removeClubCard">
+                  <i class="fa fa-id-card"></i><span class="spanen">&nbsp;</span> Rimuovi costo tessera club
+                </label>
+              </div>
+
+              <!-- 5. SPECIAL REQUIREMENTS -->
+              <div class="section-divider">
+                <h3 class="section-title"><i class="fa fa-clipboard-list"></i> Richieste Speciali</h3>
+              </div>
+
+              <div class="form-group">
+                <label for="notes"><i class="fa fa-edit"></i> Nota</label>
+                <textarea id="notes" class="form-control" rows="3" placeholder="Aggiungi eventuali note qui..."></textarea>
+              </div>
+
+              <div class="form-group">
+                <label for="signature"><i class="fa fa-signature"></i> Firma</label>
+                <input type="text" id="signature" class="form-control" placeholder="Inserisci la tua firma">
+              </div>
+
+              <!-- PRICE SUMMARY -->
+              <div class="price-summary">
+                <div id="totalPrice" class="price-amount">€0.00</div>
+               
+              </div>
+
+              <!-- SUBMIT BUTTON -->
+              <button type="submit" class="orange-button">
+                <i class="fa fa-file-pdf"></i> Genera Ricevuta e Prenota
+              </button>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="col-lg-8">
+        <p>
+          Copyright © 2048 Grand Hotel Selinunte
+          All rights reserved.
+          Design: <a rel="nofollow" href="https://templatemo.com" target="_blank">TemplateMo</a>
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+  <script src="assets/js/isotope.min.js"></script>
+  <script src="assets/js/owl-carousel.js"></script>
+  <script src="assets/js/counter.js"></script>
+  <script src="assets/js/custom.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="assets/js/pdf.js"></script>
+
+ 
+</body>
+</html>

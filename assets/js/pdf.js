@@ -46,47 +46,47 @@ const slots = [
 { start: "2025-05-31", end: "2025-06-02", nights: 2, price: 180, description: "Dal 31 maggio al 2 giugno 180€ (2 notti)" },
   
 
-   // JUNE
-   { start: "2025-06-01", end: "2025-06-08", nights: 7, price: 425, description: "Dal 1 al 8 giugno 425€ (7 notti)" },
-   { start: "2025-06-01", end: "2025-06-05", nights: 4, price: 240, description: "Dal 1 al 5 giugno 240€ (4 notti)" },
-   { start: "2025-06-03", end: "2025-06-06", nights: 3, price: 180, description: "Dal 3 al 6 giugno 180€ (3 notti)" },
-   { start: "2025-06-05", end: "2025-06-08", nights: 3, price: 185, description: "Dal 5 al 8 giugno 185€ (3 notti)" },
-   { start: "2025-06-06", end: "2025-06-08", nights: 2, price: 140, description: "Dal 6 al 8 giugno 140€ (2 notti)" },
-   { start: "2025-06-08", end: "2025-06-10", nights: 2, price: 130, description: "Dal 8 al 10 giugno 130€ (2 notti)" },
- 
-   { start: "2025-06-08", end: "2025-06-15", nights: 7, price: 435, description: "Dal 8 al 15 giugno 435€ (7 notti)" },
-   { start: "2025-06-10", end: "2025-06-12", nights: 2, price: 130, description: "Dal 10 al 12 giugno 130€ (2 notti)" },
-   
-   { start: "2025-06-08", end: "2025-06-12", nights: 4, price: 240, description: "Dal 8 al 12 giugno 240€ (4 notti)" },
-   { start: "2025-06-12", end: "2025-06-15", nights: 3, price: 195, description: "Dal 12 al 15 giugno 195€ (3 notti)" },
- 
-   { start: "2025-06-15", end: "2025-06-22", nights: 7, price: 470, description: "Dal 15 al 22 giugno 470€ (7 notti)" },
-   { start: "2025-06-15", end: "2025-06-19", nights: 4, price: 220, description: "Dal 15 al 19 giugno 220€ (4 notti)" },
-   { start: "2025-06-19", end: "2025-06-22", nights: 3, price: 210, description: "Dal 19 al 22 giugno 210€ (3 notti)" },
- 
-   { start: "2025-06-22", end: "2025-06-29", nights: 7, price: 470, description: "Dal 22 al 29 giugno 470€ (7 notti)" },
-   { start: "2025-06-22", end: "2025-06-26", nights: 4, price: 260, description: "Dal 22 al 26 giugno 260€ (4 notti)" },
-   { start: "2025-06-26", end: "2025-06-29", nights: 3, price: 210, description: "Dal 26 al 29 giugno 210€ (3 notti)" },
- 
-   { start: "2025-06-29", end: "2025-07-06", nights: 7, price: 510, description: "Dal 29 giugno al 6 luglio 510€ (7 notti)" },
-   { start: "2025-06-29", end: "2025-07-03", nights: 4, price: 280, description: "Dal 29 giugno al 3 luglio 280€ (4 notti)" },
-   { start: "2025-07-03", end: "2025-07-06", nights: 3, price: 230, description: "Dal 3 al 6 luglio 230€ (3 notti)" },
- 
+// JUNE
+{ start: "2025-06-01", end: "2025-06-08", nights: 7, price: 425, description: "Dal 1 al 8 giugno 425€ (7 notti)" },
+{ start: "2025-06-01", end: "2025-06-05", nights: 4, price: 240, description: "Dal 1 al 5 giugno 240€ (4 notti)" },
+{ start: "2025-06-03", end: "2025-06-06", nights: 3, price: 180, description: "Dal 3 al 6 giugno 180€ (3 notti)" },
+{ start: "2025-06-05", end: "2025-06-08", nights: 3, price: 185, description: "Dal 5 al 8 giugno 185€ (3 notti)" },
+{ start: "2025-06-06", end: "2025-06-08", nights: 2, price: 140, description: "Dal 6 al 8 giugno 140€ (2 notti)" },
+{ start: "2025-06-08", end: "2025-06-10", nights: 2, price: 130, description: "Dal 8 al 10 giugno 130€ (2 notti)" },
+
+{ start: "2025-06-08", end: "2025-06-15", nights: 7, price: 435, description: "Dal 8 al 15 giugno 435€ (7 notti)" },
+{ start: "2025-06-10", end: "2025-06-12", nights: 2, price: 130, description: "Dal 10 al 12 giugno 130€ (2 notti)" },
+
+{ start: "2025-06-08", end: "2025-06-12", nights: 4, price: 240, description: "Dal 8 al 12 giugno 240€ (4 notti)" },
+{ start: "2025-06-12", end: "2025-06-15", nights: 3, price: 195, description: "Dal 12 al 15 giugno 195€ (3 notti)" },
+
+{ start: "2025-06-15", end: "2025-06-22", nights: 7, price: 470, description: "Dal 15 al 22 giugno 470€ (7 notti)" },
+{ start: "2025-06-15", end: "2025-06-19", nights: 4, price: 220, description: "Dal 15 al 19 giugno 220€ (4 notti)" },
+{ start: "2025-06-19", end: "2025-06-22", nights: 3, price: 210, description: "Dal 19 al 22 giugno 210€ (3 notti)" },
+
+{ start: "2025-06-22", end: "2025-06-29", nights: 7, price: 470, description: "Dal 22 al 29 giugno 470€ (7 notti)" },
+{ start: "2025-06-22", end: "2025-06-26", nights: 4, price: 260, description: "Dal 22 al 26 giugno 260€ (4 notti)" },
+{ start: "2025-06-26", end: "2025-06-29", nights: 3, price: 210, description: "Dal 26 al 29 giugno 210€ (3 notti)" },
+
+{ start: "2025-06-29", end: "2025-07-06", nights: 7, price: 510, description: "Dal 29 giugno al 6 luglio 510€ (7 notti)" },
+{ start: "2025-06-29", end: "2025-07-03", nights: 4, price: 280, description: "Dal 29 giugno al 3 luglio 280€ (4 notti)" },
+{ start: "2025-07-03", end: "2025-07-06", nights: 3, price: 230, description: "Dal 3 al 6 luglio 230€ (3 notti)" },
+
    
   // JULY
-  { start: "2025-07-06", end: "2025-07-13", nights: 7, price: 510, description: "Dal 6 al 13 luglio 510€ (7 notti)" },
-  { start: "2025-07-06", end: "2025-07-10", nights: 4, price: 280, description: "Dal 6 al 10 luglio 280€ (4 notti)" },
-  { start: "2025-07-10", end: "2025-07-13", nights: 3, price: 230, description: "Dal 10 al 13 luglio 230€ (3 notti)" },
-  { start: "2025-07-13", end: "2025-07-20", nights: 7, price: 535, description: "Dal 13 al 20 luglio 535€ (7 notti)" },
-  { start: "2025-07-13", end: "2025-07-17", nights: 4, price: 280, description: "Dal 13 al 17 luglio 280€ (4 notti)" },
-  { start: "2025-07-17", end: "2025-07-20", nights: 3, price: 255, description: "Dal 17 al 20 luglio 255€ (3 notti)" },
-  { start: "2025-07-20", end: "2025-07-27", nights: 7, price: 590, description: "Dal 20 al 27 luglio 590€ (7 notti)" },
-  { start: "2025-07-20", end: "2025-07-24", nights: 4, price: 320, description: "Dal 20 al 24 luglio 320€ (4 notti)" },
-  { start: "2025-07-24", end: "2025-07-27", nights: 3, price: 270, description: "Dal 24 al 27 luglio 270€ (3 notti)" },
-  { start: "2025-07-27", end: "2025-07-31", nights: 4, price: 340, description: "Dal 27 al 31 luglio 340€ (4 notti)" },
-  { start: "2025-07-27", end: "2025-08-03", nights: 7, price: 640, description: "Dal 27 luglio al 3 agosto 640€ (7 notti)" },
-  { start: "2025-07-31", end: "2025-08-03", nights: 3, price: 300, description: "Dal 31 luglio al 3 agosto 300€ (3 notti)" },
-  
+{ start: "2025-07-06", end: "2025-07-13", nights: 7, price: 510, description: "Dal 6 al 13 luglio 510€ (7 notti)" },
+{ start: "2025-07-06", end: "2025-07-10", nights: 4, price: 280, description: "Dal 6 al 10 luglio 280€ (4 notti)" },
+{ start: "2025-07-10", end: "2025-07-13", nights: 3, price: 230, description: "Dal 10 al 13 luglio 230€ (3 notti)" },
+{ start: "2025-07-13", end: "2025-07-20", nights: 7, price: 535, description: "Dal 13 al 20 luglio 535€ (7 notti)" },
+{ start: "2025-07-13", end: "2025-07-17", nights: 4, price: 280, description: "Dal 13 al 17 luglio 280€ (4 notti)" },
+{ start: "2025-07-17", end: "2025-07-20", nights: 3, price: 255, description: "Dal 17 al 20 luglio 255€ (3 notti)" },
+{ start: "2025-07-20", end: "2025-07-27", nights: 7, price: 590, description: "Dal 20 al 27 luglio 590€ (7 notti)" },
+{ start: "2025-07-20", end: "2025-07-24", nights: 4, price: 320, description: "Dal 20 al 24 luglio 320€ (4 notti)" },
+{ start: "2025-07-24", end: "2025-07-27", nights: 3, price: 270, description: "Dal 24 al 27 luglio 270€ (3 notti)" },
+{ start: "2025-07-27", end: "2025-07-31", nights: 4, price: 340, description: "Dal 27 al 31 luglio 340€ (4 notti)" },
+{ start: "2025-07-27", end: "2025-08-03", nights: 7, price: 640, description: "Dal 27 luglio al 3 agosto 640€ (7 notti)" },
+{ start: "2025-07-31", end: "2025-08-03", nights: 3, price: 300, description: "Dal 31 luglio al 3 agosto 300€ (3 notti)" },
+
 
   // AUGUST
 { start: "2025-08-03", end: "2025-08-10", nights: 7, price: 690, description: "Dal 3 al 10 agosto 690€ (7 notti)" },
@@ -102,19 +102,19 @@ const slots = [
 { start: "2025-08-24", end: "2025-08-28", nights: 4, price: 440, description: "Dal 24 al 28 agosto 440€ (4 notti)" },
 { start: "2025-08-28", end: "2025-08-31", nights: 3, price: 330, description: "Dal 28 al 31 agosto 330€ (3 notti)" },
 
-  // SEPTEMBER
-  { start: "2025-08-31", end: "2025-09-07", nights: 7, price: 590, description: "Dal 31 agosto al 7 settembre 590€ (7 notti)" },
-  { start: "2025-08-31", end: "2025-09-04", nights: 4, price: 320, description: "Dal 31 agosto al 4 settembre 320€ (4 notti)" },
-  { start: "2025-09-04", end: "2025-09-07", nights: 3, price: 270, description: "Dal 4 al 7 settembre 270€ (3 notti)" },
-  { start: "2025-09-07", end: "2025-09-14", nights: 7, price: 520, description: "Dal 7 al 14 settembre 520€ (7 notti)" },
-  { start: "2025-09-07", end: "2025-09-11", nights: 4, price: 300, description: "Dal 7 al 11 settembre 300€ (4 notti)" },
-  { start: "2025-09-11", end: "2025-09-14", nights: 3, price: 220, description: "Dal 11 al 14 settembre 220€ (3 notti)" },
-  { start: "2025-09-14", end: "2025-09-21", nights: 7, price: 470, description: "Dal 14 al 21 settembre 470€ (7 notti)" },
-  { start: "2025-09-14", end: "2025-09-18", nights: 4, price: 280, description: "Dal 14 al 18 settembre 280€ (4 notti)" },
-  { start: "2025-09-18", end: "2025-09-21", nights: 3, price: 190, description: "Dal 18 al 21 settembre 190€ (3 notti)" },
-  { start: "2025-09-21", end: "2025-09-28", nights: 7, price: 430, description: "Dal 21 al 28 settembre 430€ (7 notti)" },
-  { start: "2025-09-21", end: "2025-09-25", nights: 4, price: 240, description: "Dal 21 al 25 settembre 240€ (4 notti)" },
-  { start: "2025-09-25", end: "2025-09-28", nights: 3, price: 190, description: "Dal 25 al 28 settembre 190€ (3 notti)" },
+// SEPTEMBER
+{ start: "2025-08-31", end: "2025-09-07", nights: 7, price: 590, description: "Dal 31 agosto al 7 settembre 590€ (7 notti)" },
+{ start: "2025-08-31", end: "2025-09-04", nights: 4, price: 320, description: "Dal 31 agosto al 4 settembre 320€ (4 notti)" },
+{ start: "2025-09-04", end: "2025-09-07", nights: 3, price: 270, description: "Dal 4 al 7 settembre 270€ (3 notti)" },
+{ start: "2025-09-07", end: "2025-09-14", nights: 7, price: 520, description: "Dal 7 al 14 settembre 520€ (7 notti)" },
+{ start: "2025-09-07", end: "2025-09-11", nights: 4, price: 300, description: "Dal 7 al 11 settembre 300€ (4 notti)" },
+{ start: "2025-09-11", end: "2025-09-14", nights: 3, price: 220, description: "Dal 11 al 14 settembre 220€ (3 notti)" },
+{ start: "2025-09-14", end: "2025-09-21", nights: 7, price: 470, description: "Dal 14 al 21 settembre 470€ (7 notti)" },
+{ start: "2025-09-14", end: "2025-09-18", nights: 4, price: 280, description: "Dal 14 al 18 settembre 280€ (4 notti)" },
+{ start: "2025-09-18", end: "2025-09-21", nights: 3, price: 190, description: "Dal 18 al 21 settembre 190€ (3 notti)" },
+{ start: "2025-09-21", end: "2025-09-28", nights: 7, price: 430, description: "Dal 21 al 28 settembre 430€ (7 notti)" },
+{ start: "2025-09-21", end: "2025-09-25", nights: 4, price: 240, description: "Dal 21 al 25 settembre 240€ (4 notti)" },
+{ start: "2025-09-25", end: "2025-09-28", nights: 3, price: 190, description: "Dal 25 al 28 settembre 190€ (3 notti)" },
   
   /*
   // OCTOBER
@@ -176,15 +176,18 @@ document.addEventListener('DOMContentLoaded', function() {
   const disabledDiscountBtn = document.getElementById('disabledDiscountBtn');
   const disabledFields = document.getElementById('disabledFields');
   
-  // Initially hide the panel
+  // Ensure the panel is hidden initially
   disabledFields.style.display = 'none';
   
-  // On button click, toggle the panel's visibility
+  // Toggle the panel's visibility on button click
   disabledDiscountBtn.addEventListener('click', function() {
-    if (disabledFields.style.display === 'none' || disabledFields.style.display === '') {
-      disabledFields.style.display = 'block';
+    disabledFields.style.display = disabledFields.style.display === 'none' ? 'block' : 'none';
+    
+    // Optional: Change button text based on state
+    if (disabledFields.style.display === 'none') {
+      disabledDiscountBtn.innerHTML = '<i class="fa fa-wheelchair"></i> Applica Sconto Disabili';
     } else {
-      disabledFields.style.display = 'none';
+      disabledDiscountBtn.innerHTML = '<i class="fa fa-wheelchair"></i> Nascondi Sconto Disabili';
     }
   });
 });
@@ -331,7 +334,6 @@ function calculateTotalPrice() {
   const removeClubCard = document.getElementById('removeClubCard').checked;
   const percentageDiscount = parseFloat(document.getElementById('percentageDiscount').value) || 0;
   const discountAmountLabel = document.getElementById('discountAmount') || 0;
-  
 
   const basePrice = selectedSlot.price; // Base price for the selected slot
   let totalPrice = 0;
@@ -406,7 +408,7 @@ function calculateTotalPrice() {
   /*************************************************
    * 5) Percentage Discount from Slider
    *************************************************/
- let percentageDiscountAmount = 0;
+  let percentageDiscountAmount = 0;
   if (percentageDiscount > 0) {
 
     const priceBeforePercentageDiscount = totalPrice;
@@ -416,8 +418,9 @@ function calculateTotalPrice() {
 
   }
   else {
-    discountAmountLabel.textContent = '-€0.00';
-  }
+  discountAmountLabel.textContent = '-€0.00';
+}
+
   
   /*************************************************
    * 6) Extra Services Cost (if selected)
@@ -469,98 +472,500 @@ function generateBookingMessage() {
   const adults = parseInt(document.getElementById('adults')?.value) || 0;
   const children05 = parseInt(document.getElementById('children05')?.value) || 0;
   const children612 = parseInt(document.getElementById('children612')?.value) || 0;
-  const petService = document.getElementById('petService')?.checked || false;
-  const cribService = document.getElementById('cribService')?.checked || false;
-  const poolView = document.getElementById('poolView')?.checked || false;
-  const loyaltyCustomer = document.getElementById('loyaltyCustomer')?.checked || false;
-  const removeClubCard = document.getElementById('removeClubCard')?.checked || false;
-  const percentageDiscount = parseFloat(document.getElementById('percentageDiscount').value) || 0;
+  const fullname = document.getElementById('fullname').value || 'Cliente';
   
   const totalPriceElement = document.getElementById('totalPrice');
   const totalPrice = totalPriceElement ? parseFloat(totalPriceElement.textContent.split('€')[1]) : 0;
   const deposit = totalPrice * 0.2;
-  const remainingPayment = totalPrice - deposit;
-  
   
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     return `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth()+1).toString().padStart(2, '0')}/${date.getFullYear()}`;
   };
-  let roomtypeselction="";
-  if(payingclients == 1){
-    roomtypeselction = "Singola";
-  }
-  if(payingclients==2)
-  {
-    roomtypeselction = "matrimoniale";
-  }
-  if(payingclients == 3){
-    roomtypeselction = "tripla";
-  }
-  if(payingclients==4)
-  {
-    roomtypeselction = "quadrupla";
-  }
-  if(payingclients>4)
-    {
-      roomtypeselction = "quintupla";
-    }
-  
 
-  let message = `PREVENTIVO PER IL GRAND HOTEL SELINUNTE.\n\n`;
-  message += `🗓️ PERIODO DEL SOGGIORNO:\n`;
-  message += `Dal ${formatDate(selectedSlot.start)} al ${formatDate(selectedSlot.end)}\n`;
-  message += `Tipologia di camera: ${roomtypeselction}\n`;
-  message += `Numero di notti: ${selectedSlot.nights}\n\n`;
+  // Guest composition
+  let guestComposition = [];
+  if (adults > 0) guestComposition.push(`${adults}ad`);
+  if (children612 > 0) guestComposition.push(`${children612}chd`);
+  if (children05 > 0) guestComposition.push(`${children05}inf`);
+  const guestString = guestComposition.join(' ');
+
+  let message = `Le confermo la sua prenotazione dal\n`;
+  message += `${formatDate(selectedSlot.start)} al ${formatDate(selectedSlot.end)}\n`;
+  message += `a nome ${fullname}\n`;
+  message += `per ${guestString}\n`;
+  message += `al prezzo totale di €${totalPrice.toFixed(2)}\n\n`;
   
-  message += `🗓️ ECCO LA NOSTRA MIGLIORE OFFERTA\n`;
-  message += `IL TOTALE IN PENSIONE COMPLETA CON TESSERE CLUB GIÀ INCLUSE: €${totalPrice.toFixed(2)}\n\n`;
+  message += `ACCONTO DA VERSARE TRAMITE BONIFICO €${deposit.toFixed(2)} (20% del totale)\n\n`;
   
-  message += `TIPOLOGIA CAMERA:\n`;
-  message += `${adults} AD ${children612} CHD ${children05} INF\n`;
+  message += `La conferma della prenotazione avverrà al ricevimento di un minimo acconto del 20% entro 2 giorni lavorativi. Il saldo avverrà in Hotel.\n\n`;
   
-  if (percentageDiscount > 0) {
-    message += `Sconto percentuale applicato: ${percentageDiscount}%\n`;
-  }
+  message += `INTESTAZIONE: Guedoz Srl\n`;
+  message += `BANCA: Unicredit\n`;
+  message += `IBAN: IT12C0200801048000106679127\n\n`;
   
-  const clubCardCost = removeClubCard ? 0 : 7 * (adults - (parseInt(document.getElementById('disabledAdults')?.value)||0) + (children612 - (parseInt(document.getElementById('disabledChildren612')?.value)||0)) ) * selectedSlot.nights;
-  if (!removeClubCard) {
-    message += `COSTO TESSERE CLUB: €${clubCardCost.toFixed(2)} (già incluso nel prezzo)\n\n`;
-  } else {
-    message += `TESSERE CLUB: Non incluse\n\n`;
-  }
+  message += `La preghiamo di indicare nella causale nome, cognome e data del soggiorno.\n\n`;
   
-  message += `OPZIONI EXTRA:\n`;
-  message += `culla ${cribService ? '✅' : '❌'}\n`;
-  message += `supplemento pet service ${petService ? '✅' : '❌'}\n`;
-  message += `vista piscina ${poolView ? '✅' : '❌'}\n`;
-  message += `⚠️ TUTTI I SERVIZI SOPRA SE RICHIESTI SARANNO GIÀ INCLUSI NEL PREZZO.\n\n`;
+  message += `CHECK IN: 15H30\n`;
+  message += `CHECK OUT: 10:00\n\n`;
   
-  message += `🕞CHECK IN 15:30 / 🕙CHECK OUT 10:00\n\n`;
-  message += `✅ PER CONFERMARE QUESTA PRENOTAZIONE CI MANDI IL SUO NOMINATIVO. ⬅️⬅️⬅️\n\n`;
+  message += `Rimaniamo a disposizione per ulteriori informazioni\n`;
+  message += `Cordiali saluti\n\n`;
+  message += `Andrea - Ufficio Booking\n\n`;
   
-  message += `⚠️'NOTA BENE': IL PREZZO INDICATO SOPRA E IL TOTALE COMPLESSIVO IN PENSIONE COMPLETA E CON IL COSTO DELLE TESSERE CLUB GIÀ INSERITE, SENZA ALCUN AGGIUNTIVO (ESCLUSA TASSA DI SOGGIORNO).\n\n`;
-  message += `INFORMAZIONI GENERALI ⬇️\n\n`;
-  message += `I bambini da 0 a 5 anni gratuiti nel letto con i genitori.\n`;
-  message += `Da 6 ai 12 anni sconto del 50% in terzo e quarto letto.\n`;
-  message += `Dai 13 anni in su sconto del 20% in terzo e quarto letto.\n`;
-  message += `Supplemento Camera con vista piscina €10,00 a notte.\n`;
-  message += `Supplemento Culla: €10,00 a notte\n`;
-  message += `Supplemento Cane: €30,00 (in totale)\n`;
-  if (loyaltyCustomer) {
-    message += `Sconto fedeltà del 10% applicato alla tariffa base.\n`;
-  }
-  message += `\n`;
-  
-  message += `La tessera club ha un costo di €7,00 a notte e per persona (gratuita fino ai 5 anni) e include tutti i nostri servizi.\n\n`;
-  message += `Modalità SOFT ALL INCLUSIVE: €5,00 a notte a persona (a partire dai 6 anni) - include analcolici, crema caffe, e caffetteria Bar Piscina.\n\n`;
-  
-  message += `Conferma prenotazione con acconto del 20% (€${deposit.toFixed(2)}) tramite bonifico bancario e saldo in hotel (€${remainingPayment.toFixed(2)}).\n\n`;
-  message += `IMPORTANTE: La prenotazione sarà confermata solo dopo il ricevimento dell'acconto.\n\n`;
-  
+  message += `Tassa di soggiorno (€1,00 per persona e al giorno per un massimo di 7 giorni – bambini fino a 12 anni non compiuti esenti), se dovuta, secondo regolamento comunale consultabile in reception, da pagare in loco.`;
+
   return message;
 }
 
+
+function getRoomType(adults, children612) {
+  const payingGuests = adults + children612;
+  
+  if (payingGuests <= 0) return 'Non specificata';
+  if (payingGuests === 1) return 'Singola';
+  if (payingGuests === 2) return 'Matrimoniale/Doppia';
+  if (payingGuests === 3) return 'Tripla';
+  if (payingGuests === 4) return 'Quadrupla';
+  if (payingGuests >= 5) return 'Quintupla'; // For 6+ guests
+  return;
+}
+
+/*************************************************
+ * generatePDF - Professional Receipt Version
+ *************************************************/
+function generatePDF() {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+  
+  // Get form values
+  const fullname = document.getElementById('fullname').value || 'Non specificato';
+  const phone = document.getElementById('phone').value || 'Non specificato';
+  const percentageDiscount = parseFloat(document.getElementById('percentageDiscount').value) || 0;
+  
+  const customSelect = document.querySelector('.custom-select');
+  const selectedSlotData = customSelect ? customSelect.getAttribute('data-value') : null;
+  const selectedSlot = selectedSlotData ? JSON.parse(selectedSlotData) : {};
+  const notes = document.getElementById('notes').value || '';
+  const signature = document.getElementById('signature').value || '';
+
+  if (!selectedSlot.price) {
+    alert("Per favore, seleziona un periodo prima di generare il PDF.");
+    return;
+  }
+  
+  // Guest counts
+  const adults = parseInt(document.getElementById('adults').value) || 0;
+  const children05 = parseInt(document.getElementById('children05').value) || 0;
+  const children612 = parseInt(document.getElementById('children612').value) || 0;
+  let disabledAdults = parseInt(document.getElementById('disabledAdults')?.value) || 0;
+  let disabledChildren612 = parseInt(document.getElementById('disabledChildren612')?.value) || 0;
+  
+  // Ensure we don't exceed the actual counts
+  if (disabledAdults > adults) disabledAdults = adults;
+  if (disabledChildren612 > children612) disabledChildren612 = children612;
+  
+  // Services
+  const petService = document.getElementById('petService').checked;
+  const cribService = document.getElementById('cribService').checked;
+  const poolView = document.getElementById('poolView').checked;
+  const loyaltyCustomer = document.getElementById('loyaltyCustomer').checked;
+  const removeClubCard = document.getElementById('removeClubCard').checked;
+  
+  const basePrice = selectedSlot.price;
+  const nights = selectedSlot.nights;
+  let totalPrice = 0;
+  let calculationDetails = [];
+
+  /*************************************************
+   * 1) ADULTS Calculation
+   *************************************************/
+  const nonDisabledAdults = adults - disabledAdults;
+  let adultCost = 0;
+  let disabledCost = 0;
+  
+  // First two non-disabled adults pay full price
+  if (nonDisabledAdults > 0) {
+    const fullPayingAdults = Math.min(nonDisabledAdults, 2);
+    adultCost += fullPayingAdults * basePrice;
+    calculationDetails.push({
+      description: `Adulti: ${fullPayingAdults} × €${basePrice.toFixed(2)}`,
+      amount: fullPayingAdults * basePrice
+    });
+  
+    // Additional non-disabled adults get 20% off
+    if (nonDisabledAdults > 2) {
+      const extraAdults = nonDisabledAdults - 2;
+      const discountedPrice = basePrice * 0.8;
+      adultCost += extraAdults * discountedPrice;
+      calculationDetails.push({
+        description: `Adulti aggiuntivi : ${extraAdults} × €${discountedPrice.toFixed(2)}`,
+        amount: extraAdults * discountedPrice
+      });
+    }
+  }
+  
+  // Disabled adults calculation
+  if (disabledAdults > 0) {
+    const doubleDiscount = Math.min(disabledAdults, Math.max(0, adults - 2));
+    const singleDiscount = disabledAdults - doubleDiscount;
+  
+    if (doubleDiscount > 0) {
+      const doubleDiscountedPrice = basePrice * 0.8 * 0.9;
+      disabledCost += doubleDiscount * doubleDiscountedPrice;
+      calculationDetails.push({
+        description: `Adulti disabili : ${doubleDiscount} × €${doubleDiscountedPrice.toFixed(2)}`,
+        amount: doubleDiscount * doubleDiscountedPrice
+      });
+    }
+    if (singleDiscount > 0) {
+      const singleDiscountedPrice = basePrice * 0.9;
+      disabledCost += singleDiscount * singleDiscountedPrice;
+      calculationDetails.push({
+        description: `Adulti disabili : ${singleDiscount} × €${singleDiscountedPrice.toFixed(2)}`,
+        amount: singleDiscount * singleDiscountedPrice
+      });
+    }
+  }
+  
+  totalPrice += adultCost + disabledCost;
+
+  /*************************************************
+   * 2) CHILDREN (6-12) Calculation
+   *************************************************/
+  const normalChildren = children612 - disabledChildren612;
+  const childBase = basePrice * 0.5;
+  let normalChildrenCost = normalChildren * childBase;
+  let disabledChildrenCost = 0;
+  
+  if (normalChildren > 0) {
+    calculationDetails.push({
+      description: `Bambini 6-12 : ${normalChildren} × €${childBase.toFixed(2)}`,
+      amount: normalChildrenCost
+    });
+  }
+  
+  if (disabledChildren612 > 0) {
+    disabledChildrenCost = disabledChildren612 * childBase * 0.9;
+    calculationDetails.push({
+      description: `Bambini disabili 6-12 : ${disabledChildren612} × €${(childBase * 0.9).toFixed(2)}`,
+      amount: disabledChildrenCost
+    });
+  }
+  
+  totalPrice += normalChildrenCost + disabledChildrenCost;
+
+  /*************************************************
+   * 3) LOYALTY DISCOUNT (10%)
+   *************************************************/
+  let loyaltyDiscount = 0;
+  if (loyaltyCustomer) {
+    loyaltyDiscount = totalPrice * 0.1;
+    totalPrice *= 0.9;
+  }
+
+  /*************************************************
+   * 4) PERCENTAGE DISCOUNT
+   *************************************************/
+  let percentageDiscountAmount = 0;
+  if (percentageDiscount > 0) {
+    percentageDiscountAmount = totalPrice * (percentageDiscount / 100);
+    totalPrice *= (1 - percentageDiscount / 100);
+  }
+
+  /*************************************************
+   * 5) CLUB CARD COST
+   *************************************************/
+  let clubCardCost = 0;
+  if (!removeClubCard) {
+    const payingClub = nonDisabledAdults + normalChildren;
+    clubCardCost = 7 * payingClub * nights;
+    if (clubCardCost > 0) {
+      calculationDetails.push({
+        description: `Tessere club: ${payingClub} × €7 × ${nights} notti`,
+        amount: clubCardCost
+      });
+    }
+  }
+  totalPrice += clubCardCost;
+
+  /*************************************************
+   * 6) EXTRAS COST
+   *************************************************/
+  let extrasCost = 0;
+  if (poolView) {
+    const poolCost = 10 * nights;
+    extrasCost += poolCost;
+    calculationDetails.push({
+      description: `Vista piscina: €10 × ${nights} notti`,
+      amount: poolCost
+    });
+  }
+  if (petService) {
+    extrasCost += 30;
+    calculationDetails.push({
+      description: `Servizio animali`,
+      amount: 30
+    });
+  }
+  if (cribService) {
+    const cribCost = 10 * nights;
+    extrasCost += cribCost;
+    calculationDetails.push({
+      description: `Culla: €10 × ${nights} notti`,
+      amount: cribCost
+    });
+  }
+  totalPrice += extrasCost;
+
+  // Format dates
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth()+1).toString().padStart(2, '0')}/${date.getFullYear()}`;
+  };
+
+  
+
+  // Start PDF Layout with smaller fonts
+  let yPos = 15;
+  
+  // Header - Reduced font size
+  doc.setFontSize(14);
+  doc.setTextColor(40);
+  doc.setFont(undefined, 'bold');
+  doc.text('GRAND HOTEL SELINUNTE', 105, yPos, { align: 'center' });
+  yPos += 5;
+  
+  doc.setFontSize(9);
+  doc.setFont(undefined, 'normal');
+  doc.text('Contrada, Via Trenta Salme, 91022 Marinella TP, Italy', 105, yPos, { align: 'center' });
+  yPos += 8;
+
+  // Divider line after header
+  doc.setDrawColor(200);
+  doc.line(20, yPos, 190, yPos);
+  yPos += 8;
+
+  // Two-column layout for client info and booking details
+  const leftColX = 20;
+  const rightColX = 110;
+  let leftColY = yPos;
+  let rightColY = yPos;
+
+  // Client information (left column)
+  doc.setFontSize(10);
+  doc.setFont(undefined, 'bold');
+  doc.text('Informazioni Cliente:', leftColX, leftColY);
+  leftColY += 5;
+  doc.setFont(undefined, 'normal');
+  doc.setFontSize(9);
+
+  doc.text(`Nome: ${fullname}`, leftColX, leftColY);
+  leftColY += 4;
+  doc.text(`Telefono: ${phone}`, leftColX, leftColY);
+  leftColY += 4;
+  doc.text(`Camera: ${getRoomType(adults, children612)}`, leftColX, leftColY);
+  leftColY += 8;
+
+  // Guest summary in left column
+  doc.setFontSize(10);
+  doc.setFont(undefined, 'bold');
+  doc.text('Riepilogo Ospiti:', leftColX, leftColY);
+  leftColY += 5;
+  doc.setFont(undefined, 'normal');
+  doc.setFontSize(9);
+  doc.text(`• Totali: ${adults + children612 + children05}`, leftColX, leftColY);
+  leftColY += 4;
+  doc.text(`• Adulti: ${adults}`, leftColX, leftColY);
+  leftColY += 4;
+  doc.text(`• Bambini 6-12: ${children612}`, leftColX, leftColY);
+  leftColY += 4;
+  doc.text(`• Bambini 0-5: ${children05}`, leftColX, leftColY);
+
+  // Booking details (right column)
+  doc.setFontSize(10);
+  doc.setFont(undefined, 'bold');
+  doc.text('Dettagli Soggiorno:', rightColX, rightColY);
+  rightColY += 5;
+  doc.setFont(undefined, 'normal');
+  doc.setFontSize(9);
+
+  const formattedCheckIn = formatDate(selectedSlot.start);
+  const formattedCheckOut = formatDate(selectedSlot.end);
+  doc.text(`${formattedCheckIn} - ${formattedCheckOut}`, rightColX, rightColY);
+  rightColY += 4;
+  doc.text(`Notti: ${selectedSlot.nights}`, rightColX, rightColY);
+  rightColY += 8;
+
+  // Services summary in right column
+  doc.setFontSize(10);
+  doc.setFont(undefined, 'bold');
+  doc.text('Servizi:', rightColX, rightColY);
+  rightColY += 5;
+  doc.setFont(undefined, 'normal');
+  doc.setFontSize(9);
+  doc.text(`• Culla: ${cribService ? 'Sì' : 'No'}`, rightColX, rightColY);
+  rightColY += 4;
+  doc.text(`• Animali: ${petService ? 'Sì' : 'No'}`, rightColX, rightColY);
+  rightColY += 4;
+  doc.text(`• Disabilità: ${disabledAdults + disabledChildren612 > 0 ? 'Sì' : 'No'}`, rightColX, rightColY);
+  rightColY += 4;
+  doc.text(`• Fedeltà: ${loyaltyCustomer ? 'Sì' : 'No'}`, rightColX, rightColY);
+
+  // Continue from the lower of the two columns
+  yPos = Math.max(leftColY, rightColY) + 10;
+
+  // Divider line before price details
+  doc.setDrawColor(200);
+  doc.line(20, yPos, 190, yPos);
+  yPos += 6;
+
+  // Price calculation section
+  doc.setFontSize(10);
+  doc.setFont(undefined, 'bold');
+  doc.text('Dettaglio Prezzi:', 20, yPos);
+  yPos += 5;
+  doc.setFont(undefined, 'normal');
+  doc.setFontSize(9);
+
+  // Display only base price calculations (without extras)
+  calculationDetails.forEach(item => {
+    if (!item.description.includes('Tessere club') && 
+        !item.description.includes('Vista piscina') && 
+        !item.description.includes('Servizio animali') && 
+        !item.description.includes('Culla')) {
+      doc.text(item.description, 20, yPos);
+      doc.text(`€${item.amount.toFixed(2)}`, 180, yPos, { align: 'right' });
+      yPos += 4;
+    }
+  });
+  
+  // Calculate base subtotal (before any discounts and extras)
+  const subtotalBeforeDiscounts = adultCost + disabledCost + normalChildrenCost + disabledChildrenCost;
+  doc.setFont(undefined, 'bold');
+  doc.text('Subtotale prima sconti:', 20, yPos);
+  doc.text(`€${subtotalBeforeDiscounts.toFixed(2)}`, 180, yPos, { align: 'right' });
+  yPos += 6;
+  
+  // Discounts section
+  if (loyaltyDiscount > 0 || percentageDiscountAmount > 0) {
+    doc.setFont(undefined, 'bold');
+    doc.text('Sconti applicati:', 20, yPos);
+    yPos += 5;
+    doc.setFont(undefined, 'normal');
+    
+    if (loyaltyDiscount > 0) {
+      doc.text(`• Sconto fedeltà (10%):`, 20, yPos);
+      doc.text(`-€${loyaltyDiscount.toFixed(2)}`, 180, yPos, { align: 'right' });
+      yPos += 4;
+    }
+    
+    if (percentageDiscountAmount > 0) {
+      doc.text(`• Sconto aggiuntivo (${percentageDiscount}%):`, 20, yPos);
+      doc.text(`-€${percentageDiscountAmount.toFixed(2)}`, 180, yPos, { align: 'right' });
+      yPos += 4;
+    }
+    
+    // Price after discounts (before extras)
+    const priceAfterDiscounts = subtotalBeforeDiscounts - loyaltyDiscount - percentageDiscountAmount;
+    doc.setFont(undefined, 'bold');
+    doc.text(`Totale dopo sconti:`, 20, yPos);
+    doc.text(`€${priceAfterDiscounts.toFixed(2)}`, 180, yPos, { align: 'right' });
+    yPos += 6;
+  }
+  
+  // Extras section
+  doc.setFont(undefined, 'bold');
+  doc.text('Servizi aggiuntivi:', 20, yPos);
+  yPos += 5;
+  doc.setFont(undefined, 'normal');
+  
+  calculationDetails.forEach(item => {
+    if (item.description.includes('Tessere club') || 
+        item.description.includes('Vista piscina') || 
+        item.description.includes('Servizio animali') || 
+        item.description.includes('Culla')) {
+      const formattedDesc = item.description.replace(':', '');
+      doc.text(`• ${formattedDesc}`, 20, yPos);
+      doc.text(`€${item.amount.toFixed(2)}`, 180, yPos, { align: 'right' });
+      yPos += 4;
+    }
+  });
+  
+  // Divider before total
+  doc.setDrawColor(200);
+  doc.line(20, yPos + 2, 190, yPos + 2);
+  yPos += 6;
+  
+  // Total
+  doc.setFontSize(11);
+  doc.setFont(undefined, 'bold');
+  doc.text('Prezzo Totale:', 20, yPos);
+  doc.text(`€${totalPrice.toFixed(2)}`, 180, yPos, { align: 'right' });
+  yPos += 15;
+  
+  // Note section - positioned well above signature
+doc.setFontSize(10);
+doc.setFont(undefined, 'bold');
+doc.text('Nota:', 20, yPos);
+yPos += 5;
+doc.setFont(undefined, 'normal');
+doc.setFontSize(9);
+
+// Split notes into multiple lines if needed
+const maxLineLength = 80;
+const noteLines = [];
+let currentLine = '';
+
+notes.split(' ').forEach(word => {
+  if ((currentLine + word).length > maxLineLength) {
+    noteLines.push(currentLine);
+    currentLine = word + ' ';
+  } else {
+    currentLine += word + ' ';
+  }
+});
+if (currentLine) noteLines.push(currentLine.trim());
+
+// Add each line of notes
+noteLines.forEach(line => {
+  doc.text(line, 20, yPos);
+  yPos += 6;
+});
+
+// If no notes, add a single line
+if (noteLines.length === 0) {
+  doc.text('_____________________________________________________________________', 20, yPos);
+  yPos += 6;
+}
+
+const pageHeight = doc.internal.pageSize.height;
+const signatureY = pageHeight - 20;
+doc.setFont('helvetica', 'italic');
+doc.setFontSize(9);
+doc.setTextColor(0, 0, 255);
+
+// Signature text above the line
+doc.text(signature || 'Firma', 172, signatureY - 7, { align: 'center' });
+
+doc.setFont(undefined, 'normal');
+// Line below the signature
+doc.text('_________________________', 150, signatureY - 5);
+
+// Constant "Firma" text below the line
+doc.text('Firma', 162, signatureY, { align: 'center' });  
+
+const now = new Date();
+const formattedDate = `${now.getDate().toString().padStart(2, '0')}/${(now.getMonth()+1).toString().padStart(2, '0')}/${now.getFullYear()}`;
+doc.setFontSize(8);
+doc.setFont(undefined, 'normal');
+doc.setTextColor(100);
+doc.text(`${formattedDate}`, 105, doc.internal.pageSize.height - 10, { align: 'center' });
+
+// Save the PDF
+doc.save(`Prenotazione_${fullname.replace(' ', '_')}.pdf`);
+
+}
 /*************************************************
  * displayBookingMessage
  *************************************************/
@@ -621,9 +1026,18 @@ function displayBookingMessage(message) {
       });
   });
   
+  // NEW: PDF Generation Button
+  const pdfButton = document.createElement('button');
+  pdfButton.textContent = 'Genera PDF';
+  pdfButton.className = 'orange-button';
+  pdfButton.style.width = '100%';
+  pdfButton.style.backgroundColor = '#4CAF50'; // Green color for PDF button
+  pdfButton.addEventListener('click', generatePDF);
+  
   buttonContainer.appendChild(copyButton);
-  buttonContainer.appendChild(closeButton);
   buttonContainer.appendChild(whatsappButton);
+  buttonContainer.appendChild(pdfButton);
+  buttonContainer.appendChild(closeButton);
   
   messageDiv.appendChild(buttonContainer);
   
@@ -646,18 +1060,19 @@ function displayBookingMessage(message) {
       copyButton.style.width = 'auto';
       closeButton.style.width = 'auto';
       whatsappButton.style.width = 'auto';
+      pdfButton.style.width = 'auto';
     } else {
       buttonContainer.style.flexDirection = 'column';
       buttonContainer.style.gap = '10px';
       copyButton.style.width = '100%';
       closeButton.style.width = '100%';
       whatsappButton.style.width = '100%';
+      pdfButton.style.width = '100%';
     }
   };
   handleMediaQueryChange(mediaQuery);
   mediaQuery.addEventListener('change', handleMediaQueryChange);
 }
-
 /*************************************************
  * copyToClipboard
  *************************************************/
@@ -731,6 +1146,10 @@ function resetForm() {
   const percentageDiscountSlider = document.getElementById('percentageDiscount');
   if (percentageDiscountSlider) {
     percentageDiscountSlider.value = '0';
+  }
+  const discountAmountLabel = document.getElementById('discountAmount');
+  if (discountAmountLabel) {
+    discountAmountLabel.textContent = '-€0.00';
   }
   const discountValueLabel = document.getElementById('discountValue');
   if (discountValueLabel) {

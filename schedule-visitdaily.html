@@ -1,11 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DREY2HQR1G"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-DREY2HQR1G');
+</script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-  <title>Villa Agency - Schedule a Visit</title>
+  <title>Villa Agency - Pianifica una visita</title>
 
   <!-- Bootstrap core CSS -->
   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -70,10 +79,9 @@
             <ul class="nav">
               <li><a href="index.html">Home</a></li>
               <li><a href="properties.html">Properties</a></li>
-              <li><a href="property-details.html">Property Details</a></li>
-              <li><a href="contact.html">Contact Us</a></li>
-              <li><a href="schedule-visitdaily.html">Schedule vist on daily basis</a></li>
-              <li><a href="schedule-visit.html" class="active"><i class="fa fa-calendar"></i>Schedule a visit</a></li>
+              <li><a href="pdf.html">Genera ricevuta</a></li>
+              <li><a href="schedule-visitdaily.html">Pianifica la visita su base giornaliera</a></li>
+              <li><a href="schedule-visit.html" class="active">Pianifica una visita</a></li>
             </ul>
             <a class="menu-trigger">
               <span>Menu</span>
@@ -86,21 +94,12 @@
   </header>
   <!-- ***** Header Area End ***** -->
 
-  <div class="main-banner">
-    <div class="owl-carousel owl-banner">
-      <div class="item item-1">
-        <div class="header-text">
-          <span class="category">Schedule, <em>Your Visit</em></span>
-          <h2>Find Your Dream<br>Property Today</h2>
-        </div>
-      </div>
-    </div>
-  </div>
+  
 
   <div class="schedule-content">
     <div class="container">
       <div class="schedule-form-container">
-        <h2>Schedule Your Visit daily prices</h2>
+        <h2>Pianifica la tua visita prezzi giornalieri</h2>
         <form id="scheduleForm">
           <div class="row">
             <div class="col-md-6">
@@ -141,8 +140,12 @@
             <div class="col-md-12">
               <div class="form-group">
                 <div id="discountContainer">
-                  <label for="percentageDiscount">Discount: <span id="discountValue">0%</span></label>
-                  <input type="range" id="percentageDiscount" min="0" max="100" step="1" value="0">
+                  <label for="percentageDiscount"><i class="fa fa-percent"></i> Sconto Generale</label>
+                          <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                            <span id="discountValue">0%</span>
+                            <span id="discountAmount">-€0.00</span>
+                          </div>
+                  <input type="range" id="percentageDiscount" min="0" max="100" step="0.5" value="0">
                 </div>
               </div>
             </div>
@@ -173,6 +176,37 @@
               <input type="checkbox" id="removeClubCard"> Rimuovi costo tessera club
             </label>
           </div>
+      
+          <!-- NEW: Button to show/hide disabled fields -->
+          <div class="row">
+            <div class="col-md-12">
+              <button type="button" id="disabledDiscountBtn" class="btn btn-info" style="width: 100%;">
+                Applica Sconto Disabili
+              </button>
+            </div>
+          </div>
+
+          <!-- NEW: Fields for disabled adults & children -->
+          <div id="disabledFields" style="display: none; margin-top: 15px;">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="disabledAdults">Adulti disabili</label>
+                  <input type="number" id="disabledAdults" min="0" value="0">
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="disabledChildren612">Bambini disabili (6-12)</label>
+                  <input type="number" id="disabledChildren612" min="0" value="0">
+                </div>
+              </div>
+            </div>
+            <p style="font-size: 0.9em; color: #555;">
+              <em>* Ogni adulto o bambino disabile ottiene il 10% di sconto aggiuntivo sulla propria quota e non paga la tessera club.</em>
+            </p>
+          </div>
+        
           <!-- Total Price -->
           <div id="totalPrice">Prezzo totale: €0.00</div>
           <!-- Submit -->
